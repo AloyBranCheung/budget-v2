@@ -39,8 +39,12 @@ export default async function MainNavbar() {
 
   return (
     <div className="w-full fixed bottom-8 px-6 ">
-      <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between">
-        <BaseIconWithLabel b64Str={homeIconBase64} label="Home" />
+      <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between shadow-md">
+        <BaseIconWithLabel
+          isFocused={true}
+          b64Str={homeIconBase64}
+          label="Home"
+        />
         <BaseIconWithLabel b64Str={strategyIconBase64} label="Planning" />
         <BaseIconWithLabel b64Str={addIconBase64} width={40} height={40} />
         <BaseIconWithLabel b64Str={graphIconBase64} label="Statistics" />
