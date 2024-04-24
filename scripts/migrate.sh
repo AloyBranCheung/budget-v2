@@ -1,0 +1,6 @@
+#!/usr/bin/env bash 
+
+set -eu
+
+
+npx tsx ./prisma/seeds/20240424105830-add-home-icon.ts

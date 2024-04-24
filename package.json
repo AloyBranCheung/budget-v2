@@ -6,6 +6,7 @@
     "dev": "docker compose -f docker-compose.yml up -d --build && next dev",
     "docker:stop": "docker compose -f docker-compose.yml down",
     "migrate:data:create": "dotenv -e .env.local -- ./scripts/create_static_data_migration.sh",
+    "migrate:data": "dotenv -e .env.local -- ./scripts/migrate.sh",
     "migrate:dev": "dotenv -e .env.local -- yarn prisma migrate dev",
     "psql:local": "psql -U local -h localhost -p 5432 local",
     "build": "next build",
