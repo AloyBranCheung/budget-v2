@@ -20,7 +20,7 @@ const main = async () => {
             name: 'home-icon.png'
         }
     })
-    if (exists) return logger.info("Image already in DB, moving on...")
+    if (exists) return logger.info("home-icon.png already in DB, moving on...")
     // read file sync home icon 
     logger.info("Beginning to insert binary file to postgres...")
     const currDir = __dirname;
