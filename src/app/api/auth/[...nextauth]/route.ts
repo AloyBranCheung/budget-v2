@@ -1,20 +1,7 @@
-import NextAuth from "next-auth"
-import Auth0Provider from "next-auth/providers/auth0";
+import { config } from "@/auth/auth-helper"
+import NextAuth from "next-auth/next"
 
-if (!process.env.AUTH0_CLIENT_ID || !process.env.AUTH0_CLIENT_SECRET || !process.env.AUTH0_ISSUER) {
-    throw new Error("Missing Auth0 environment variables")
-}
+const handler = NextAuth(config)
 
-export const authOptions = {
-    providers: [
-        Auth0Provider({
-            clientId: process.env.AUTH0_CLIENT_ID,
-            clientSecret: process.env.AUTH0_CLIENT_SECRET,
-            issuer: process.env.AUTH0_ISSUER
-        })
-    ]
-}
-
-const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }

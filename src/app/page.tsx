@@ -1,5 +1,14 @@
-import Image from "next/image";
+// auth
+import { getServerSession } from "next-auth";
+// components
+import LoginButton from "@/containers/landingpage/LoginButton";
 
-export default function LandingPage() {
-  return <div>landing page</div>;
+export default async function LandingPage() {
+  const session = await getServerSession();
+  return (
+    <div className="flex flex-col gap-2 h-screen items-center justify-center">
+      <div>Landing Page</div>
+      <LoginButton session={session} />
+    </div>
+  );
 }
