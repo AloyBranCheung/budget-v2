@@ -25,7 +25,7 @@ const main = async () => {
         })
 
         if (exists) {
-            logger.info("Image already in DB, moving on...")
+            logger.info(`${filename} already in DB, moving on...`)
             continue
         }
 

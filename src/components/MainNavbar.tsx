@@ -1,9 +1,7 @@
 import React from "react";
 import { getServerSession } from "next-auth";
-// prisma
-import prisma from "@/libs/prisma";
 // utils
-import BinaryUtil from "@/utils/BinaryUtil";
+import IconHelper from "@/utils/IconHelper";
 // components
 import Page500 from "@/app/Page500";
 import Page403 from "@/app/Page403";
@@ -13,21 +11,40 @@ export default async function MainNavbar() {
   const session = await getServerSession();
   if (!session) return <Page403 />;
 
-  const homeIcon = await prisma.images.findFirst({
-    where: {
-      name: "home-icon.png",
-    },
-  });
-  if (!homeIcon) {
+  // this is unnecessary and potentially not performant but just want to try
+  // having binary in a bytes column
+  const [
+    homeIconBase64,
+    addIconBase64,
+    strategyIconBase64,
+    goalIconBase64,
+    graphIconBase64,
+  ] = await Promise.all([
+    new IconHelper("home-icon.png").getIcon64(),
+    new IconHelper("add-icon.png").getIcon64(),
+    new IconHelper("strategy-icon.png").getIcon64(),
+    new IconHelper("goal-icon.png").getIcon64(),
+    new IconHelper("graph-icon.png").getIcon64(),
+  ]);
+
+  if (
+    !homeIconBase64 ||
+    !addIconBase64 ||
+    !strategyIconBase64 ||
+    !goalIconBase64 ||
+    !graphIconBase64
+  ) {
     return <Page500 />;
   }
 
-  const homeIconBase64 = new BinaryUtil(homeIcon.bytes).pngBinaryToBase64();
-
   return (
     <div className="w-full fixed bottom-8 px-6 ">
-      <div className="bg-secondary p-2 rounded-2xl">
+      <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between">
         <BaseIconWithLabel b64Str={homeIconBase64} label="Home" />
+        <BaseIconWithLabel b64Str={strategyIconBase64} label="Planning" />
+        <BaseIconWithLabel b64Str={addIconBase64} width={40} height={40} />
+        <BaseIconWithLabel b64Str={graphIconBase64} label="Statistics" />
+        <BaseIconWithLabel b64Str={goalIconBase64} label="Goals" />
       </div>
     </div>
   );
