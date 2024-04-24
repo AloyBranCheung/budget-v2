@@ -14,7 +14,9 @@ const config: Config = {
         'tertiary': '#F3D0D7',
         'quaternary': '#FFEFEF',
       },
-
+      fontSize: {
+        'body3': '0.563rem'
+      }
     },
   },
   plugins: [],

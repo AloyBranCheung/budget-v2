@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import Page403 from "../Page403";
 // components
 import Container from "@/components/Container";
+import MainNavbar from "@/components/MainNavbar";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -19,9 +20,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
       <Container>
         <div className="h-full overflow-y-auto">{children}</div>
       </Container>
-      <div className="w-full fixed bottom-8 px-8">
-        <div className="bg-secondary ">navbar here </div>
-      </div>
+      <MainNavbar />
     </div>
   );
 }
