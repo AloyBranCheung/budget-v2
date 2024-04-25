@@ -12,6 +12,7 @@ const config: Config = {
         'primary': '#F6F5F2',
         'secondary': '#F0EBE3',
         'tertiary': '#F3D0D7',
+        'tertiary:hover': '#7c7c7c',
         'quaternary': '#FFEFEF',
       },
       fontSize: {

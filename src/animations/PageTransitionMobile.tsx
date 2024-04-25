@@ -14,10 +14,13 @@ export default function PageTransitionMobile() {
     },
   };
   return (
-    <div className="fixed h-screen w-screen pointer-events-none">
-      <div className="flex w-screen h-full">
+    <div
+      style={{ zIndex: 50 }}
+      className="fixed h-screen w-screen pointer-events-none"
+    >
+      <div className="flex w-screen h-full relative z-50">
         <motion.div
-          className="w-full h-full bg-primary absolute"
+          className="w-full h-full bg-primary absolute z-50"
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: [0.98, 0.0, 1.0, -0.115] }}
@@ -33,7 +36,7 @@ export default function PageTransitionMobile() {
               ease: [0.0, 1.005, 1.0, 0.01],
             }}
             key={`${i}-${Math.random()}`}
-            className="bg-tertiary h-full w-full relative z-10"
+            className="bg-tertiary h-full w-full relative z-50"
           />
         ))}
       </div>
