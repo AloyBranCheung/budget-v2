@@ -25,13 +25,11 @@ export default function BaseIconWithLabel({
   const router = useRouter();
   const focusState = isFocused || (targetPath && pathname === targetPath);
 
-  console.log(focusState, targetPath);
-
   const variants: AnimationProps["variants"] = {
     initial: {
       padding: "4px 12px",
       borderRadius: "16px",
-      background: "transparent",
+      background: "rgba(0,0,0,0)",
     },
     animate: {
       backgroundColor: "#F3D0D7",
@@ -53,24 +51,28 @@ export default function BaseIconWithLabel({
       className="flex flex-col items-center justify-center cursor-pointer"
       onClick={handleClick}
     >
-      <motion.div
-        key={`${targetPath}-${pathname}-${Math.random()}`}
-        whileHover={{ backgroundColor: "#7c7c7c" }}
-        whileTap={{ scale: 0.9 }}
-        variants={variants}
-        initial="initial"
-        animate={focusState && "animate"}
-        transition={{
-          duration: 5,
-        }}
-      >
-        <Image
-          src={b64Str}
-          alt={`${label}-icon`}
-          width={width}
-          height={height}
-        ></Image>
-      </motion.div>
+      <AnimatePresence initial={false} mode="wait">
+        <motion.div
+          key={`${targetPath}-${pathname}-${Math.random()}`}
+          style={{ padding: "4px 12px", borderRadius: "16px" }}
+          whileHover={{ backgroundColor: "#7c7c7c" }}
+          whileTap={{ scale: 0.9 }}
+          initial="initial"
+          variants={variants}
+          animate={focusState && "animate"}
+          exit="initial"
+          transition={{
+            duration: 0.3,
+          }}
+        >
+          <Image
+            src={b64Str}
+            alt={`${label}-icon`}
+            width={width}
+            height={height}
+          ></Image>
+        </motion.div>
+      </AnimatePresence>
       <motion.p
         key={`${targetPath}-${pathname}-${Math.random()}`}
         className="text-body3"
