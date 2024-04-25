@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import Page403 from "../Page403";
 // components
 import Container from "@/components/Container";
-import MainNavbar from "@/components/MainNavbar";
+import MainNavbar from "@/components/navigation/MainNavbar";
 
 interface AppLayoutProps {
   children: React.ReactNode;

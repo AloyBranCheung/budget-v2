@@ -5,7 +5,7 @@ import IconHelper from "@/utils/IconHelper";
 // components
 import Page500 from "@/app/Page500";
 import Page403 from "@/app/Page403";
-import BaseIconWithLabel from "./icons/BaseIconWithLabel";
+import NavbarIcon from "./NavbarIcon";
 
 export default async function MainNavbar() {
   const session = await getServerSession();
@@ -40,15 +40,28 @@ export default async function MainNavbar() {
   return (
     <div className="w-full fixed bottom-8 px-6 ">
       <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between shadow-md">
-        <BaseIconWithLabel
-          isFocused={true}
-          b64Str={homeIconBase64}
-          label="Home"
+        <NavbarIcon targetPath="/app" b64Str={homeIconBase64} label="Home" />
+        <NavbarIcon
+          targetPath="/app/planning"
+          b64Str={strategyIconBase64}
+          label="Planning"
         />
-        <BaseIconWithLabel b64Str={strategyIconBase64} label="Planning" />
-        <BaseIconWithLabel b64Str={addIconBase64} width={40} height={40} />
-        <BaseIconWithLabel b64Str={graphIconBase64} label="Statistics" />
-        <BaseIconWithLabel b64Str={goalIconBase64} label="Goals" />
+        <NavbarIcon
+          targetPath="/app/add"
+          b64Str={addIconBase64}
+          width={40}
+          height={40}
+        />
+        <NavbarIcon
+          targetPath="/app/statistics"
+          b64Str={graphIconBase64}
+          label="Statistics"
+        />
+        <NavbarIcon
+          targetPath="/app/goals"
+          b64Str={goalIconBase64}
+          label="Goals"
+        />
       </div>
     </div>
   );

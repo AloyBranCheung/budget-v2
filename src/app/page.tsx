@@ -1,7 +1,7 @@
 // auth
 import { getServerSession } from "next-auth";
 // components
-import LoginButton from "@/containers/landingpage/LoginButton";
+import LoginButton from "@/containers/landing-page/LoginButton";
 
 export default async function LandingPage() {
   const session = await getServerSession();

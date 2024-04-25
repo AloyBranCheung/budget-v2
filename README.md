@@ -15,3 +15,8 @@ To stop databases run `yarn docker:stop`
 2. Edit files (make sure to add a check if the data exists)
 3. Add data
 4. Run `yarn migrate:data`
+
+## Conventions
+
+- `filenames` are `kebab-cased`
+- `.sh` scripts are `snake_cased`
