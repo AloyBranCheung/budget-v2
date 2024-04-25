@@ -1,44 +1,42 @@
+"use client";
 import React from "react";
-import { getServerSession } from "next-auth";
-// utils
-import IconHelper from "@/utils/IconHelper";
+import { AnimatePresence, AnimationProps, motion } from "framer-motion";
 // components
-import Page500 from "@/app/Page500";
-import Page403 from "@/app/Page403";
 import NavbarIcon from "./NavbarIcon";
 
-export default async function MainNavbar() {
-  const session = await getServerSession();
-  if (!session) return <Page403 />;
+interface MainNavbarProps {
+  homeIconBase64: string;
+  strategyIconBase64: string;
+  addIconBase64: string;
+  graphIconBase64: string;
+  goalIconBase64: string;
+}
 
-  // this is unnecessary and potentially not performant but just want to try
-  // having binary in a bytes column
-  const [
-    homeIconBase64,
-    addIconBase64,
-    strategyIconBase64,
-    goalIconBase64,
-    graphIconBase64,
-  ] = await Promise.all([
-    new IconHelper("home-icon.png").getIcon64(),
-    new IconHelper("add-icon.png").getIcon64(),
-    new IconHelper("strategy-icon.png").getIcon64(),
-    new IconHelper("goal-icon.png").getIcon64(),
-    new IconHelper("graph-icon.png").getIcon64(),
-  ]);
-
-  if (
-    !homeIconBase64 ||
-    !addIconBase64 ||
-    !strategyIconBase64 ||
-    !goalIconBase64 ||
-    !graphIconBase64
-  ) {
-    return <Page500 />;
-  }
+export default function MainNavbar({
+  homeIconBase64,
+  strategyIconBase64,
+  addIconBase64,
+  graphIconBase64,
+  goalIconBase64,
+}: MainNavbarProps) {
+  const variants: AnimationProps["variants"] = {
+    initial: {
+      bottom: "32px",
+    },
+    animate: {
+      bottom: ["32px", "-120px", "32px"],
+    },
+  };
 
   return (
-    <div className="w-full fixed bottom-8 px-6">
+    <motion.div
+      key="mainnavbar"
+      variants={variants}
+      initial="initial"
+      animate="animate"
+      transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1] }}
+      className="w-full fixed px-6"
+    >
       <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between shadow-md">
         <NavbarIcon targetPath="/app" b64Str={homeIconBase64} label="Home" />
         <NavbarIcon
@@ -63,6 +61,6 @@ export default async function MainNavbar() {
           label="Goals"
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
