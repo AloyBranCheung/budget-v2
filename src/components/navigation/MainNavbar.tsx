@@ -38,7 +38,7 @@ export default async function MainNavbar() {
   }
 
   return (
-    <div className="w-full fixed bottom-8 px-6 ">
+    <div className="w-full fixed bottom-8 px-6">
       <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between shadow-md">
         <NavbarIcon targetPath="/app" b64Str={homeIconBase64} label="Home" />
         <NavbarIcon
