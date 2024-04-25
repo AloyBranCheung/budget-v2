@@ -16,7 +16,8 @@ const config: Config = {
         'quaternary': '#FFEFEF',
       },
       fontSize: {
-        'body3': '0.563rem'
+        'body3': '0.563rem',
+        'heading3': '1.5rem',
       }
     },
   },
