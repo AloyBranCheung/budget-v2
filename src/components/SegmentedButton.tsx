@@ -1,18 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, LayoutGroup } from "framer-motion";
 import { MenuOptions } from "@/types/menu";
 
 interface SegmentedButtonProps {
   layoutGroupId: string;
   menuItems: MenuOptions[];
+  onChange: (activeItem: number | string) => void;
 }
 
 export default function SegmentedButton({
   menuItems,
   layoutGroupId,
+  onChange,
 }: SegmentedButtonProps) {
   const [activeItem, setActiveItem] = useState(menuItems[0].value);
+
+  useEffect(() => {
+    onChange(activeItem);
+  });
 
   return (
     <div className="flex w-full items-center bg-secondary p-2 rounded-2xl shadow-inner">
@@ -23,7 +29,10 @@ export default function SegmentedButton({
             <div
               key={item.value}
               className="w-full flex items-center justify-center"
-              onClick={() => setActiveItem(item.value)}
+              onClick={() => {
+                setActiveItem(item.value);
+                onChange(item.value);
+              }}
             >
               <motion.div
                 className="w-fit p-2 px-6 rounded-2xl cursor-pointer relative z-0"

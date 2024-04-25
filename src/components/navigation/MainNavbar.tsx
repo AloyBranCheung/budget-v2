@@ -35,6 +35,8 @@ export default function MainNavbar({
       initial="initial"
       animate="animate"
       transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1] }}
+      // z-50 tailwind class not working
+      style={{ zIndex: 50 }}
       className="w-full fixed px-6"
     >
       <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between shadow-md">
