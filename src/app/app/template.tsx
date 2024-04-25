@@ -25,8 +25,8 @@ export default function RootTemplate({ children }: RootTemplateProps) {
           <motion.div
             className="w-full h-full bg-primary absolute"
             initial={{ opacity: 1 }}
-            animate={{ opacity: [0.99, 0.98, 0.97, 0] }}
-            transition={{ duration: 0.8, ease: "linear" }}
+            animate={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: [0.98, 0.0, 1.0, -0.115] }}
           />
           {[...new Array(NUMBER_OF_RECTANGLES)].map((_, i) => (
             <motion.div
