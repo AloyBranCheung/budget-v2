@@ -15,6 +15,7 @@ export default function PageTransitionMobile() {
   };
   return (
     <div
+      // added style zIndex: 50 because z-50 tailwind class not showing on html/css
       style={{ zIndex: 50 }}
       className="fixed h-screen w-screen pointer-events-none"
     >
