@@ -30,14 +30,15 @@ model Images {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   // auth0 stuff 
-  name      String
-  email     String   @unique
-  auth0Id   String   @unique
-  image     String
+  name            String
+  email           String   @unique
+  auth0Id         String   @unique
+  image           String
+  currTotalBudget Int      @default(0)
 
   // relationships
   transactions Transaction[]
