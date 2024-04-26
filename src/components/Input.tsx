@@ -10,6 +10,7 @@ interface InputProps {
   step?: number;
   inputClassName?: ClassNameValue;
   required?: boolean;
+  maxLength?: number;
 }
 
 export default function Input({
@@ -20,6 +21,7 @@ export default function Input({
   inputClassName,
   step,
   required,
+  maxLength,
 }: InputProps) {
   return (
     <div className="flex flex-col gap-2 relative">
@@ -35,6 +37,7 @@ export default function Input({
         )}
         name={name ?? label}
         step={step}
+        maxLength={30 ?? maxLength}
       />
     </div>
   );

@@ -41,6 +41,7 @@ export default function AddTransactionForm({
           },
         ]}
       />
+      <Input name="name" label="Name" placeholder="Name of transaction" />
       <Input
         name="amount"
         label="Amount"
@@ -49,6 +50,7 @@ export default function AddTransactionForm({
         inputClassName="text-right"
         step={0.01}
       />
+      {/* // TODO: CHANGE TO SINGLE SELECT */}
       <Multiselect
         label="Categories"
         name="categories"
