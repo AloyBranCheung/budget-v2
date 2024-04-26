@@ -16,6 +16,12 @@ To stop databases run `yarn docker:stop`
 3. Add data
 4. Run `yarn migrate:data`
 
+## Users
+
+For `local` environment need to run user migration from auth0db to local db
+
+for `deployed` environment e.g. `tst` will need to have an auth0 post user registration action
+
 ## Conventions
 
 - `filenames` are `kebab-cased`
