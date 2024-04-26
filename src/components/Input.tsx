@@ -9,6 +9,7 @@ interface InputProps {
   placeholder?: string;
   step?: number;
   inputClassName?: ClassNameValue;
+  required?: boolean;
 }
 
 export default function Input({
@@ -18,13 +19,13 @@ export default function Input({
   placeholder,
   inputClassName,
   step,
+  required,
 }: InputProps) {
   return (
     <div className="flex flex-col gap-2 relative">
-      <label htmlFor={name ?? label} className="font-semibold text-heading3">
-        {label}
-      </label>
+      <label htmlFor={name ?? label}>{label}</label>
       <input
+        required={required ?? true}
         id={name ?? label}
         type={type}
         placeholder={placeholder ?? label}

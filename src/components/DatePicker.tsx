@@ -5,9 +5,10 @@ import dayjs from "dayjs";
 interface DatePickerProps {
   label: string;
   name?: string;
+  required?: boolean;
 }
 
-export default function DatePicker({ label, name }: DatePickerProps) {
+export default function DatePicker({ label, name, required }: DatePickerProps) {
   const [date, setDate] = useState<string>(
     dayjs(new Date()).format("YYYY-MM-DD")
   );
@@ -16,6 +17,7 @@ export default function DatePicker({ label, name }: DatePickerProps) {
     <div className="flex flex-col gap-2">
       <label htmlFor={name}>{label}</label>
       <input
+        required={required ?? true}
         onChange={(e) => {
           setDate(e.target.value);
         }}

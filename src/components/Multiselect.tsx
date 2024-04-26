@@ -6,12 +6,14 @@ interface MultiselectProps {
   label: string;
   name?: string;
   menuOptions: MenuOptions[];
+  required?: boolean;
 }
 
 export default function Multiselect({
   label,
   name,
   menuOptions,
+  required,
 }: MultiselectProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
@@ -19,6 +21,7 @@ export default function Multiselect({
     <div className="flex flex-col gap-2">
       <label htmlFor={name ?? label}>{label}</label>
       <select
+        required={required ?? true}
         size={menuOptions.length}
         className="p-4 bg-secondary rounded-2xl shadow-md outline-none border-none h-fit selection:bg-none"
         id={name ?? label}

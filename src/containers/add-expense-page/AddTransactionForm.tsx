@@ -5,6 +5,7 @@ import SegmentedButton from "@/components/SegmentedButton";
 import Input from "@/components/Input";
 import Multiselect from "@/components/Multiselect";
 import DatePicker from "@/components/DatePicker";
+import TextArea from "@/components/TextArea";
 
 export default function AddExpenseForm() {
   return (
@@ -38,7 +39,7 @@ export default function AddExpenseForm() {
         ]}
       />
       <DatePicker label="Date" name="date" />
-      <div>notes</div>
+      <TextArea label="Notes" name="notes" />
     </form>
   );
 }

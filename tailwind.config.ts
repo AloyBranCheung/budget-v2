@@ -18,8 +18,12 @@ const config: Config = {
         'quaternary': '#FFEFEF',
       },
       fontSize: {
+        'body1': '1.25',
         'body3': '0.563rem',
         'heading3': '1.5rem',
+      },
+      textColor: {
+        'placeholder': '#a1a8b2',
       }
     },
   },
