@@ -40,7 +40,6 @@ model User {
 
   // relationships
   transactions Transaction[]
-  categories   Category[]
   tags         Tag[]
 }
 
@@ -69,8 +68,6 @@ model Category {
 
   // relationships
   transactions Transaction[] // implicit m2m relationship
-  user         User?         @relation(fields: [userId], references: [id])
-  userId       String?
 }
 
 model Tag {
