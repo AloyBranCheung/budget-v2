@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useFormState } from "react-dom";
+import { TransactionType } from "@prisma/client";
 // action
 import addTransaction from "@/actions/addTransaction";
 // components
@@ -17,11 +18,19 @@ export default function AddExpenseForm() {
   return (
     <form className="flex flex-col gap-2" action={formAction}>
       <SegmentedButton
-        name="incomeExpenseCategory"
+        name="type"
         layoutGroupId="incomeExpenses"
         menuItems={[
-          { id: "Income", value: "Income", label: "Income" },
-          { id: "Expense", value: "Expense", label: "Expense" },
+          {
+            id: TransactionType.Income,
+            value: TransactionType.Income,
+            label: TransactionType.Income,
+          },
+          {
+            id: TransactionType.Expense,
+            value: TransactionType.Expense,
+            label: TransactionType.Expense,
+          },
         ]}
       />
       <Input
@@ -33,8 +42,22 @@ export default function AddExpenseForm() {
         step={0.01}
       />
       <Multiselect
-        label={"Categories"}
-        name={"categories"}
+        label="Categories"
+        name="categories"
+        menuOptions={[
+          ...new Array(5).fill(0).map((_, i) => {
+            const test = `test${i}`;
+            return {
+              id: test,
+              value: test,
+              label: test,
+            };
+          }),
+        ]}
+      />
+      <Multiselect
+        label="Tags"
+        name="tags"
         menuOptions={[
           ...new Array(5).fill(0).map((_, i) => {
             const test = `test${i}`;
