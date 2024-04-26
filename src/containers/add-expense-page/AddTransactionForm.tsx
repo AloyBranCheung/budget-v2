@@ -11,6 +11,7 @@ import Multiselect from "@/components/Multiselect";
 import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
+import SingleSelect from "@/components/SingleSelect";
 
 interface AddTransactionFormProps {
   categories: Prisma.CategoryGetPayload<{}>[];
@@ -50,16 +51,16 @@ export default function AddTransactionForm({
         inputClassName="text-right"
         step={0.01}
       />
-      {/* // TODO: CHANGE TO SINGLE SELECT */}
-      <Multiselect
-        label="Categories"
-        name="categories"
+      <SingleSelect
+        label="Category"
+        name="category"
         menuOptions={categories.map((category) => ({
           id: category.id,
           label: category.name,
           value: category.id,
         }))}
       />
+      {/* // TODO: add add more tags */}
       <Multiselect
         label="Tags"
         name="tags"
