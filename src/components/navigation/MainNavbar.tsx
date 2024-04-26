@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { AnimatePresence, AnimationProps, motion } from "framer-motion";
+import { AnimationProps, motion } from "framer-motion";
 // components
 import NavbarIcon from "./NavbarIcon";
 

@@ -6,6 +6,7 @@ import { MenuOptions } from "@/types/menu";
 interface SegmentedButtonProps {
   layoutGroupId: string;
   menuItems: MenuOptions[];
+  // eslint-disable-next-line no-unused-vars
   onChange?: (activeItem: number | string) => void;
   name?: string;
 }

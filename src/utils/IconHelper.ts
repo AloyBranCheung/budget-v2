@@ -16,7 +16,7 @@ export default class IconHelper {
             }
         })
         if (!icon) {
-            console.log(`${this.iconName} not found.`)
+            console.error(`${this.iconName} not found.`)
             return null
         }
 
