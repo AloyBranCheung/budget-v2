@@ -6,7 +6,7 @@ import { MenuOptions } from "@/types/menu";
 interface SegmentedButtonProps {
   layoutGroupId: string;
   menuItems: MenuOptions[];
-  onChange: (activeItem: number | string) => void;
+  onChange?: (activeItem: number | string) => void;
 }
 
 export default function SegmentedButton({
@@ -17,7 +17,9 @@ export default function SegmentedButton({
   const [activeItem, setActiveItem] = useState(menuItems[0].value);
 
   useEffect(() => {
-    onChange(activeItem);
+    if (onChange) {
+      onChange(activeItem);
+    }
   });
 
   return (
@@ -31,7 +33,9 @@ export default function SegmentedButton({
               className="w-full flex items-center justify-center"
               onClick={() => {
                 setActiveItem(item.value);
-                onChange(item.value);
+                if (onChange) {
+                  onChange(item.value);
+                }
               }}
             >
               <motion.div
