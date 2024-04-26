@@ -59,7 +59,12 @@ export default function SegmentedButton({
           );
         })}
       </LayoutGroup>
-      <input className="hidden" value={activeItem} name={name} />
+      <input
+        className="hidden"
+        value={activeItem}
+        onChange={() => {}}
+        name={name}
+      />
     </div>
   );
 }

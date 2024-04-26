@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useFormState } from "react-dom";
 // action
 import addTransaction from "@/actions/addTransaction";
 // components
@@ -11,8 +12,10 @@ import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
 
 export default function AddExpenseForm() {
+  const [state, formAction] = useFormState(addTransaction, null);
+
   return (
-    <form className="flex flex-col gap-2" action={addTransaction}>
+    <form className="flex flex-col gap-2" action={formAction}>
       <SegmentedButton
         name="incomeExpenseCategory"
         layoutGroupId="incomeExpenses"
@@ -22,6 +25,7 @@ export default function AddExpenseForm() {
         ]}
       />
       <Input
+        name="amount"
         label="Amount"
         type="number"
         placeholder="$0.00"

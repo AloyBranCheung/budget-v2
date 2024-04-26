@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 // types
 import { MenuOptions } from "@/types/menu";

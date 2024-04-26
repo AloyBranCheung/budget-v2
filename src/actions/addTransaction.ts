@@ -1,7 +1,7 @@
 'use server'
 
-const addTransaction = async (formData: FormData) => {
-    console.log(formData)
+const addTransaction = async (currentState, formData: FormData | null) => {
+    console.log(currentState)
     return formData
 }
 
