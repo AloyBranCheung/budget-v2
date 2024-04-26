@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import { Prisma, TransactionType } from "@prisma/client";
+import Image from "next/image";
 // action
 import addTransaction from "@/actions/addTransaction";
 // components
@@ -12,20 +13,26 @@ import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
 import SingleSelect from "@/components/SingleSelect";
+import { motion } from "framer-motion";
+import Modal from "@/components/Modal";
 
 interface AddTransactionFormProps {
   categories: Prisma.CategoryGetPayload<{}>[];
   userTags: Prisma.TagGetPayload<{}>[];
+  addIcon: string;
 }
 
 export default function AddTransactionForm({
   categories,
   userTags,
+  addIcon,
 }: AddTransactionFormProps) {
   const [state, formAction] = useFormState(addTransaction, null);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <form className="flex flex-col gap-2" action={formAction}>
+    <form className="flex flex-col gap-4" action={formAction}>
       <SegmentedButton
         name="type"
         layoutGroupId="incomeExpenses"
@@ -59,6 +66,17 @@ export default function AddTransactionForm({
           label: category.name,
           value: category.id,
         }))}
+        icon={
+          <motion.button
+            onClick={() => setIsOpen(true)}
+            className="p-1 rounded-2xl"
+            type="button"
+            whileTap={{ scale: 0.95 }}
+            whileHover={{ backgroundColor: "#7c7c7c" }}
+          >
+            <Image src={addIcon} alt="add-tag-icon" width={20} height={20} />
+          </motion.button>
+        }
       />
       {/* // TODO: add add more tags */}
       <Multiselect
@@ -75,6 +93,13 @@ export default function AddTransactionForm({
       <Button type="submit" className="mt-4 bg-tertiary">
         Save
       </Button>
+      <Modal
+        modalTitle="Add Tag"
+        onClose={() => setIsOpen(false)}
+        isOpen={isOpen}
+      >
+        modal content here
+      </Modal>
     </form>
   );
 }

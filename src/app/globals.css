@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+h3 {
+  @apply font-semibold text-heading3;
+}
+
 label {
   @apply font-semibold text-body1;
 }
