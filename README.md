@@ -1,5 +1,9 @@
 # Budget v2
 
+## Figma
+
+[figma](https://www.figma.com/file/fCUCaKRes5cNjmAAd7dq7b/budget-v2?type=design&node-id=1%3A90&mode=design&t=rUTmK3ALBNcNVQaM-1)
+
 ## Getting Started
 
 1. Run `yarn install`

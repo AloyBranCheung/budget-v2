@@ -1,5 +1,5 @@
 import { ZodError } from "zod"
-const joinZodErrmsg = (errorsArr: ZodError) => {
+const joinZodErrMsg = (errorsArr: ZodError) => {
     let msg = ''
     for (const err of errorsArr.issues) {
         if (msg.length > 0) {
@@ -10,4 +10,4 @@ const joinZodErrmsg = (errorsArr: ZodError) => {
     return msg
 }
 
-export default joinZodErrmsg
+export default joinZodErrMsg

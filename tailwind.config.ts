@@ -19,6 +19,7 @@ const config: Config = {
       },
       fontSize: {
         'body1': '1.25rem',
+        'body2': '1rem',
         'body3': '0.563rem',
         'heading1': '2rem',
         'heading3': '1.5rem',
