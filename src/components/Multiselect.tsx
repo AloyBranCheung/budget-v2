@@ -8,6 +8,7 @@ interface MultiselectProps {
   name?: string;
   menuOptions: MenuOptions[];
   required?: boolean;
+  icon?: React.ReactNode;
 }
 
 export default function Multiselect({
@@ -15,12 +16,16 @@ export default function Multiselect({
   name,
   menuOptions,
   required,
+  icon,
 }: MultiselectProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={name ?? label}>{label}</label>
+      <div className="flex items-center justify-between">
+        <label htmlFor={name ?? label}>{label}</label>
+        {icon}
+      </div>
       <select
         required={required ?? true}
         size={menuOptions.length}

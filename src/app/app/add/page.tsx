@@ -13,7 +13,11 @@ export default async function AddTransactionPage() {
   const user = await getUser();
   if (!user) return <Page403 />;
 
-  const categories = await prisma.category.findMany();
+  const categories = await prisma.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
   if (!categories) return <Page500 />;
 
   const userTags = await prisma.tag.findMany({
@@ -26,6 +30,9 @@ export default async function AddTransactionPage() {
           userId: user.dbUser.id,
         },
       ],
+    },
+    orderBy: {
+      name: "asc",
     },
   });
   if (!userTags) return <Page500 />;
