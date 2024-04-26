@@ -2,7 +2,7 @@ import React from "react";
 // utils
 import IconHelper from "@/utils/IconHelper";
 // components
-import Page500 from "@/app/Page500";
+import Page500 from "@/app/error";
 import MainNavbar from "@/components/navigation/MainNavbar";
 import PageTransitionMobile from "@/animations/PageTransitionMobile";
 

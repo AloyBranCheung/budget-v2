@@ -7,7 +7,7 @@ import IconHelper from "@/utils/IconHelper";
 // components
 import AddTransactionForm from "@/containers/add-expense-page/AddTransactionForm";
 import Page403 from "@/app/Page403";
-import Page500 from "@/app/Page500";
+import Page500 from "@/app/error";
 
 export default async function AddTransactionPage() {
   const user = await getUser();
