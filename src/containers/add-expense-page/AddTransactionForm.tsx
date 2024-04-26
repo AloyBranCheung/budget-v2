@@ -15,17 +15,20 @@ import Button from "@/components/Button";
 import SingleSelect from "@/components/SingleSelect";
 import { motion } from "framer-motion";
 import Modal from "@/components/Modal";
+import BaseIconButton from "@/components/BaseIconButton";
 
 interface AddTransactionFormProps {
   categories: Prisma.CategoryGetPayload<{}>[];
   userTags: Prisma.TagGetPayload<{}>[];
   addIcon: string;
+  closeIcon: string;
 }
 
 export default function AddTransactionForm({
   categories,
   userTags,
   addIcon,
+  closeIcon,
 }: AddTransactionFormProps) {
   const [state, formAction] = useFormState(addTransaction, null);
 
@@ -67,15 +70,9 @@ export default function AddTransactionForm({
           value: category.id,
         }))}
         icon={
-          <motion.button
-            onClick={() => setIsOpen(true)}
-            className="p-1 rounded-2xl"
-            type="button"
-            whileTap={{ scale: 0.95 }}
-            whileHover={{ backgroundColor: "#7c7c7c" }}
-          >
+          <BaseIconButton onClick={() => setIsOpen(true)}>
             <Image src={addIcon} alt="add-tag-icon" width={20} height={20} />
-          </motion.button>
+          </BaseIconButton>
         }
       />
       {/* // TODO: add add more tags */}
@@ -94,6 +91,7 @@ export default function AddTransactionForm({
         Save
       </Button>
       <Modal
+        closeIcon={closeIcon}
         modalTitle="Add Tag"
         onClose={() => setIsOpen(false)}
         isOpen={isOpen}

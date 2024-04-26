@@ -33,12 +33,16 @@ export default async function AddTransactionPage() {
   const addIconb64 = await new IconHelper("add-icon.png").getIcon64();
   if (!addIconb64) return <Page500 />;
 
+  const closeIconb64 = await new IconHelper("close-icon.png").getIcon64();
+  if (!closeIconb64) return <Page500 />;
+
   return (
     <div className="flex flex-col gap-2">
       <AddTransactionForm
         categories={categories}
         userTags={userTags}
         addIcon={addIconb64}
+        closeIcon={closeIconb64}
       />
     </div>
   );

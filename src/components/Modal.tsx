@@ -1,12 +1,15 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import BaseIconButton from "./BaseIconButton";
 
 interface ModalProps {
   isOpen: boolean;
   modalTitle: string;
   onClose: () => void;
   children: React.ReactNode;
+  closeIcon: string;
 }
 
 export default function Modal({
@@ -14,6 +17,7 @@ export default function Modal({
   onClose,
   children,
   modalTitle,
+  closeIcon,
 }: ModalProps) {
   return (
     <AnimatePresence>
@@ -25,7 +29,9 @@ export default function Modal({
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
         >
           <div className="bg-primary p-4 w-full h-full flex flex-col gap-2 shadow-md">
-            <div onClick={onClose}>flex-end x icon here</div>
+            <BaseIconButton className="self-end" onClick={onClose}>
+              <Image src={closeIcon} width={20} height={20} alt="close-icon" />
+            </BaseIconButton>
             <h3>{modalTitle}</h3>
             <div>{children}</div>
           </div>
