@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useFormState } from "react-dom";
-import { TransactionType } from "@prisma/client";
+import { Prisma, TransactionType } from "@prisma/client";
 // action
 import addTransaction from "@/actions/addTransaction";
 // components
@@ -12,7 +12,15 @@ import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
 
-export default function AddExpenseForm() {
+interface AddTransactionFormProps {
+  categories: Prisma.CategoryGetPayload<{}>[];
+  userTags: Prisma.TagGetPayload<{}>[];
+}
+
+export default function AddTransactionForm({
+  categories,
+  userTags,
+}: AddTransactionFormProps) {
   const [state, formAction] = useFormState(addTransaction, null);
 
   return (
@@ -44,30 +52,20 @@ export default function AddExpenseForm() {
       <Multiselect
         label="Categories"
         name="categories"
-        menuOptions={[
-          ...new Array(5).fill(0).map((_, i) => {
-            const test = `test${i}`;
-            return {
-              id: test,
-              value: test,
-              label: test,
-            };
-          }),
-        ]}
+        menuOptions={categories.map((category) => ({
+          id: category.id,
+          label: category.name,
+          value: category.id,
+        }))}
       />
       <Multiselect
         label="Tags"
         name="tags"
-        menuOptions={[
-          ...new Array(5).fill(0).map((_, i) => {
-            const test = `test${i}`;
-            return {
-              id: test,
-              value: test,
-              label: test,
-            };
-          }),
-        ]}
+        menuOptions={userTags.map((tag) => ({
+          id: tag.id,
+          label: tag.name,
+          value: tag.id,
+        }))}
       />
       <DatePicker label="Date" name="date" />
       <TextArea label="Notes" name="notes" required={false} />

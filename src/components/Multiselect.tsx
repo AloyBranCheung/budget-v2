@@ -40,13 +40,13 @@ export default function Multiselect({
         }}
         value={selectedOptions}
       >
-        {menuOptions.map(({ id, value }) => (
+        {menuOptions.map(({ id, value, label }) => (
           <option
             className="rounded-2xl p-2 my-2 checked:bg-tertiary"
             key={id}
             value={value}
           >
-            {value}
+            {label}
           </option>
         ))}
       </select>
