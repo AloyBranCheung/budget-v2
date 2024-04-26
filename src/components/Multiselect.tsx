@@ -42,7 +42,7 @@ export default function Multiselect({
             key={id}
             value={value}
           >
-            <p className="w-full">{value}</p>
+            {value}
           </option>
         ))}
       </select>

@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
+// components
 import SegmentedButton from "@/components/SegmentedButton";
 import Input from "@/components/Input";
 import Multiselect from "@/components/Multiselect";
+import DatePicker from "@/components/DatePicker";
 
 export default function AddExpenseForm() {
   return (
@@ -35,7 +37,7 @@ export default function AddExpenseForm() {
           }),
         ]}
       />
-      <div>date</div>
+      <DatePicker label="Date" name="date" />
       <div>notes</div>
     </form>
   );
