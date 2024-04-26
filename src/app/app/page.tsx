@@ -9,6 +9,7 @@ import Page500 from "../error";
 import Page403 from "../Page403";
 import ProfileIcon from "@/components/icons/ProfileIcon";
 import Card from "@/components/Card";
+import { TransactionType } from "@prisma/client";
 
 export default async function Home() {
   const user = await getUser();
@@ -23,10 +24,13 @@ export default async function Home() {
     },
   });
 
-  const totalRemaining = transactions.reduce(
-    (acc, curr) => acc - curr.amount,
-    user.dbUser.currTotalBudget
-  );
+  const totalRemaining = transactions.reduce((acc, curr) => {
+    if (curr.type === TransactionType.Income) {
+      return acc + curr.amount;
+    } else {
+      return acc - curr.amount;
+    }
+  }, user.dbUser.currTotalBudget);
 
   return (
     <div className="flex flex-col gap-4">
