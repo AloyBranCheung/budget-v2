@@ -30,7 +30,7 @@ export default function AddTagModal({ onSuccess }: AddTagModalProps) {
   return (
     <form className="flex flex-col gap-4" action={formAction}>
       <Input label="Name" name="name" />
-      <TextArea label="Description" name="description" />
+      <TextArea label="Description" name="description" required={false} />
       {state.status === "error" && (
         <p className="text-red-500">{state.error}</p>
       )}
