@@ -6,7 +6,7 @@ const addTransaction = async (_currState: unknown, formData: FormData | null) =>
 
     const data = formDataToObj(formData);
 
-    console.log(data)
+    console.debug(data)
     // revalidate
 
     // redirect 

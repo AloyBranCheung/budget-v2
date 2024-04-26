@@ -1,3 +1,4 @@
+// https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices
 import { PrismaClient } from '@prisma/client'
 
 const prismaClientSingleton = () => {
@@ -5,7 +6,7 @@ const prismaClientSingleton = () => {
 }
 
 declare global {
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line no-unused-vars, no-var
     var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>
 }
 

@@ -17,8 +17,8 @@ import Modal from "@/components/Modal";
 import BaseIconButton from "@/components/BaseIconButton";
 
 interface AddTransactionFormProps {
-  categories: Prisma.CategoryGetPayload<{}>[];
-  userTags: Prisma.TagGetPayload<{}>[];
+  categories: Prisma.CategoryGetPayload<object>[];
+  userTags: Prisma.TagGetPayload<object>[];
   addIcon: string;
   closeIcon: string;
 }
