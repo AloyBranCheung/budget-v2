@@ -7,12 +7,14 @@ interface SegmentedButtonProps {
   layoutGroupId: string;
   menuItems: MenuOptions[];
   onChange?: (activeItem: number | string) => void;
+  name?: string;
 }
 
 export default function SegmentedButton({
   menuItems,
   layoutGroupId,
   onChange,
+  name,
 }: SegmentedButtonProps) {
   const [activeItem, setActiveItem] = useState(menuItems[0].value);
 
@@ -57,6 +59,7 @@ export default function SegmentedButton({
           );
         })}
       </LayoutGroup>
+      <input className="hidden" value={activeItem} name={name} />
     </div>
   );
 }

@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 // components
 import SegmentedButton from "@/components/SegmentedButton";
 import Input from "@/components/Input";
 import Multiselect from "@/components/Multiselect";
 import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
+import Button from "@/components/Button";
 
 export default function AddExpenseForm() {
   return (
     <form className="flex flex-col gap-2">
       <SegmentedButton
+        name="incomeExpenseCategory"
         layoutGroupId="incomeExpenses"
         menuItems={[
           { id: "Income", value: "Income", label: "Income" },
@@ -40,6 +42,9 @@ export default function AddExpenseForm() {
       />
       <DatePicker label="Date" name="date" />
       <TextArea label="Notes" name="notes" />
+      <Button type="submit" className="mt-4 bg-tertiary">
+        Save
+      </Button>
     </form>
   );
 }
