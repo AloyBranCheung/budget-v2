@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+// action
+import addTransaction from "@/actions/addTransaction";
 // components
 import SegmentedButton from "@/components/SegmentedButton";
 import Input from "@/components/Input";
@@ -10,7 +12,7 @@ import Button from "@/components/Button";
 
 export default function AddExpenseForm() {
   return (
-    <form className="flex flex-col gap-2">
+    <form className="flex flex-col gap-2" action={addTransaction}>
       <SegmentedButton
         name="incomeExpenseCategory"
         layoutGroupId="incomeExpenses"
@@ -41,7 +43,7 @@ export default function AddExpenseForm() {
         ]}
       />
       <DatePicker label="Date" name="date" />
-      <TextArea label="Notes" name="notes" />
+      <TextArea label="Notes" name="notes" required={false} />
       <Button type="submit" className="mt-4 bg-tertiary">
         Save
       </Button>
