@@ -48,6 +48,7 @@ model Transaction {
   id        String          @id @default(uuid())
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
+  name      String
   type      TransactionType
   amount    Int
   date      DateTime
