@@ -55,14 +55,26 @@ model Transaction {
   categories Category[] // implicit m2m relationship
   user       User       @relation(fields: [userId], references: [id])
   userId     String
+  tags       Tag[]
 }
 
 model Category {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String?
 
   // relationships
   transactions Transaction[] // implicit m2m relationship
+}
+
+model Tag {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String?
+
+  transactions Transaction[]
 }
