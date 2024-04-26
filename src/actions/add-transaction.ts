@@ -43,6 +43,18 @@ const addTransaction = async (_currState: GenericFormState | undefined, formData
         return { status: "error", message: null, error: "User not found." }
     }
 
+    const mostRecentPaycheck = await prisma.paycheck.findFirst({
+        orderBy: {
+            createdAt: "desc",
+        },
+        where: {
+            userId: user.dbUser.id,
+        },
+    });
+    if (!mostRecentPaycheck) {
+        return { status: "error", message: null, error: "No paycheck found." }
+    }
+
     try {
         await prisma.transaction.create({
             data: {
@@ -57,17 +69,13 @@ const addTransaction = async (_currState: GenericFormState | undefined, formData
                 },
                 tags: {
                     connect: validatedData.data.tags.map(tag => ({ id: tag }))
-                }
+                },
+                paycheckId: mostRecentPaycheck.id
             }
         })
     } catch (error) {
-        if (error instanceof Error) {
-            console.error(error)
-            return { status: "error", message: null, error: error.message }
-        } else {
-            console.error(error)
-            return { status: "error", message: null, error: "Unknown error." }
-        }
+        console.error(error)
+        return { status: "error", message: null, error: "Unknown error." }
     }
 
     redirect("/app")

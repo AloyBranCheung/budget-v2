@@ -48,6 +48,7 @@ export default async function Home() {
       <OverviewCard
         totalRemaining={totalRemaining}
         closeIconB64={closeIconB64}
+        paycheckDate={mostRecentPaycheck?.createdAt}
       />
     </div>
   );
