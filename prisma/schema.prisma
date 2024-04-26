@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// config 
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,6 +14,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// enums
+enum TransactionType {
+  Income
+  Expense
+}
+
+// models
 model Images {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -29,4 +37,23 @@ model User {
   name      String
   email     String
   image     String
+}
+
+model Transaction {
+  id         String          @id @default(uuid())
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  type       TransactionType
+  amount     Int
+  date       DateTime
+  notes      String?
+  categories Category[] // implicit m2m relationship
+}
+
+model Category {
+  id           String        @id @default(uuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  name         String
+  transactions Transaction[] // implicit m2m relationship
 }
