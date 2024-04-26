@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
+import CountUp from "react-countup";
 // components
 import Card from "@/components/Card";
 import Button from "@/components/Button";
@@ -38,7 +39,11 @@ export default function OverviewCard({
             <>
               <h4>Balance</h4>
               <div className="flex gap-2 items-end">
-                <h1>${totalRemaining.toFixed(2)}</h1>
+                <CountUp
+                  className="font-semibold text-heading1"
+                  end={totalRemaining}
+                  decimals={2}
+                />
                 <h4 className="leading-10">Remaining</h4>
               </div>
             </>

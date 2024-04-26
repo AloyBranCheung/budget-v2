@@ -45,6 +45,7 @@ export default function AddTransactionForm({
         <SegmentedButton
           name="type"
           layoutGroupId="incomeExpenses"
+          defaultValue={TransactionType.Expense}
           menuItems={[
             {
               id: TransactionType.Income,

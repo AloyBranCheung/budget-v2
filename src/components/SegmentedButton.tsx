@@ -6,6 +6,7 @@ import { MenuOptions } from "@/types/menu";
 interface SegmentedButtonProps {
   layoutGroupId: string;
   menuItems: MenuOptions[];
+  defaultValue?: MenuOptions["value"];
   // eslint-disable-next-line no-unused-vars
   onChange?: (activeItem: number | string) => void;
   name?: string;
@@ -16,8 +17,11 @@ export default function SegmentedButton({
   layoutGroupId,
   onChange,
   name,
+  defaultValue,
 }: SegmentedButtonProps) {
-  const [activeItem, setActiveItem] = useState(menuItems[0].value);
+  const [activeItem, setActiveItem] = useState(
+    defaultValue ?? menuItems[0].value
+  );
 
   useEffect(() => {
     if (onChange) {
