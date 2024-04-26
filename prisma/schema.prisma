@@ -35,8 +35,8 @@ model User {
   updatedAt DateTime @updatedAt
   // auth0 stuff 
   name      String
-  email     String
-  auth0Id   String
+  email     String   @unique
+  auth0Id   String   @unique
   image     String
 
   // relationships
