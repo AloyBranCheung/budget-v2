@@ -55,7 +55,7 @@ model Transaction {
 
   // relationships
   categories Category[] // implicit m2m relationship
-  user       User       @relation(fields: [userId], references: [id])
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   tags       Tag[]
 }
@@ -79,6 +79,6 @@ model Tag {
   description String?
 
   transactions Transaction[]
-  User         User?         @relation(fields: [userId], references: [id])
+  User         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
 }
