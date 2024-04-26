@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import { Prisma, TransactionType } from "@prisma/client";
 import Image from "next/image";
+// types
+import { GenericFormState, defaultGenericFormState } from "@/types/formstate";
 // action
 import addTransaction from "@/actions/add-transaction";
 // components
@@ -30,7 +32,10 @@ export default function AddTransactionForm({
   addIcon,
   closeIcon,
 }: AddTransactionFormProps) {
-  const [state, formAction] = useFormState(addTransaction, null);
+  const [state, formAction] = useFormState<
+    GenericFormState | undefined,
+    FormData
+  >(addTransaction, defaultGenericFormState);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -87,6 +92,9 @@ export default function AddTransactionForm({
         />
         <DatePicker label="Date" name="date" />
         <TextArea label="Notes" name="notes" required={false} />
+        {state && state.status === "error" && (
+          <p className="text-red-500">{state.error}</p>
+        )}
         <Button type="submit" className="mt-4 bg-tertiary">
           Save
         </Button>
