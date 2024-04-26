@@ -1,4 +1,5 @@
 import React from "react";
+import prisma from "@/libs/prisma";
 // auth
 import getUser from "@/auth/get-user";
 // utils
@@ -16,6 +17,17 @@ export default async function Home() {
   const profileIconB64 = await new IconHelper("profile-icon.png").getIcon64();
   if (!profileIconB64) return <Page500 />;
 
+  const transactions = await prisma.transaction.findMany({
+    where: {
+      userId: user.dbUser.id,
+    },
+  });
+
+  const totalRemaining = transactions.reduce(
+    (acc, curr) => acc - curr.amount,
+    user.dbUser.currTotalBudget
+  );
+
   return (
     <div className="flex flex-col gap-4">
       <div>
@@ -30,7 +42,7 @@ export default async function Home() {
       <Card>
         <h4>Balance</h4>
         <div className="flex gap-2 items-end">
-          <h1>$Balance</h1>
+          <h1>${totalRemaining.toFixed(2)}</h1>
           <h4 className="leading-10">Remaining</h4>
         </div>
       </Card>
