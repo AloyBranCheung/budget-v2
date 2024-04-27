@@ -5,6 +5,8 @@ import { TransactionType } from "@prisma/client";
 import getUser from "@/auth/get-user";
 // utils
 import IconHelper from "@/utils/IconHelper";
+// actions
+import expensesByCategory from "@/actions/expenses-by-category";
 // components
 import Page500 from "../error";
 import Page403 from "../Page403";
@@ -42,6 +44,10 @@ export default async function Home() {
         return acc - curr.amount;
       }
     }, mostRecentPaycheck.amount);
+
+  const pieChartData = await expensesByCategory();
+
+  console.log(pieChartData);
 
   return (
     <div className="flex flex-col gap-4">
