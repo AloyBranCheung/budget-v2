@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import pino from 'pino';
 
 const logger = pino({
@@ -56,17 +56,17 @@ const main = async () => {
         {
             name: "Needs",
             description: "E.g. rent, groceries",
-            percentageSplit: 50
+            percentageSplit: new Prisma.Decimal(.5)
         },
         {
             name: "Wants",
             description: "e.g. restaurants, movies, games",
-            percentageSplit: 30
+            percentageSplit: new Prisma.Decimal(.3)
         },
         {
             name: "Savings",
             description: "e.g. investments, savings account... make sure to plan for emergencies!",
-            percentageSplit: 20
+            percentageSplit: new Prisma.Decimal(.2)
         }
     ]
 
@@ -94,7 +94,7 @@ const main = async () => {
 
     // categories
     const categoryTasks = []
-    const createCategory = async (category: { name: string, description: string, percentageSplit: number }) => {
+    const createCategory = async (category: { name: string, description: string, percentageSplit: Prisma.Decimal }) => {
         logger.info(`Creating category ${category.name}`)
         await prisma.category.create({
             data: category

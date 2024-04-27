@@ -82,7 +82,7 @@ model Category {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   name            String
-  percentageSplit Int
+  percentageSplit Decimal
   description     String?
 
   // relationships
