@@ -55,15 +55,18 @@ const main = async () => {
     const categories = [
         {
             name: "Needs",
-            description: "E.g. rent, groceries"
+            description: "E.g. rent, groceries",
+            percentageSplit: 50
         },
         {
             name: "Wants",
-            description: "e.g. restaurants, movies, games"
+            description: "e.g. restaurants, movies, games",
+            percentageSplit: 30
         },
         {
             name: "Savings",
-            description: "e.g. investments, savings account... make sure to plan for emergencies!"
+            description: "e.g. investments, savings account... make sure to plan for emergencies!",
+            percentageSplit: 20
         }
     ]
 
@@ -91,7 +94,7 @@ const main = async () => {
 
     // categories
     const categoryTasks = []
-    const createCategory = async (category: { name: string, description: string }) => {
+    const createCategory = async (category: { name: string, description: string, percentageSplit: number }) => {
         logger.info(`Creating category ${category.name}`)
         await prisma.category.create({
             data: category
