@@ -48,7 +48,8 @@ export default function OverviewCard({
               </div>
             </>
           ) : (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center flex-col gap-4">
+              <p>Get started by adding your first paycheck</p>
               <Button
                 className="bg-tertiary text-body2 py-2"
                 onClick={() => setIsOpen(true)}

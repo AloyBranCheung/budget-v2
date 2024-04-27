@@ -9,7 +9,7 @@ export const CreateTransactionSchema = z.object({
     type: TransactionTypeEnum,
     name: z.string().min(1, "At least 1 character"),
     amount: z.coerce.number().min(0.01, "At least $0.01."),
-    category: z.array(z.string().uuid()),
+    category: z.string().uuid(),
     tags: z.array(z.string().uuid()),
     date: z.string().date(),
     notes: z.string().nullable().optional(),

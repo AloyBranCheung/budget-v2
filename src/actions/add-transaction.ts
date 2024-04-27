@@ -23,14 +23,6 @@ const addTransaction = async (_currState: GenericFormState | undefined, formData
     } else {
         return { status: 'error', message: null, error: "Tags must be in data." }
     }
-    if ('category' in data) {
-        if (!Array.isArray(data.category)) {
-            data.category = [data.category]
-        }
-    } else {
-        return { status: 'error', message: null, error: "Category must be in data." }
-    }
-
 
     const validatedData = CreateTransactionSchema.safeParse(data)
 
@@ -64,9 +56,7 @@ const addTransaction = async (_currState: GenericFormState | undefined, formData
                 type: validatedData.data.type as TransactionType,
                 notes: validatedData.data.notes,
                 userId: user.dbUser.id,
-                categories: {
-                    connect: validatedData.data.category.map((category) => ({ id: category }))
-                },
+                categoryId: validatedData.data.category,
                 tags: {
                     connect: validatedData.data.tags.map(tag => ({ id: tag }))
                 },

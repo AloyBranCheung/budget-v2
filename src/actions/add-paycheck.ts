@@ -36,6 +36,7 @@ const addPaycheck = async (currState: GenericFormState | undefined, formData: Fo
     }
 
     revalidatePath('/app')
+    revalidatePath('/app/add')
 
     return { status: "success", message: "Paycheck added successfully", error: null }
 }
