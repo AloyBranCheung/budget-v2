@@ -68,23 +68,25 @@ model Transaction {
   notes     String?
 
   // relationships
-  categories Category[] // implicit m2m relationship
-  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   tags       Tag[]
-  paycheck   Paycheck   @relation(fields: [paycheckId], references: [id])
+  paycheck   Paycheck @relation(fields: [paycheckId], references: [id])
   paycheckId String
+  Category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
 }
 
 model Category {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String
-  description String?
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  name            String
+  percentageSplit Int
+  description     String?
 
   // relationships
-  transactions Transaction[] // implicit m2m relationship
+  transactions Transaction[]
 }
 
 model Tag {
