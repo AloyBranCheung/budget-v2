@@ -10,6 +10,7 @@ import Page500 from "../error";
 import Page403 from "../Page403";
 import OverviewCard from "@/containers/home-page/OverviewCard";
 import WelcomeText from "@/containers/home-page/WelcomeText";
+import CategoryExpense from "@/containers/add-expense-page/CategoryExpense";
 
 export default async function Home() {
   const user = await getUser();
@@ -50,6 +51,7 @@ export default async function Home() {
         closeIconB64={closeIconB64}
         paycheckDate={mostRecentPaycheck?.createdAt}
       />
+      <CategoryExpense />
     </div>
   );
 }
