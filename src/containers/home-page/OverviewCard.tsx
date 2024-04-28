@@ -24,10 +24,7 @@ export default function OverviewCard({
 
   return (
     <div className="flex flex-col gap-2">
-      <h4>
-        Current Paycheck{" "}
-        {paycheckDate && `(${dayjs(paycheckDate).format("YYYY-MM-DD")})`}
-      </h4>
+      <h4>Current Paycheck</h4>
       <motion.div
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.97 }}
@@ -40,12 +37,17 @@ export default function OverviewCard({
               <h4>Balance</h4>
               <div className="flex gap-2 items-end">
                 <CountUp
+                  prefix="$ "
                   className="font-semibold text-heading1"
                   end={totalRemaining}
                   decimals={2}
                 />
                 <h4 className="leading-10">Remaining</h4>
               </div>
+              <p className="text-xs">
+                {paycheckDate &&
+                  `Since ${dayjs(paycheckDate).format("dddd, MMMM D, YYYY")}`}
+              </p>
             </>
           ) : (
             <div className="flex items-center justify-center flex-col gap-4">
