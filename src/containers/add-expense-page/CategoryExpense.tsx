@@ -20,19 +20,18 @@ export default function CategoryExpense({
   pieChartData,
   upRightArrowIconB64,
 }: CategoryExpenseProps) {
-  console.log(pieChartData);
   return (
     <div>
       <h4>Expenses by Category</h4>
-      <div className="flex items-start space-between gap-4 p-2 py-6 max-w-full overflow-x-auto">
+      <div className="flex items-start space-between gap-4 p-2 py-6 flex-wrap">
         {pieChartData &&
-          pieChartData.map(({ chartData, label, spent }, i) => (
+          pieChartData.map(({ chartData, label, spent, startingTotal }, i) => (
             <motion.div
               key={`${Math.random()}-${i}`}
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Card className="min-w-40 h-40 flex flex-col gap-2">
+              <Card className="w-40 h-40 flex flex-col gap-2">
                 <div className="w-full h-40 flex">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -67,8 +66,8 @@ export default function CategoryExpense({
                   </BaseIconButton>
                 </div>
                 <h5>{label}</h5>
-                <p>
-                  ${Math.abs(spent).toFixed(2)}{" "}
+                <p className="text-xs">
+                  ${Math.abs(spent).toFixed(2)}/${startingTotal}{" "}
                   <span className="font-medium">
                     {spent < 0 ? "saved" : "spent"}
                   </span>

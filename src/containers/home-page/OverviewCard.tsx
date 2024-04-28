@@ -10,7 +10,7 @@ import Modal from "@/components/Modal";
 import AddPaycheckModalContent from "./AddPaycheckModalContent";
 
 interface OverviewCardProps {
-  totalRemaining: number | null;
+  totalRemaining: number | null | undefined;
   closeIconB64: string;
   paycheckDate: Date | undefined;
 }

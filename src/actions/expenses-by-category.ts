@@ -7,6 +7,15 @@ import { ExpensesByCategory } from "@/types/piechart-data";
 const expensesByCategory = async () => {
     const user = await getUser();
     if (!user) return null;
+
+    const mostRecentPaycheck = await prisma.paycheck.findFirst({
+        orderBy: {
+            createdAt: "desc",
+        },
+        take: 1,
+    });
+    if (!mostRecentPaycheck) return null;
+
     const userTransactionsByCategories = await prisma.category.findMany({
         where: {
             OR: [
@@ -19,7 +28,11 @@ const expensesByCategory = async () => {
             ],
         },
         include: {
-            transactions: true,
+            transactions: {
+                where: {
+                    paycheckId: mostRecentPaycheck.id
+                }
+            },
         }
     });
     if (!userTransactionsByCategories) return null;
@@ -59,15 +72,15 @@ const expensesByCategory = async () => {
         const categoryTotalRemaining = categoryStartingTotal - transactionsTotal
 
         chartData.push({
-            name: `${categoryWithTransactions.name} Total Remaining`,
-            value: categoryTotalRemaining > categoryStartingTotal ? categoryStartingTotal : categoryTotalRemaining,
-        })
-        chartData.push({
             name: "Transactions Total",
             value: transactionsTotal < 0 ? 0 : transactionsTotal
         })
+        chartData.push({
+            name: `${categoryWithTransactions.name} Total Remaining`,
+            value: categoryTotalRemaining > categoryStartingTotal ? categoryStartingTotal : categoryTotalRemaining,
+        })
         // if transaction total < 0 then it is amount saved, if it is > 0 then it is amount spent (expenditure)
-        pieChartData.push({ chartData, label: categoryWithTransactions.name, spent: transactionsTotal })
+        pieChartData.push({ chartData, label: categoryWithTransactions.name, spent: transactionsTotal, startingTotal: categoryStartingTotal })
     }
 
     return pieChartData

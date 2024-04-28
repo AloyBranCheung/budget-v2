@@ -26,21 +26,26 @@ export default async function Home() {
   if (!profileIconB64 || !closeIconB64 || !upRightArrowIconB64)
     return <Page500 />;
 
-  const transactions = await prisma.transaction.findMany({
-    where: {
-      userId: user.dbUser.id,
-    },
-  });
-
   const mostRecentPaycheck = await prisma.paycheck.findFirst({
     orderBy: {
       createdAt: "desc",
     },
     take: 1,
   });
+  let transactions;
+
+  if (mostRecentPaycheck) {
+    transactions = await prisma.transaction.findMany({
+      where: {
+        userId: user.dbUser.id,
+        paycheckId: mostRecentPaycheck.id,
+      },
+    });
+  }
 
   const totalRemaining =
     mostRecentPaycheck &&
+    transactions &&
     transactions.reduce((acc, curr) => {
       if (curr.type === TransactionType.Income) {
         return acc + curr.amount;
