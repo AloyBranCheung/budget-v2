@@ -55,7 +55,7 @@ export default async function AddTransactionPage() {
     <div className="flex flex-col gap-2">
       {recentPaycheck ? (
         <AddTransactionForm
-          categories={categories}
+          JSONcategories={JSON.stringify(categories)}
           userTags={userTags}
           addIcon={addIconb64}
           closeIcon={closeIconb64}

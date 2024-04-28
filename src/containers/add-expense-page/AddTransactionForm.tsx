@@ -20,14 +20,14 @@ import BaseIconButton from "@/components/BaseIconButton";
 import AddTagModal from "./AddTagModal";
 
 interface AddTransactionFormProps {
-  categories: Prisma.CategoryGetPayload<object>[];
+  JSONcategories: string; // Prisma.CategoryGetPayload<object>[];
   userTags: Prisma.TagGetPayload<object>[];
   addIcon: string;
   closeIcon: string;
 }
 
 export default function AddTransactionForm({
-  categories,
+  JSONcategories,
   userTags,
   addIcon,
   closeIcon,
@@ -71,11 +71,13 @@ export default function AddTransactionForm({
         <SingleSelect
           label="Category"
           name="category"
-          menuOptions={categories.map((category) => ({
-            id: category.id,
-            label: category.name,
-            value: category.id,
-          }))}
+          menuOptions={JSON.parse(JSONcategories).map(
+            (category: Prisma.CategoryGetPayload<object>) => ({
+              id: category.id,
+              label: category.name,
+              value: category.id,
+            })
+          )}
         />
         <Multiselect
           label="Tags"
