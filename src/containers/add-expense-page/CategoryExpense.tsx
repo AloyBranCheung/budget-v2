@@ -67,7 +67,11 @@ export default function CategoryExpense({
                 </div>
                 <h5>{label}</h5>
                 <p className="text-xs">
-                  ${Math.abs(spent).toFixed(2)}/${startingTotal}{" "}
+                  $
+                  {spent < 0
+                    ? (Math.abs(spent) + startingTotal).toFixed(2)
+                    : Math.abs(spent).toFixed(2)}
+                  /${startingTotal}{" "}
                   <span className="font-medium">
                     {spent < 0 ? "saved" : "spent"}
                   </span>

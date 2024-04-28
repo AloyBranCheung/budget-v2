@@ -71,13 +71,24 @@ const expensesByCategory = async () => {
 
         const categoryTotalRemaining = categoryStartingTotal - transactionsTotal
 
+
         chartData.push({
             name: "Transactions Total",
-            value: transactionsTotal < 0 ? 0 : transactionsTotal
+            value: transactionsTotal < 0 ? 0 : transactionsTotal > categoryStartingTotal ? categoryStartingTotal : transactionsTotal
         })
+
+        let transactionTotalRemaining;
+        if (categoryTotalRemaining > categoryStartingTotal) {
+            transactionTotalRemaining = categoryStartingTotal
+        } else if (categoryTotalRemaining > 0) {
+            transactionTotalRemaining = categoryTotalRemaining
+        } else {
+            transactionTotalRemaining = 0
+        }
+
         chartData.push({
             name: `${categoryWithTransactions.name} Total Remaining`,
-            value: categoryTotalRemaining > categoryStartingTotal ? categoryStartingTotal : categoryTotalRemaining,
+            value: transactionTotalRemaining
         })
         // if transaction total < 0 then it is amount saved, if it is > 0 then it is amount spent (expenditure)
         pieChartData.push({ chartData, label: categoryWithTransactions.name, spent: transactionsTotal, startingTotal: categoryStartingTotal })
