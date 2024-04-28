@@ -1,56 +1,80 @@
 "use client";
 import React from "react";
+import Image from "next/image";
+import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { motion } from "framer-motion";
+// types
+import { ExpensesByCategory } from "@/types/piechart-data";
 // components
 import Card from "@/components/Card";
-import { PieChartData } from "@/types/piechart-data";
-import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import BaseIconButton from "@/components/BaseIconButton";
 
 const COLORS = ["#F3D0D7", "#FFEFEF"];
 
-const data01 = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-  { name: "Group E", value: 278 },
-  { name: "Group F", value: 189 },
-];
-
 interface CategoryExpenseProps {
-  pieChartData: PieChartData | null;
+  pieChartData: ExpensesByCategory[] | null;
+  upRightArrowIconB64: string;
 }
 
 export default function CategoryExpense({
   pieChartData,
+  upRightArrowIconB64,
 }: CategoryExpenseProps) {
+  console.log(pieChartData);
   return (
     <div>
       <h4>Expenses by Category</h4>
-      <div className="flex items-start space-between gap-4 p-2 max-w-full overflow-x-auto">
+      <div className="flex items-start space-between gap-4 p-2 py-6 max-w-full overflow-x-auto">
         {pieChartData &&
-          pieChartData.map((chartData, i) => (
-            <Card
+          pieChartData.map(({ chartData, label, spent }, i) => (
+            <motion.div
               key={`${Math.random()}-${i}`}
-              className="min-w-40 h-40 flex flex-col gap-2"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <div className="w-full h-40 flex">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      dataKey="value"
-                      data={data01}
-                      innerRadius={23}
-                      outerRadius={30}
-                      fill="#8884d8"
-                      cx={25}
+              <Card className="min-w-40 h-40 flex flex-col gap-2">
+                <div className="w-full h-40 flex">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        dataKey="value"
+                        data={chartData}
+                        innerRadius={23}
+                        outerRadius={30}
+                        cx={25}
+                      >
+                        {chartData.map((data, i) => (
+                          <Cell
+                            className="outline-none"
+                            key={`${data.name}-${Math.random()}`}
+                            fill={COLORS[i]}
+                            stroke="none"
+                          />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <BaseIconButton
+                    className="w-7 h-7"
+                    onClick={() => console.log("icon clicked")}
+                  >
+                    <Image
+                      src={upRightArrowIconB64}
+                      alt="icon-arrow"
+                      width={30}
+                      height={30}
                     />
-                  </PieChart>
-                </ResponsiveContainer>
-                <div>icon</div>
-              </div>
-              <div>label here</div>
-              <div>$number spent</div>
-            </Card>
+                  </BaseIconButton>
+                </div>
+                <h5>{label}</h5>
+                <p>
+                  ${Math.abs(spent).toFixed(2)}{" "}
+                  <span className="font-medium">
+                    {spent < 0 ? "saved" : "spent"}
+                  </span>
+                </p>
+              </Card>
+            </motion.div>
           ))}
       </div>
     </div>

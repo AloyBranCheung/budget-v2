@@ -2,7 +2,7 @@
 import prisma from "@/libs/prisma";
 import getUser from "@/auth/get-user";
 import { TransactionType } from "@prisma/client";
-import { PieChartData } from "@/types/piechart-data";
+import { ExpensesByCategory } from "@/types/piechart-data";
 
 const expensesByCategory = async () => {
     const user = await getUser();
@@ -42,7 +42,7 @@ const expensesByCategory = async () => {
     });
     if (!userCurrentPaycheck) return null
 
-    const pieChartData: PieChartData = [];
+    const pieChartData: ExpensesByCategory[] = [];
 
     for (const categoryWithTransactions of userTransactionsByCategories) {
         const chartData: { name: string; value: number }[] = []
@@ -66,7 +66,8 @@ const expensesByCategory = async () => {
             name: "Transactions Total",
             value: transactionsTotal < 0 ? 0 : transactionsTotal
         })
-        pieChartData.push(chartData)
+        // if transaction total < 0 then it is amount saved, if it is > 0 then it is amount spent (expenditure)
+        pieChartData.push({ chartData, label: categoryWithTransactions.name, spent: transactionsTotal })
     }
 
     return pieChartData

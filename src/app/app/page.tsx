@@ -20,7 +20,11 @@ export default async function Home() {
 
   const closeIconB64 = await new IconHelper("close-icon.png").getIcon64();
   const profileIconB64 = await new IconHelper("profile-icon.png").getIcon64();
-  if (!profileIconB64 || !closeIconB64) return <Page500 />;
+  const upRightArrowIconB64 = await new IconHelper(
+    "up-right-arrow-icon.png"
+  ).getIcon64();
+  if (!profileIconB64 || !closeIconB64 || !upRightArrowIconB64)
+    return <Page500 />;
 
   const transactions = await prisma.transaction.findMany({
     where: {
@@ -55,7 +59,10 @@ export default async function Home() {
         closeIconB64={closeIconB64}
         paycheckDate={mostRecentPaycheck?.createdAt}
       />
-      <CategoryExpense pieChartData={pieChartData} />
+      <CategoryExpense
+        pieChartData={pieChartData}
+        upRightArrowIconB64={upRightArrowIconB64}
+      />
     </div>
   );
 }
