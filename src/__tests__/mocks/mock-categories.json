@@ -1,0 +1,29 @@
+[
+  {
+    "id": "52942e81-cad8-46e3-b4c6-84925e8854bf",
+    "createdAt": "2024-04-27T13:25:01.045Z",
+    "updatedAt": "2024-04-27T13:25:01.045Z",
+    "name": "Needs",
+    "percentageSplit": "0.5",
+    "description": "E.g. rent, groceries",
+    "userId": null
+  },
+  {
+    "id": "6d136658-c7b5-42a3-b701-cb0588838436",
+    "createdAt": "2024-04-27T13:25:01.062Z",
+    "updatedAt": "2024-04-27T13:25:01.062Z",
+    "name": "Savings",
+    "percentageSplit": "0.2",
+    "description": "e.g. investments, savings account... make sure to plan for emergencies!",
+    "userId": null
+  },
+  {
+    "id": "729cc6e4-2f63-4e0f-8102-b2b83a4a208b",
+    "createdAt": "2024-04-27T13:25:01.047Z",
+    "updatedAt": "2024-04-27T13:25:01.047Z",
+    "name": "Wants",
+    "percentageSplit": "0.3",
+    "description": "e.g. restaurants, movies, games",
+    "userId": null
+  }
+]
