@@ -2,6 +2,7 @@
 import prisma from "@/libs/prisma";
 import getUser from "@/auth/get-user";
 import { TransactionType } from "@prisma/client";
+import { PieChartData } from "@/types/piechart-data";
 
 const expensesByCategory = async () => {
     const user = await getUser();
@@ -41,7 +42,7 @@ const expensesByCategory = async () => {
     });
     if (!userCurrentPaycheck) return null
 
-    const pieChartData: { name: string; value: number }[][] = [];
+    const pieChartData: PieChartData = [];
 
     for (const categoryWithTransactions of userTransactionsByCategories) {
         const chartData: { name: string; value: number }[] = []

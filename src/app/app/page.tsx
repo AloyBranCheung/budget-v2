@@ -47,8 +47,6 @@ export default async function Home() {
 
   const pieChartData = await expensesByCategory();
 
-  console.log(pieChartData);
-
   return (
     <div className="flex flex-col gap-4">
       <WelcomeText profileIconB64={profileIconB64} name={user.dbUser.name} />
@@ -57,7 +55,7 @@ export default async function Home() {
         closeIconB64={closeIconB64}
         paycheckDate={mostRecentPaycheck?.createdAt}
       />
-      <CategoryExpense />
+      <CategoryExpense pieChartData={pieChartData} />
     </div>
   );
 }
