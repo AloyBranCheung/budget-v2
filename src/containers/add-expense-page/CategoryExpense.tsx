@@ -31,7 +31,7 @@ export default function CategoryExpense({
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Card className="w-40 h-40 flex flex-col gap-2">
+              <Card className="w-40 h-40 flex flex-col gap-2 cursor-pointer">
                 <div className="w-full h-40 flex">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
