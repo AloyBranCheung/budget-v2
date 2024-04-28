@@ -36,3 +36,5 @@ npx tsx ./prisma/seeds/20240425225318-add-static-categories.ts
 npx tsx ./prisma/seeds/20240426082801-add-close-icon.ts
 
 npx tsx ./prisma/seeds/20240426141945-add-profile-icon.ts
+
+npx tsx ./prisma/seeds/20240427203855-add-arrow-icon.ts
