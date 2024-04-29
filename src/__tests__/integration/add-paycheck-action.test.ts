@@ -55,5 +55,15 @@ describe("test add-paycheck server action", () => {
             message: 'Paycheck added successfully',
             error: null
         })
+
+        const newPaycheck = await prisma.paycheck.findMany({
+            where: {
+                userId: user.id
+            }
+        })
+
+        expect(newPaycheck).toHaveLength(1)
+        expect(newPaycheck).not.toBeNull()
+        expect(newPaycheck[0].amount).toBe(123)
     })
 });

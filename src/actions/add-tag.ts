@@ -34,7 +34,8 @@ const addTag = async (_currState: GenericFormState, formData: FormData): Promise
         return { status: "success", message: "Success", error: null }
     } catch (error) {
         if (error instanceof Error) {
-            return { status: "error", message: "Error", error: error.message }
+            console.error(error)
+            return { status: "error", message: "Error", error: "Something went wrong" }
         } else {
             console.error(error)
             return { status: "error", message: "Oops, something went wrong", error: "Unknown error." }
