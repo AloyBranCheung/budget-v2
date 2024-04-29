@@ -1,20 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@/__tests__/e2e/fixtures/base-fixture'
 
-test('has title', async ({ page }) => {
-    await page.goto('https://playwright.dev/');
+test.describe("test user auth flow to adding paycheck to adding transaction to logging out", () => {
+    test('should login, add paycheck, add transaction and logout', async ({ page, loginPage, userCredentials }) => {
+        await loginPage.navToLogin()
+        await loginPage.inputLoginCredentials(userCredentials)
 
-    // Expect a title "to contain" a substring.
-    await expect(page).toHaveTitle(/Playwright/);
-});
+        expect(page.getByRole('heading', { name: userCredentials.email }))
+    })
+})
 
-test('get started link', async ({ page }) => {
-    await page.goto('https://playwright.dev/');
-
-    // Click the get started link.
-    await page.getByRole('link', { name: 'Get started' }).click();
-
-    // Expects page to have a heading with the name of Installation.
-    await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-
-    console.log('helloworld')
-});
