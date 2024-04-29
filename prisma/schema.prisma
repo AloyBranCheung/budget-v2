@@ -72,7 +72,7 @@ model Transaction {
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   tags       Tag[]
-  paycheck   Paycheck @relation(fields: [paycheckId], references: [id])
+  paycheck   Paycheck @relation(fields: [paycheckId], references: [id], onDelete: Cascade)
   paycheckId String
   Category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
