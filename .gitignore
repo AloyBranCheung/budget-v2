@@ -41,3 +41,7 @@ databases*
 
 # .vscode
 .vscode*
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
