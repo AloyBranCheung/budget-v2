@@ -67,7 +67,8 @@ const expensesByCategory = async () => {
                 transactionsTotal -= transaction.amount
             }
         }
-        const categoryStartingTotal = (userCurrentPaycheck.amount * categoryWithTransactions.percentageSplit.toNumber())
+        // https://stackoverflow.com/questions/11832914/how-to-round-to-at-most-2-decimal-places-if-necessary
+        const categoryStartingTotal = Math.round(((userCurrentPaycheck.amount * categoryWithTransactions.percentageSplit.toNumber()) + Number.EPSILON) * 100) / 100
 
         const categoryTotalRemaining = categoryStartingTotal - transactionsTotal
 

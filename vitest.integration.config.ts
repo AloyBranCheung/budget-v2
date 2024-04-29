@@ -11,7 +11,12 @@ export default defineConfig({
         ],
         setupFiles: [
             'src/__tests__/integration/setups/setup.ts'
-        ]
+        ],
+        poolOptions: {
+            threads: {
+                singleThread: true
+            }
+        }
     },
     resolve: {
         alias: {
