@@ -48,6 +48,10 @@ describe("test add-paycheck server action", () => {
 
         mockGetUser.mockResolvedValue({ dbUser: user })
 
+        const randomAmount = Math.floor(Math.random() * 1000)
+        validFormData.delete('amount')
+        validFormData.append('amount', randomAmount.toString())
+
         const result = await addPaycheck(defaultGenericFormState, validFormData)
 
         expect(result).toEqual({
@@ -58,12 +62,13 @@ describe("test add-paycheck server action", () => {
 
         const newPaycheck = await prisma.paycheck.findMany({
             where: {
-                userId: user.id
+                userId: user.id,
+                amount: randomAmount
             }
         })
 
         expect(newPaycheck).toHaveLength(1)
         expect(newPaycheck).not.toBeNull()
-        expect(newPaycheck[0].amount).toBe(123)
+        expect(newPaycheck[0].amount).toBe(randomAmount)
     })
 });
