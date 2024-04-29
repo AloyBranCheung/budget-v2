@@ -32,3 +32,8 @@ for `deployed` environment e.g. `tst` will need to have an auth0 post user regis
 
 - `filenames` are `kebab-cased`
 - `.sh` scripts are `snake_cased`
+
+## Testing
+
+- For integration tests setup `.env.test` (copy of `.env.local`) except change the connection URL
+- add `--run` for non-watch mode

@@ -13,7 +13,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:unit": "vitest"
+    "test:unit": "vitest",
+    "test:int": "bash ./scripts/test_integration.sh"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
