@@ -6,6 +6,7 @@ test.describe("test user auth flow to adding paycheck to adding transaction to l
         await loginPage.inputLoginCredentials(userCredentials)
 
         expect(page.getByRole('heading', { name: userCredentials.email }))
+        expect(page.getByRole('heading', { name: 'Welcome,' }))
     })
 })
 

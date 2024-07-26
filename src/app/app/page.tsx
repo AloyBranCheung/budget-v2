@@ -64,10 +64,12 @@ export default async function Home() {
         closeIconB64={closeIconB64}
         paycheckDate={mostRecentPaycheck?.createdAt}
       />
-      <CategoryExpense
-        pieChartData={pieChartData}
-        upRightArrowIconB64={upRightArrowIconB64}
-      />
+      {mostRecentPaycheck && (
+        <CategoryExpense
+          pieChartData={pieChartData}
+          upRightArrowIconB64={upRightArrowIconB64}
+        />
+      )}
     </div>
   );
 }

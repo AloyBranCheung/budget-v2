@@ -24,7 +24,7 @@ export default function OverviewCard({
 
   return (
     <div className="flex flex-col gap-2">
-      <h4>Current Paycheck</h4>
+      {paycheckDate && <h4>Current Paycheck</h4>}
       <motion.div
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.97 }}
