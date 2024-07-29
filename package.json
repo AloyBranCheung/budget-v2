@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "docker compose -f docker-compose.yml up -d --build && next dev",
+    "dev:next": "next dev", 
+    "dc:db": "docker compose up local-db -d --build",
     "docker:stop": "docker compose -f docker-compose.yml down",
     "migrate:data:create": "dotenv -e .env.local -- ./scripts/create_static_data_migration.sh",
     "migrate:data": "dotenv -e .env.local -- ./scripts/migrate.sh",

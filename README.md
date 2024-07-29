@@ -7,6 +7,7 @@
 ## Getting Started
 
 1. Run `yarn install`
+2. Setup `.env.local` per `.env.local.example`
 2. Run `yarn dev`
 3. Run `yarn migrate:dev`
 4. Run `yarn migrate:data`
