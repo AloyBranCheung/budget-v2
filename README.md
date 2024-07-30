@@ -8,9 +8,9 @@
 
 1. Run `yarn install`
 2. Setup `.env.local` per `.env.local.example`
-2. Run `yarn dev`
-3. Run `yarn migrate:dev`
-4. Run `yarn migrate:data`
+3. Run `yarn dev`
+4. Run `yarn migrate:dev`
+5. Run `yarn migrate:data`
 
 To stop databases run `yarn docker:stop`
 
@@ -36,5 +36,6 @@ for `deployed` environment e.g. `tst` will need to have an auth0 post user regis
 
 ## Testing
 
-- For integration tests setup `.env.test` (copy of `.env.local`) except change the connection URL
+- For integration tests setup `.env.test` (copy of `.env.local`) except change the connection URL to `test-db`
+- Make sure to run `export NODE_ENV=test`[link](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#environment-variable-load-order)
 - add `--run` for non-watch mode
