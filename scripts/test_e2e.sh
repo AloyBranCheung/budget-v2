@@ -12,4 +12,6 @@ DIR="$(cd "$(dirname "$0")" && pwd)"
 
 source $DIR/setup_testdb.sh
 
-npx playwright test
+dotenv -e .env.test -- npx playwright test
+
+yarn dc:stop test-db

@@ -49,6 +49,7 @@ export default function MainNavbar({
           b64Str={addIconBase64}
           width={40}
           height={40}
+          label="add"
         />
         <NavbarIcon
           targetPath="/app/statistics"
