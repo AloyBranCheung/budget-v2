@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimationProps } from "framer-motion";
 
 export default function PageTransitionMobile() {
@@ -13,7 +14,7 @@ export default function PageTransitionMobile() {
       top: [0, "100%"],
     },
   };
-  return (
+  return createPortal(
     <div className="fixed h-screen w-screen pointer-events-none z-50">
       <div className="flex w-screen h-full relative z-50">
         <motion.div
@@ -37,6 +38,7 @@ export default function PageTransitionMobile() {
           />
         ))}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

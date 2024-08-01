@@ -31,7 +31,7 @@ export default function OverviewCard({
         className="cursor-pointer"
         onClick={() => setIsOpen(true)}
       >
-        <Card>
+        <Card className="w-max">
           {totalRemaining ? (
             <>
               <h4>Balance</h4>

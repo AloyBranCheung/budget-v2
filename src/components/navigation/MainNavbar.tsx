@@ -35,7 +35,7 @@ export default function MainNavbar({
       initial="initial"
       animate="animate"
       transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1] }}
-      className="w-full fixed px-6 z-50"
+      className="w-full fixed px-6 z-50 container"
     >
       <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between shadow-md">
         <NavbarIcon targetPath="/app" b64Str={homeIconBase64} label="Home" />

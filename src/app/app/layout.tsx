@@ -16,9 +16,9 @@ export default async function AppLayout({ children }: AppLayoutProps) {
   if (!session) return <Page403 />;
 
   return (
-    <div className="bg-primary relative min-h-screen pb-40">
+    <div id="portal-animation" className="bg-primary relative min-h-screen">
       <Container>
-        <div className="h-full">{children}</div>
+        <div className="h-full w-full">{children}</div>
       </Container>
     </div>
   );
