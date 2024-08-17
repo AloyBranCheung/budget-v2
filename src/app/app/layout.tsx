@@ -4,9 +4,6 @@ import { getServerSession } from "next-auth";
 // pages
 import Page403 from "../Page403";
 
-// components
-import Container from "@/components/Container";
-
 interface AppLayoutProps {
   children: React.ReactNode;
 }
@@ -17,9 +14,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div id="portal-animation" className="bg-primary relative min-h-screen">
-      <Container>
-        <div className="h-full w-full">{children}</div>
-      </Container>
+      <div className="h-full w-full">{children}</div>
     </div>
   );
 }

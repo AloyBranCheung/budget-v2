@@ -6,6 +6,9 @@ import Page500 from "@/app/error";
 import MainNavbar from "@/components/navigation/MainNavbar";
 import PageTransitionMobile from "@/animations/PageTransitionMobile";
 
+// components
+import Container from "@/components/Container";
+
 interface RootTemplateProps {
   children: React.ReactNode;
 }
@@ -40,16 +43,18 @@ export default async function RootTemplate({ children }: RootTemplateProps) {
   return (
     <div className="h-screen">
       <PageTransitionMobile />
-      <div className="px-4 pt-8 h-full">{children}</div>
-      <MainNavbar
-        {...{
-          homeIconBase64,
-          addIconBase64,
-          strategyIconBase64,
-          goalIconBase64,
-          graphIconBase64,
-        }}
-      />
+      <Container>
+        <div className="px-4 pt-8 h-full">{children}</div>
+        <MainNavbar
+          {...{
+            homeIconBase64,
+            addIconBase64,
+            strategyIconBase64,
+            goalIconBase64,
+            graphIconBase64,
+          }}
+        />
+      </Container>
     </div>
   );
 }
