@@ -50,12 +50,13 @@ jobs:
 
           token=$(echo $response | jq -r '.access_token')
 
-          echo "AUTH0_TMP_API_TOKEN=${token}" >> $GITHUB_ENV
+          export AUTH0_TMP_API_TOKEN=$token
 
           echo "Migrating users from auth0 db to local db"
           npx tsx ./prisma/seeds/migrate-users.ts
 
           echo "Migrating other static data to db"
-          ./migrate.sh
+          chmod +x ./scripts/migrate.sh
+          ./scripts/migrate.sh
       - name: Integration Test
         run: vitest -c vitest.integration.config.ts --run
