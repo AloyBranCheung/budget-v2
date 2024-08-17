@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgresql://local:local@localhost:6543/local
+
+      TZ: UTC
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
