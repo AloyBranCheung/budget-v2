@@ -35,8 +35,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - name: Install all dependencies
-        run: yarn install
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
       - name: Install jq
         uses: dcarbone/install-jq-action@v2.1.0
       - name: Build + Generate API Client
@@ -65,4 +65,4 @@ jobs:
           chmod +x ./scripts/migrate.sh
           ./scripts/migrate.sh
       - name: Integration Test
-        run: vitest -c vitest.integration.config.ts --run
+        run: yarn vitest -c vitest.integration.config.ts --run
