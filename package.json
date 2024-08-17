@@ -12,7 +12,7 @@
     "migrate:dev": "dotenv -e .env.local -- yarn prisma migrate dev",
     "migrate:reset": "dotenv -e .env.local -- yarn prisma migrate reset && yarn migrate:data",
     "psql:local": "psql -U local -h localhost -p 5432 local",
-    "build": "next build",
+    "build": "yarn prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "test:unit": "vitest",

@@ -1,0 +1,45 @@
+name: Prisma Migrate Deploy
+on:
+  push:
+    branches: [main, master]
+jobs:
+  Prisma-Migrate-Deploy:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      AUTH0_SECRET: ${{ secrets.AUTH0_SECRET }}
+      AUTH0_BASE_URL: http://localhost:3000
+      AUTH0_ISSUER_BASE_URL: ${{ secrets.AUTH0_ISSUER_BASE_URL }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+
+      AUTH0_MANAGEMENT_API_CLIENT_ID: ${{ secrets.AUTH0_MANAGEMENT_API_CLIENT_ID }}
+      AUTH0_MANAGEMENT_API_CLIENT_SECRET: ${{ secrets.AUTH0_MANAGEMENT_API_CLIENT_SECRET }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Prisma Migrate Deploy
+        run: yarn prisma migrate deploy
+      - name: Seed DB
+        run: |
+          echo "Grabbing Auth0 Management API token"
+
+          response=$(curl --request POST \
+          --url $AUTH0_ISSUER_BASE_URL/oauth/token \
+          --header 'content-type: application/json' \
+          --data "{\"client_id\":\"$AUTH0_MANAGEMENT_API_CLIENT_ID\",\"client_secret\":\"$AUTH0_MANAGEMENT_API_CLIENT_SECRET\",\"audience\":\"https://dev-uw0vq8v32kjv4k1a.us.auth0.com/api/v2/\",\"grant_type\":\"client_credentials\"}")
+
+          token=$(echo $response | jq -r '.access_token')
+
+          export AUTH0_TMP_API_TOKEN=$token
+
+          echo "Migrating users from auth0 db to local db"
+          npx tsx ./prisma/seeds/migrate-users.ts
+
+          echo "Migrating other static data to db"
+          ./migrate.sh
