@@ -35,10 +35,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Install vitest
-        run: yarn add vitest vitest-mock-extended
+      - name: Install all dependencies
+        run: yarn install
       - name: Install jq
         uses: dcarbone/install-jq-action@v2.1.0
       - name: Build + Generate API Client
