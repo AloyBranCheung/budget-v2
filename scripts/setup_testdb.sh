@@ -18,7 +18,7 @@ docker compose -f docker-compose.yml up test-db -d --build
 echo '🟡 - Waiting for database to be ready...'
 $DIR/wait_for_it.sh "${DATABASE_URL}" -- echo '🟢 - Database ready!' 
 
-yarn prisma migrate dev
+yarn prisma migrate deploy
 
 # migrate users and static data 
 $DIR/migrate.sh

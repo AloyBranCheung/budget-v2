@@ -17,12 +17,12 @@ export default class LoginPage {
     }
 
     public async inputLoginCredentials({ email, pass }: { email: string, pass: string }) {
-        const emailAddressField = await this.page.getByLabel('Email address*')
+        const emailAddressField = await this.page.getByLabel('Email address')
         await emailAddressField.click()
         await emailAddressField.fill(email)
         await this.page.getByRole('button', { name: 'Continue' }).click()
 
-        const passField = await this.page.getByLabel('Password*')
+        const passField = await this.page.getByLabel('Password')
         await passField.click()
         await passField.fill(pass)
 

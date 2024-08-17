@@ -1,5 +1,7 @@
 const formDataToObj = (formData: FormData) => {
-    const obj: { [key: string]: unknown } = {}
+    // type unknown throws build error 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const obj: { [key: string]: any } = {}
     for (const [key, value] of formData) {
         if (key.startsWith('$')) continue
         if (!(key in obj)) {

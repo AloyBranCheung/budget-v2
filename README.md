@@ -39,3 +39,6 @@ for `deployed` environment e.g. `tst` will need to have an auth0 post user regis
 - For integration tests setup `.env.test` (copy of `.env.local`) except change the connection URL to `test-db`
 - Make sure to run `export NODE_ENV=test`[link](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#environment-variable-load-order) to use the `.env.test` file
 - add `--run` for non-watch mode
+- test debugging
+  - ` npx playwright test example.spec.ts:10 --project=chromium --debug`
+  - [docs here](https://playwright.dev/docs/debug)
