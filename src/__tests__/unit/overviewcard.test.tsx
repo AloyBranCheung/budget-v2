@@ -26,8 +26,6 @@ describe("test OverviewCard component", () => {
       />
     );
 
-    screen.debug();
-
     expect(screen.queryByText("$ 1,000.00")).not.toBeNull();
     expect(screen.queryByText("Since Tuesday, April 23, 2024")).not.toBeNull();
   });

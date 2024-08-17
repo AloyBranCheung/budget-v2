@@ -50,7 +50,7 @@ jobs:
 
           token=$(echo $response | jq -r '.access_token')
 
-          export AUTH0_TMP_API_TOKEN=$token
+          echo "AUTH0_TMP_API_TOKEN=${token}" >> $GITHUB_ENV
 
           echo "Migrating users from auth0 db to local db"
           npx tsx ./prisma/seeds/migrate-users.ts
