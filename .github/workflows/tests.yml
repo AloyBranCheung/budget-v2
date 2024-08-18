@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgresql://local:local@localhost:6543/local
-      DIRECT_URL: ${{ secrets.DIRECT_URL }}
+      DIRECT_URL: postgresql://local:local@localhost:6543/local
       LOCAL_ENV: false
 
       AUTH0_ISSUER_BASE_URL: ${{ secrets.AUTH0_ISSUER_BASE_URL }}
