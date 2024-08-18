@@ -43,4 +43,5 @@ jobs:
           npx tsx ./prisma/seeds/migrate-users.ts
 
           echo "Migrating other static data to db"
-          ./migrate.sh
+          chmod +x ./scripts/migrate.sh
+          ./scripts/migrate.sh
