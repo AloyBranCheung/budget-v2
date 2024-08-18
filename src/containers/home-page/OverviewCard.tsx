@@ -31,7 +31,7 @@ export default function OverviewCard({
         className="cursor-pointer"
         onClick={() => setIsOpen(true)}
       >
-        <Card className="w-max">
+        <Card className={`${paycheckDate ? "w-max" : "w-full"}`}>
           {totalRemaining ? (
             <>
               <h4>Balance</h4>
