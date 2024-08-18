@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgresql://local:local@localhost:6543/local
+      DIRECT_URL: ${{ secrets.DIRECT_URL }}
       NEXT_PUBLIC_BASE_URL: http://localhost:3000
 
       LOCAL_ENV: false
