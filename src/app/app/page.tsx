@@ -1,8 +1,8 @@
 import React from "react";
-import prisma from "@/libs/prisma";
-import { TransactionType } from "@prisma/client";
 // auth
 import getUser from "@/auth/get-user";
+// actions
+import getMostRecentPaycheck from "@/actions/most-recent-paycheck";
 // utils
 import IconHelper from "@/utils/IconHelper";
 // actions
@@ -13,6 +13,7 @@ import Page403 from "../Page403";
 import OverviewCard from "@/containers/home-page/OverviewCard";
 import WelcomeText from "@/containers/home-page/WelcomeText";
 import CategoryExpense from "@/containers/add-expense-page/CategoryExpense";
+import TodaysExpenses from "@/containers/todays-expenses/TodaysExpenses";
 
 export default async function Home() {
   const user = await getUser();
@@ -23,36 +24,13 @@ export default async function Home() {
   const upRightArrowIconB64 = await new IconHelper(
     "up-right-arrow-icon.png"
   ).getIcon64();
+
   if (!profileIconB64 || !closeIconB64 || !upRightArrowIconB64)
     return <Page500 />;
 
-  const mostRecentPaycheck = await prisma.paycheck.findFirst({
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 1,
-  });
-  let transactions;
-
-  if (mostRecentPaycheck) {
-    transactions = await prisma.transaction.findMany({
-      where: {
-        userId: user.dbUser.id,
-        paycheckId: mostRecentPaycheck.id,
-      },
-    });
-  }
-
-  const totalRemaining =
-    mostRecentPaycheck &&
-    transactions &&
-    transactions.reduce((acc, curr) => {
-      if (curr.type === TransactionType.Income) {
-        return acc + curr.amount;
-      } else {
-        return acc - curr.amount;
-      }
-    }, mostRecentPaycheck.amount);
+  const { mostRecentPaycheck, totalRemaining } = await getMostRecentPaycheck(
+    user
+  );
 
   const pieChartData = await expensesByCategory();
 
@@ -70,6 +48,7 @@ export default async function Home() {
           upRightArrowIconB64={upRightArrowIconB64}
         />
       )}
+      {mostRecentPaycheck && <TodaysExpenses />}
     </div>
   );
 }
