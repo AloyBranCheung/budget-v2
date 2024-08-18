@@ -27,9 +27,12 @@ const main = async () => {
         logger.info('Querying Auth0 User DB...')
         const res = await axios.request(options)
         if (!res) throw new Error("No response found from Auth0.")
-        // for now leave `budgetv2${process.env.LOCAL_ENV ? '' : '-tst-'}user-pass` since it's a personal project and i probably won't have other environments
+
+        // filter for particular environment's user db
+        // for now leave `budgetv2${process.env.LOCAL_ENV ? (JSON.parse(process.env.LOCAL_ENV) ? '-' : '-tst-') : ''}user-pass` since it's a personal project and i probably won't have other environments
         const budgetv2Users = res.data.filter((usr: Record<string, string>) => Array.isArray(usr.identities) && usr.identities.some((identity) => identity.connection === `budgetv2${process.env.LOCAL_ENV ? (JSON.parse(process.env.LOCAL_ENV) ? '-' : '-tst-') : ''}user-pass`))
         const users = budgetv2Users.map((usr: Record<string, string>) => ({ name: usr.name, email: usr.email, auth0Id: usr.user_id, image: usr.picture }))
+
         logger.info('Adding Users to DB...')
         await prisma.user.createMany({
             data: users,
