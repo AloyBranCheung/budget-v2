@@ -1,7 +1,8 @@
 import { getServerSession } from "next-auth";
 import prisma from "@/libs/prisma";
+import { GetUserType } from "@/types/user";
 
-const getUser = async () => {
+const getUser = async (): Promise<GetUserType> => {
     const session = await getServerSession();
     if (!session || !session.user?.email) return null
 
