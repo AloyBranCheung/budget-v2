@@ -41,7 +41,7 @@ export default async function RootTemplate({ children }: RootTemplateProps) {
   }
 
   return (
-    <div className="h-screen">
+    <div>
       <PageTransitionMobile />
       <Container>
         <div className="px-4 pt-8 h-full">{children}</div>
