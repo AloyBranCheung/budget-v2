@@ -26,6 +26,7 @@ const config: Config = {
       },
       textColor: {
         'placeholder': '#a1a8b2',
+        'error': 'red',
       }
     },
   },
