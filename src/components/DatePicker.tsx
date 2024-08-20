@@ -10,6 +10,8 @@ interface DatePickerProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   value?: string;
   className?: ClassNameValue;
+  inputClassName?: ClassNameValue;
+  isDateTime?: boolean;
 }
 
 export default function DatePicker({
@@ -19,9 +21,13 @@ export default function DatePicker({
   onChange,
   value,
   className,
+  inputClassName,
+  isDateTime,
 }: DatePickerProps) {
   const [date, setDate] = useState<string>(
-    dayjs(new Date()).format("YYYY-MM-DD")
+    isDateTime
+      ? dayjs().format("YYYY-MM-DDTHH:mm")
+      : dayjs(new Date()).format("YYYY-MM-DD")
   );
 
   return (
@@ -36,10 +42,13 @@ export default function DatePicker({
           })
         }
         value={value ?? date}
-        type="date"
+        type={isDateTime ? "datetime-local" : "date"}
         id={name}
         name={name}
-        className="p-4 w-full bg-secondary rounded-2xl shadow-md outline-none border-none cursor-pointer"
+        className={twMerge(
+          "p-4 w-full bg-secondary rounded-2xl shadow-md outline-none border-none cursor-pointer",
+          inputClassName
+        )}
       />
     </div>
   );

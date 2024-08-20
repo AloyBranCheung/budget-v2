@@ -93,7 +93,7 @@ export default function AddTransactionForm({
             </BaseIconButton>
           }
         />
-        <DatePicker label="Date" name="date" />
+        <DatePicker label="Date" name="date" isDateTime />
         <TextArea label="Notes" name="notes" required={false} />
         {state && state.status === "error" && (
           <p className="text-red-500">{state.error}</p>

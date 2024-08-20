@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from "@/libs/prisma"
+import dayjs from "dayjs"
 
 interface GetTransactionsFilteredParams {
     toDate: string
@@ -8,33 +9,33 @@ interface GetTransactionsFilteredParams {
 }
 
 const getTransactionsFiltered = async ({ toDate, fromDate }: GetTransactionsFilteredParams) => {
-    console.log({ toDate, fromDate })
     try {
         const transactions = await prisma.transaction.findMany({
             include: {
                 tags: {
                     include: {
-                        image: {
-                            select: {
-                                name: true,
-                            }
-                        }
+                        image: true
                     }
                 }
             },
             where: {
                 date: {
-                    gte: fromDate,
-                    lte: toDate,
+                    gte: dayjs(fromDate).startOf('day').toISOString(),
+                    lte: dayjs(toDate).startOf('day').add(1, 'day').toISOString(),
                 }
             },
             orderBy: {
                 date: 'desc'
             }
         });
-        return transactions
+
+        // cannot send bytea over server action
+        // https://stackoverflow.com/questions/77091418/warning-only-plain-objects-can-be-passed-to-client-components-from-server-compo
+        return JSON.stringify(transactions)
     } catch (error) {
-        return { message: "Error fetching transactions.", isError: true, data: null }
+        // cannot send bytea over server action
+        // https://stackoverflow.com/questions/77091418/warning-only-plain-objects-can-be-passed-to-client-components-from-server-compo
+        return JSON.stringify({ message: "Error fetching transactions.", isError: true, data: null })
     }
 }
 
