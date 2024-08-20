@@ -13,7 +13,7 @@ import Page403 from "../Page403";
 import OverviewCard from "@/containers/home-page/OverviewCard";
 import WelcomeText from "@/containers/home-page/WelcomeText";
 import CategoryExpense from "@/containers/add-expense-page/CategoryExpense";
-import TodaysExpenses from "@/containers/todays-expenses/TodaysExpenses";
+import TodaysExpenses from "@/containers/home-page/TodaysExpenses";
 
 export default async function Home() {
   const user = await getUser();

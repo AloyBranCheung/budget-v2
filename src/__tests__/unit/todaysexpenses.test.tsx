@@ -5,7 +5,7 @@ import { TransactionType } from "@prisma/client";
 import mockIcon from "../mocks/mock-icon";
 import mockUseAxios from "@/hooks/__mocks__/useAxios";
 // test this
-import TodaysExpenses from "@/containers/todays-expenses/TodaysExpenses";
+import TodaysExpenses from "@/containers/home-page/TodaysExpenses";
 
 vi.mock("@/hooks/useAxios");
 vi.mock("react-dom", () => ({
