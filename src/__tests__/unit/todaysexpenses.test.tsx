@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { TransactionType } from "@prisma/client";
 // mocks
-import mockIcon from "../mocks/mock-icon";
+import mockIcon, { binaryUtil } from "../mocks/mock-icon";
 import mockUseAxios from "@/hooks/__mocks__/useAxios";
 // test this
 import TodaysExpenses from "@/containers/home-page/TodaysExpenses";
@@ -42,7 +42,7 @@ describe("test TodaysExpenses component", () => {
     });
     render(<TodaysExpenses icons={{ borderAllIconB64: mockIcon }} />);
 
-    expect(screen.getByText("Loading...")).toBeDefined();
+    expect(screen.getByTestId("loading-skeleton")).toBeDefined();
   });
 
   it("should render -amount for expenses and +amount for income", () => {
@@ -59,6 +59,11 @@ describe("test TodaysExpenses component", () => {
         userId: "",
         paycheckId: "",
         categoryId: "",
+        tags: [
+          {
+            image: { bytes: binaryUtil.getBinary() },
+          },
+        ],
       })),
       isLoading: false,
       isError: false,
@@ -68,11 +73,11 @@ describe("test TodaysExpenses component", () => {
 
     expect(screen.getByText("name-0")).toBeDefined();
     expect(screen.getByText("name-1")).toBeDefined();
-    expect(screen.getByText("+$100")).toBeDefined();
-    expect(screen.getByText("-$100")).toBeDefined();
+    expect(screen.getByText("+$100.00")).toBeDefined();
+    expect(screen.getByText("-$100.00")).toBeDefined();
   });
 
-  it("should render get started button", () => {
+  it("should render add an expense button", () => {
     mockUseAxios.mockReturnValue({
       data: [],
       isLoading: false,
@@ -81,7 +86,7 @@ describe("test TodaysExpenses component", () => {
 
     render(<TodaysExpenses icons={{ borderAllIconB64: mockIcon }} />);
 
-    expect(screen.getByText("Get Started"));
+    expect(screen.getByText("Add an Expense"));
   });
 
   it("should render error message", () => {

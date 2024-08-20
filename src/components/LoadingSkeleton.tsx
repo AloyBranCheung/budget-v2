@@ -8,6 +8,7 @@ interface LoadingSkeletonProps {
 export default function LoadingSkeleton({ className }: LoadingSkeletonProps) {
   return (
     <div
+      data-testid="loading-skeleton"
       className={twMerge(
         "w-full h-24 rounded-2xl p-4 animate-pulse bg-loading",
         className
