@@ -12,6 +12,7 @@ import useAxios from "@/hooks/useAxios";
 import fetchTodaysTransactions from "@/data-fetching/fetch-todays-transactions";
 // components
 import Card from "@/components/Card";
+import Button from "@/components/Button";
 
 interface TodaysExpensesProps {
   icons: { borderAllIconB64: string };
@@ -46,25 +47,34 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
         </p>
       ) : (
         <Card className="p-4">
-          {(data as Transaction[]).map((transaction, i) => (
-            <div key={transaction.id}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-8">
-                  <div>icon</div>
-                  <div className="flex flex-col">
-                    <h5>{transaction.name}</h5>
-                    <h6>{dayjs(transaction.createdAt).format("HH:mm")}</h6>
+          {(data as Transaction[]).length > 0 ? (
+            (data as Transaction[]).map((transaction, i) => (
+              <div key={transaction.id}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-8">
+                    <div>icon</div>
+                    <div className="flex flex-col">
+                      <h5>{transaction.name}</h5>
+                      <h6>{dayjs(transaction.createdAt).format("HH:mm")}</h6>
+                    </div>
                   </div>
+                  <h5>{`${transaction.type === "Expense" ? "-" : "+"}$${
+                    transaction.amount
+                  }`}</h5>
                 </div>
-                <h5>{`${transaction.type === "Expense" ? "-" : "+"}$${
-                  transaction.amount
-                }`}</h5>
+                {i !== (data as Transaction[]).length - 1 && (
+                  <hr className="h-[2px] my-4 bg-tertiary border-0" />
+                )}
               </div>
-              {i !== (data as Transaction[]).length - 1 && (
-                <hr className="h-[2px] my-4 bg-tertiary border-0" />
-              )}
-            </div>
-          ))}
+            ))
+          ) : (
+            <Button
+              onClick={() => router.push("/app/add")}
+              className="bg-tertiary py-2"
+            >
+              Get Started
+            </Button>
+          )}
         </Card>
       )}
     </div>

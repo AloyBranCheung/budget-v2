@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen, cleanup } from "@testing-library/react";
 import { TransactionType } from "@prisma/client";
 // mocks
 import mockIcon from "../mocks/mock-icon";
@@ -8,6 +8,9 @@ import mockUseAxios from "@/hooks/__mocks__/useAxios";
 import TodaysExpenses from "@/containers/todays-expenses/TodaysExpenses";
 
 vi.mock("@/hooks/useAxios");
+vi.mock("react-dom", () => ({
+  useFormStatus: vi.fn().mockReturnValue({ pending: false }),
+}));
 
 // mock next/navigation
 // https://stackoverflow.com/questions/76858797/error-invariant-expected-app-router-to-be-mounted-why-this-happened-when-using
@@ -27,6 +30,10 @@ vi.mock("next/navigation", async () => {
 });
 
 describe("test TodaysExpenses component", () => {
+  beforeEach(() => {
+    cleanup();
+  });
+
   it("should should loading...", () => {
     mockUseAxios.mockReturnValue({
       data: [],
@@ -63,5 +70,31 @@ describe("test TodaysExpenses component", () => {
     expect(screen.getByText("name-1")).toBeDefined();
     expect(screen.getByText("+$100")).toBeDefined();
     expect(screen.getByText("-$100")).toBeDefined();
+  });
+
+  it("should render get started button", () => {
+    mockUseAxios.mockReturnValue({
+      data: [],
+      isLoading: false,
+      isError: false,
+    });
+
+    render(<TodaysExpenses icons={{ borderAllIconB64: mockIcon }} />);
+
+    expect(screen.getByText("Get Started"));
+  });
+
+  it("should render error message", () => {
+    mockUseAxios.mockReturnValue({
+      data: [],
+      isLoading: false,
+      isError: true,
+    });
+
+    render(<TodaysExpenses icons={{ borderAllIconB64: mockIcon }} />);
+
+    expect(
+      screen.getByText("Error fetching data, please try again later.")
+    ).toBeDefined();
   });
 });
