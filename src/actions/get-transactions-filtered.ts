@@ -21,7 +21,7 @@ const getTransactionsFiltered = async ({ toDate, fromDate }: GetTransactionsFilt
             where: {
                 date: {
                     gte: dayjs(fromDate).startOf('day').toISOString(),
-                    lte: dayjs(toDate).startOf('day').add(1, 'day').toISOString(),
+                    lt: dayjs(toDate).startOf('day').add(1, 'day').toISOString(),
                 }
             },
             orderBy: {
