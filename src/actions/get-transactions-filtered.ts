@@ -1,14 +1,17 @@
 'use server'
 
 import prisma from "@/libs/prisma"
+import { Tag, TransactionType } from "@prisma/client"
 import dayjs from "dayjs"
 
 interface GetTransactionsFilteredParams {
     toDate: string
     fromDate: string
+    transactionType: TransactionType
+    tag: Tag['id']
 }
 
-const getTransactionsFiltered = async ({ toDate, fromDate }: GetTransactionsFilteredParams) => {
+const getTransactionsFiltered = async ({ toDate, fromDate, transactionType, tag }: GetTransactionsFilteredParams) => {
     try {
         const transactions = await prisma.transaction.findMany({
             include: {
@@ -22,7 +25,15 @@ const getTransactionsFiltered = async ({ toDate, fromDate }: GetTransactionsFilt
                 date: {
                     gte: dayjs(fromDate).startOf('day').toISOString(),
                     lt: dayjs(toDate).startOf('day').add(1, 'day').toISOString(),
-                }
+                },
+                ...(transactionType && transactionType.length > 0 && { type: transactionType }),
+                ...(tag && tag.length > 0 && {
+                    tags: {
+                        every: {
+                            id: tag
+                        }
+                    }
+                })
             },
             orderBy: {
                 date: 'desc'

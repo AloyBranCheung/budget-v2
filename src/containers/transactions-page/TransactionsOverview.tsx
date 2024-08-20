@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { Prisma } from "@prisma/client";
+import { Prisma, Tag, TransactionType } from "@prisma/client";
 // action
 import getTransactionsFiltered from "@/actions/get-transactions-filtered";
 // hooks
@@ -16,7 +16,13 @@ import Card from "@/components/Card";
 
 dayjs.extend(utc);
 
-export default function TransactionsOverview() {
+interface TransactionsOverviewProps {
+  tags: Tag[];
+}
+
+export default function TransactionsOverview({
+  tags,
+}: TransactionsOverviewProps) {
   const last30Days = dayjs
     .utc()
     .startOf("day")
@@ -32,10 +38,18 @@ export default function TransactionsOverview() {
   const [selectOption, setSelectOption] = useState<string>(last30Days);
   const [fromDate, setFromDate] = useState<string>(last30Days);
   const [toDate, setToDate] = useState<string>(today);
+  const [transactionType, setTransactionType] = useState<string>("");
+  const [tag, setTag] = useState<string>("");
 
   const fetchData = useCallback(
-    () => getTransactionsFiltered({ fromDate, toDate }),
-    [fromDate, toDate]
+    () =>
+      getTransactionsFiltered({
+        fromDate,
+        toDate,
+        transactionType: transactionType as TransactionType,
+        tag,
+      }),
+    [fromDate, toDate, transactionType, tag]
   );
   const { data: transactionsArr, isLoading } = useServerAction(fetchData) as {
     data:
@@ -47,7 +61,7 @@ export default function TransactionsOverview() {
     isError: boolean;
   };
 
-  const menuOptions = [
+  const dateRangeMenuOptions = [
     {
       id: 1,
       label: "Last 30 days",
@@ -84,7 +98,7 @@ export default function TransactionsOverview() {
       <SingleSelect
         label="Date Range"
         name="date-filter"
-        menuOptions={menuOptions}
+        menuOptions={dateRangeMenuOptions}
         onChange={handleChangeSelect}
         value={selectOption}
         selectClassName="p-2"
@@ -107,6 +121,41 @@ export default function TransactionsOverview() {
           inputClassName="p-2"
         />
       </div>
+      <SingleSelect
+        label="Transaction Type"
+        name="transaction-type"
+        menuOptions={[
+          { id: "", label: "None", value: "" },
+          {
+            id: TransactionType.Expense,
+            label: TransactionType.Expense,
+            value: TransactionType.Expense,
+          },
+          {
+            id: TransactionType.Income,
+            label: TransactionType.Income,
+            value: TransactionType.Income,
+          },
+        ]}
+        onChange={(e) => setTransactionType(e.target.value as TransactionType)}
+        value={transactionType}
+        selectClassName="p-2"
+      />
+      <SingleSelect
+        label="Tags"
+        name="Tags"
+        menuOptions={[
+          ...tags.map(({ id, name }) => ({
+            id,
+            label: name,
+            value: id,
+          })),
+          { id: "", label: "None", value: "" },
+        ]}
+        onChange={(e) => setTag(e.target.value as Tag["id"])}
+        value={tag}
+        selectClassName="p-2"
+      />
       <hr className="my-4" />
       <h4>Results</h4>
       <div>
@@ -116,7 +165,7 @@ export default function TransactionsOverview() {
           <div className="flex flex-col gap-2">
             {transactionsArr &&
               transactionsArr.length > 0 &&
-              transactionsArr?.map((transaction) => (
+              transactionsArr.map((transaction) => (
                 <Card key={transaction.id}>
                   <ExpenseFormat
                     transaction={transaction}
