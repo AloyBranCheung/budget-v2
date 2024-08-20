@@ -28,6 +28,10 @@ model Images {
   updatedAt DateTime @updatedAt
   name      String
   bytes     Bytes
+
+  // relationships
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?   @unique
 }
 
 model User {
@@ -91,6 +95,7 @@ model Category {
   transactions Transaction[]
   User         User?         @relation(fields: [userId], references: [id])
   userId       String?
+  image        Images?
 }
 
 model Tag {
