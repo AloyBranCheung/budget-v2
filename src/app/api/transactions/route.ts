@@ -29,7 +29,10 @@ export async function GET(req: NextRequest) {
                 gte: dayjs(todaysDate).startOf('day').toDate()
             }
         },
-        ...(isIncludeIcon && { include: { tags: { include: { image: true } } } })
+        ...(isIncludeIcon && { include: { tags: { include: { image: true } } } }),
+        orderBy: {
+            date: 'desc'
+        }
     })
 
     return NextResponse.json(todaysTransactions)
