@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import dayjs from "dayjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 // types
@@ -12,9 +11,9 @@ import useAxios from "@/hooks/useAxios";
 import fetchTodaysTransactions from "@/data-fetching/fetch-todays-transactions";
 // components
 import Card from "@/components/Card";
+import ExpenseFormat from "@/components/ExpenseFormat";
 import Button from "@/components/Button";
 // util
-import BinaryUtil from "@/utils/BinaryUtil";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 
 interface TodaysExpensesProps {
@@ -57,29 +56,7 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
               }>[]
             ).map((transaction, i) => (
               <div key={transaction.id}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-8">
-                    <div>
-                      {
-                        <Image
-                          src={new BinaryUtil(
-                            transaction.tags[0].image!.bytes
-                          ).pngBinaryToBase64()}
-                          alt="tag image"
-                          width={25}
-                          height={25}
-                        />
-                      }
-                    </div>
-                    <div className="flex flex-col">
-                      <h5>{transaction.name}</h5>
-                      <h6>{dayjs(transaction.createdAt).format("HH:mm")}</h6>
-                    </div>
-                  </div>
-                  <h5>{`${transaction.type === "Expense" ? "-" : "+"}$${
-                    transaction.amount
-                  }`}</h5>
-                </div>
+                <ExpenseFormat transaction={transaction} />
                 {i !== (data as Transaction[]).length - 1 && (
                   <hr className="h-[2px] my-4 bg-tertiary border-0" />
                 )}

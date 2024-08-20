@@ -2,14 +2,17 @@
 import React, { useCallback, useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { Prisma } from "@prisma/client";
 // action
 import getTransactionsFiltered from "@/actions/get-transactions-filtered";
+// hooks
+import useServerAction from "@/hooks/useServerAction";
 // components
 import SingleSelect from "@/components/SingleSelect";
 import DatePicker from "@/components/DatePicker";
-import useServerAction from "@/hooks/useServerAction";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
-import { Prisma } from "@prisma/client";
+import ExpenseFormat from "@/components/ExpenseFormat";
+import Card from "@/components/Card";
 
 dayjs.extend(utc);
 
@@ -84,19 +87,24 @@ export default function TransactionsOverview() {
         menuOptions={menuOptions}
         onChange={handleChangeSelect}
         value={selectOption}
+        selectClassName="p-2"
       />
-      <div className="w-full flex flex-col gap-2">
+      <div className="w-full flex gap-2 items-center">
         <DatePicker
           label="From"
           name="from"
           onChange={(e) => setFromDate(dayjs.utc(e.target.value).toISOString())}
           value={dayjs.utc(fromDate).format("YYYY-MM-DD")}
+          className="w-full"
+          inputClassName="p-2"
         />
         <DatePicker
           label="To"
           name="to"
           onChange={(e) => setToDate(dayjs.utc(e.target.value).toISOString())}
           value={dayjs.utc(toDate).format("YYYY-MM-DD")}
+          className="w-full"
+          inputClassName="p-2"
         />
       </div>
       <hr className="my-4" />
@@ -105,13 +113,16 @@ export default function TransactionsOverview() {
         {isLoading ? (
           <LoadingSkeleton />
         ) : (
-          <div>
+          <div className="flex flex-col gap-2">
             {transactionsArr &&
               transactionsArr.length > 0 &&
               transactionsArr?.map((transaction) => (
-                <div key={transaction.id}>
-                  {dayjs.utc(transaction.date).format("YYYY-MM-DD")}
-                </div>
+                <Card key={transaction.id}>
+                  <ExpenseFormat
+                    transaction={transaction}
+                    dayjsDateFormat="YYYY-MM-DD HH:mm"
+                  />
+                </Card>
               ))}
           </div>
         )}

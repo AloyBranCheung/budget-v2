@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 // components
@@ -8,6 +9,8 @@ import Card from "@/components/Card";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import AddPaycheckModalContent from "./AddPaycheckModalContent";
+
+dayjs.extend(utc);
 
 interface OverviewCardProps {
   totalRemaining: number | null | undefined;
@@ -46,7 +49,9 @@ export default function OverviewCard({
               </div>
               <p className="text-xs">
                 {paycheckDate &&
-                  `Since ${dayjs(paycheckDate).format("dddd, MMMM D, YYYY")}`}
+                  `Since ${dayjs
+                    .utc(paycheckDate)
+                    .format("dddd, MMMM D, YYYY")}`}
               </p>
             </>
           ) : (
