@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { config as authOptions } from '@/auth/auth-helper'
 import prisma from '@/libs/prisma'
+import dayjs from 'dayjs'
 
 // params
 // todaysDate: string/Date
@@ -24,8 +25,8 @@ export async function GET(req: NextRequest) {
 
     const todaysTransactions = await prisma.transaction.findMany({
         where: {
-            createdAt: {
-                gte: todaysDate
+            date: {
+                gte: dayjs(todaysDate).startOf('day').toDate()
             }
         },
         ...(isIncludeIcon && { include: { tags: { include: { image: true } } } })
