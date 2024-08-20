@@ -14,7 +14,7 @@ import fetchTodaysTransactions from "@/data-fetching/fetch-todays-transactions";
 import Card from "@/components/Card";
 
 interface TodaysExpensesProps {
-  icons: { [key: string]: string };
+  icons: { borderAllIconB64: string };
 }
 
 export default function TodaysExpenses({ icons }: TodaysExpensesProps) {

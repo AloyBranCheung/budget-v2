@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
             createdAt: {
                 gte: todaysDate
             }
-        }
+        },
     })
 
     return NextResponse.json(todaysTransactions)
