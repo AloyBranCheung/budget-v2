@@ -68,12 +68,14 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
               </div>
             ))
           ) : (
-            <Button
-              onClick={() => router.push("/app/add")}
-              className="bg-tertiary py-2"
-            >
-              Get Started
-            </Button>
+            <div className="w-full flex items-center justify-center">
+              <Button
+                onClick={() => router.push("/app/add")}
+                className="bg-tertiary py-2"
+              >
+                <p>Add an Expense</p>
+              </Button>
+            </div>
           )}
         </Card>
       )}
