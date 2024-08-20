@@ -145,12 +145,12 @@ export default function TransactionsOverview({
         label="Tags"
         name="Tags"
         menuOptions={[
+          { id: "", label: "None", value: "" },
           ...tags.map(({ id, name }) => ({
             id,
             label: name,
             value: id,
           })),
-          { id: "", label: "None", value: "" },
         ]}
         onChange={(e) => setTag(e.target.value as Tag["id"])}
         value={tag}

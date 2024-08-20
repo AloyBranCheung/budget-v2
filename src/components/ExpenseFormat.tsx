@@ -42,7 +42,9 @@ export default function ExpenseFormat({
         </div>
       </div>
       <h5>
-        {`${transaction.type === "Expense" ? "-" : "+"}$${transaction.amount}`}
+        {`${
+          transaction.type === "Expense" ? "-" : "+"
+        }$${transaction.amount.toFixed(2)}`}
       </h5>
     </div>
   );

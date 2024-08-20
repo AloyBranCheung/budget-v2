@@ -36,9 +36,14 @@ export default function SingleSelect({
         )}
         onChange={onChange}
         value={value}
+        data-testid={label ?? name}
       >
         {menuOptions.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option
+            key={option.value}
+            value={option.value}
+            data-testid={option.label}
+          >
             {option.label}
           </option>
         ))}
