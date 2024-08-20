@@ -24,8 +24,14 @@ export default async function Home() {
   const upRightArrowIconB64 = await new IconHelper(
     "up-right-arrow-icon.png"
   ).getIcon64();
+  const borderAllIconB64 = await new IconHelper("border-all.png").getIcon64();
 
-  if (!profileIconB64 || !closeIconB64 || !upRightArrowIconB64)
+  if (
+    !profileIconB64 ||
+    !closeIconB64 ||
+    !upRightArrowIconB64 ||
+    !borderAllIconB64
+  )
     return <Page500 />;
 
   const { mostRecentPaycheck, totalRemaining } = await getMostRecentPaycheck(
@@ -48,7 +54,7 @@ export default async function Home() {
           upRightArrowIconB64={upRightArrowIconB64}
         />
       )}
-      {mostRecentPaycheck && <TodaysExpenses />}
+      {mostRecentPaycheck && <TodaysExpenses icons={{ borderAllIconB64 }} />}
     </div>
   );
 }
