@@ -14,13 +14,14 @@ const logger = pino({
 
 const prisma = new PrismaClient();
 
-const addIconToDb = async (filename: string) => {
+const addIconToDb = async (filename: string, options?: { connectToTag: boolean, tagName: string }) => {
     logger.info(`Checking if ${filename} exists`)
     const exists = await prisma.images.findFirst({
         where: {
             name: filename
         }
     })
+
     if (exists) {
         logger.info(`${filename} already exists`)
         return
@@ -30,12 +31,34 @@ const addIconToDb = async (filename: string) => {
     const fileBuffer = Buffer.from(file)
 
     logger.info(`Creating ${filename}`)
-    await prisma.images.create({
-        data: {
-            name: filename,
-            bytes: fileBuffer
-        }
-    })
+
+
+    if (!options || !options?.connectToTag) {
+        await prisma.images.create({
+            data: {
+                name: filename,
+                bytes: fileBuffer
+            }
+        })
+    } else if (options && options.connectToTag && options?.tagName.length > 0) {
+        const tag = await prisma.tag.findFirst({ where: { name: options.tagName } })
+        if (!tag) throw new Error("Invalid tag.")
+
+
+        await prisma.images.create({
+            data: {
+                name: filename,
+                bytes: fileBuffer,
+                tag: {
+                    connect: {
+                        id: tag.id
+                    }
+                }
+            },
+        })
+
+    }
+
     logger.info(`Created ${filename}`)
 }
 
