@@ -6,6 +6,8 @@ interface SingleSelectProps {
   name: string;
   menuOptions: MenuOptions[];
   icon?: React.ReactNode;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  value?: string | number;
 }
 
 export default function SingleSelect({
@@ -13,6 +15,8 @@ export default function SingleSelect({
   name,
   menuOptions,
   icon,
+  onChange,
+  value,
 }: SingleSelectProps) {
   return (
     <div className="flex flex-col gap-2">
@@ -24,6 +28,8 @@ export default function SingleSelect({
         id={name ?? label}
         name={name ?? label}
         className="p-4 rounded-2xl bg-secondary shadow-md outline-none border-none"
+        onChange={onChange}
+        value={value}
       >
         {menuOptions.map((option) => (
           <option key={option.value} value={option.value}>
