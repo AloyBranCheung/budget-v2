@@ -15,8 +15,9 @@ export default function useAxios(axiosFn: () => Promise<AxiosResponse>) {
       } catch (error) {
         console.error(error);
         setIsError(true);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     fetchData();

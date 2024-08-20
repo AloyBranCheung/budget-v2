@@ -16,6 +16,7 @@ const config: Config = {
         'tertiary': '#F3D0D7',
         'tertiary:hover': '#7c7c7c',
         'quaternary': '#FFEFEF',
+        'loading': '#e6e6e6'
       },
       fontSize: {
         'body1': '1.25rem',

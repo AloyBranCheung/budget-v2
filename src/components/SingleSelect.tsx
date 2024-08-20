@@ -27,7 +27,7 @@ export default function SingleSelect({
       <select
         id={name ?? label}
         name={name ?? label}
-        className="p-4 rounded-2xl bg-secondary shadow-md outline-none border-none"
+        className="p-4 rounded-2xl bg-secondary shadow-md outline-none border-none cursor-pointer"
         onChange={onChange}
         value={value}
       >

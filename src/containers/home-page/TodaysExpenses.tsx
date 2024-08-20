@@ -15,6 +15,7 @@ import Card from "@/components/Card";
 import Button from "@/components/Button";
 // util
 import BinaryUtil from "@/utils/BinaryUtil";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 
 interface TodaysExpensesProps {
   icons: { borderAllIconB64: string };
@@ -42,7 +43,7 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
         </div>
       </div>
       {isLoading ? (
-        <div>Loading...</div>
+        <LoadingSkeleton />
       ) : isError ? (
         <p className="text-error">
           Error fetching data, please try again later.

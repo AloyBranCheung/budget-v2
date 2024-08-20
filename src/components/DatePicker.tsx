@@ -39,7 +39,7 @@ export default function DatePicker({
         type="date"
         id={name}
         name={name}
-        className="p-4 w-full bg-secondary rounded-2xl shadow-md outline-none border-none"
+        className="p-4 w-full bg-secondary rounded-2xl shadow-md outline-none border-none cursor-pointer"
       />
     </div>
   );
