@@ -47,11 +47,8 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
       ) : (
         <Card className="p-4">
           {(data as Transaction[]).map((transaction, i) => (
-            <>
-              <div
-                key={transaction.id}
-                className="flex items-center justify-between"
-              >
+            <div key={transaction.id}>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-8">
                   <div>icon</div>
                   <div className="flex flex-col">
@@ -66,7 +63,7 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
               {i !== (data as Transaction[]).length - 1 && (
                 <hr className="h-[2px] my-4 bg-tertiary border-0" />
               )}
-            </>
+            </div>
           ))}
         </Card>
       )}
