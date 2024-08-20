@@ -1,5 +1,7 @@
 import React from "react";
+// components
+import TransactionsOverview from "@/containers/transactions-page/TransactionsOverview";
 
-export default function TransactionsPage() {
-  return <div>TransactionsPage</div>;
+export default async function TransactionsPage() {
+  return <TransactionsOverview />;
 }
