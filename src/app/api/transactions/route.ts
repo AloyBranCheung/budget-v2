@@ -3,6 +3,10 @@ import { getServerSession } from 'next-auth'
 import { config as authOptions } from '@/auth/auth-helper'
 import prisma from '@/libs/prisma'
 
+// params
+// todaysDate: string/Date
+// includeIcon: boolean
+
 export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions)
 
@@ -12,6 +16,7 @@ export async function GET(req: NextRequest) {
 
     const url = new URL(req.url);
     const todaysDate = url.searchParams.get('todaysDate')
+    const isIncludeIcon = url.searchParams.get('includeIcon')
 
     if (!todaysDate) {
         return new NextResponse('Error: No date given', { status: 500 })
@@ -23,6 +28,7 @@ export async function GET(req: NextRequest) {
                 gte: todaysDate
             }
         },
+        ...(isIncludeIcon && { include: { tags: { include: { image: true } } } })
     })
 
     return NextResponse.json(todaysTransactions)

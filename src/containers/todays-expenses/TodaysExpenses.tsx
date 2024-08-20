@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 // types
-import { Transaction } from "@prisma/client";
+import { Transaction, Prisma } from "@prisma/client";
 // hooks
 import useAxios from "@/hooks/useAxios";
 // data-fetching
@@ -13,6 +13,8 @@ import fetchTodaysTransactions from "@/data-fetching/fetch-todays-transactions";
 // components
 import Card from "@/components/Card";
 import Button from "@/components/Button";
+// util
+import BinaryUtil from "@/utils/BinaryUtil";
 
 interface TodaysExpensesProps {
   icons: { borderAllIconB64: string };
@@ -48,11 +50,26 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
       ) : (
         <Card className="p-4">
           {(data as Transaction[]).length > 0 ? (
-            (data as Transaction[]).map((transaction, i) => (
+            (
+              data as Prisma.TransactionGetPayload<{
+                include: { tags: { include: { image: true } } };
+              }>[]
+            ).map((transaction, i) => (
               <div key={transaction.id}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-8">
-                    <div>icon</div>
+                    <div>
+                      {
+                        <Image
+                          src={new BinaryUtil(
+                            transaction.tags[0].image!.bytes
+                          ).pngBinaryToBase64()}
+                          alt="tag image"
+                          width={25}
+                          height={25}
+                        />
+                      }
+                    </div>
                     <div className="flex flex-col">
                       <h5>{transaction.name}</h5>
                       <h6>{dayjs(transaction.createdAt).format("HH:mm")}</h6>
