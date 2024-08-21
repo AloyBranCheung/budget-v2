@@ -41,7 +41,7 @@ export default function AddTransactionForm({
 
   return (
     <>
-      <form className="flex flex-col gap-4 mb-40" action={formAction}>
+      <form className="flex flex-col gap-4" action={formAction}>
         <SegmentedButton
           name="type"
           layoutGroupId="incomeExpenses"

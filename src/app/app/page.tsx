@@ -41,7 +41,7 @@ export default async function Home() {
   const pieChartData = await expensesByCategory();
 
   return (
-    <div className="flex flex-col gap-4 mb-40">
+    <div className="flex flex-col gap-4">
       <WelcomeText profileIconB64={profileIconB64} name={user.dbUser.name} />
       <OverviewCard
         totalRemaining={totalRemaining}

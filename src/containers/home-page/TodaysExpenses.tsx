@@ -32,7 +32,7 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
           className="cursor-pointer flex items-center gap-1"
           onClick={() => router.push("/app/transactions")}
         >
-          <h6>View All</h6>
+          <h6>All Transactions</h6>
           <Image
             src={icons.borderAllIconB64}
             alt="all-icon.png"

@@ -5,10 +5,6 @@ import dayjs from 'dayjs';
 // test this
 import getTransactionsFiltered from "@/actions/get-transactions-filtered";
 
-// TODO: write integration test for filter transaction server action
-// TODO: test results are filtered by date range, transaction type, tags and a combination of them 
-
-
 describe('test get-transactions-filtered server action/api thing', async () => {
     const date = new Date('2024-08-01')
     const findUser = async () => await prisma.user.findFirst({
