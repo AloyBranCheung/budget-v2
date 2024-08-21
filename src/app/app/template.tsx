@@ -41,10 +41,10 @@ export default async function RootTemplate({ children }: RootTemplateProps) {
   }
 
   return (
-    <div className="h-screen">
+    <div>
       <PageTransitionMobile />
       <Container>
-        <div className="px-4 pt-8 h-full">{children}</div>
+        <div className="px-4 pt-8 h-full w-full mb-40">{children}</div>
         <MainNavbar
           {...{
             homeIconBase64,

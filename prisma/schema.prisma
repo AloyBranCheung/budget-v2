@@ -28,6 +28,10 @@ model Images {
   updatedAt DateTime @updatedAt
   name      String
   bytes     Bytes
+
+  // relationships
+  tag   Tag?    @relation(fields: [tagId], references: [id])
+  tagId String? @unique
 }
 
 model User {
@@ -51,7 +55,7 @@ model Paycheck {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  amount    Int
+  amount    Float
 
   // relationships
   User         User          @relation(fields: [userId], references: [id])
@@ -65,7 +69,7 @@ model Transaction {
   updatedAt DateTime        @updatedAt
   name      String
   type      TransactionType
-  amount    Int
+  amount    Float
   date      DateTime
   notes     String?
 
@@ -104,4 +108,5 @@ model Tag {
   transactions Transaction[]
   User         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
+  image        Images?
 }

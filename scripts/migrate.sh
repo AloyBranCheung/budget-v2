@@ -38,3 +38,7 @@ npx tsx ./prisma/seeds/20240426082801-add-close-icon.ts
 npx tsx ./prisma/seeds/20240426141945-add-profile-icon.ts
 
 npx tsx ./prisma/seeds/20240427203855-add-arrow-icon.ts
+
+npx tsx ./prisma/seeds/20240820003353-add-border-all-icon.ts
+
+npx tsx ./prisma/seeds/20240820022239-add-icons-to-tags.ts

@@ -29,7 +29,7 @@ export default function Multiselect({
       <select
         required={required ?? true}
         size={menuOptions.length}
-        className="p-4 bg-secondary rounded-2xl shadow-md outline-none border-none h-fit selection:bg-none"
+        className="p-4 bg-secondary rounded-2xl shadow-md outline-none border-none h-fit selection:bg-none cursor-pointer"
         id={name ?? label}
         name={name}
         multiple

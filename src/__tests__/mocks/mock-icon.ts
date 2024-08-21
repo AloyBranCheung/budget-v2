@@ -4,6 +4,7 @@ import BinaryUtil from '@/utils/BinaryUtil';
 
 const file = fs.readFileSync(path.join(__dirname, '../../../prisma/static-data/assets/add-icon.png'))
 const buffer = Buffer.from(file);
-const mockIcon = new BinaryUtil(buffer).pngBinaryToBase64()
+export const binaryUtil = new BinaryUtil(buffer)
+const mockIcon = binaryUtil.pngBinaryToBase64()
 
 export default mockIcon

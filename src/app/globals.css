@@ -18,6 +18,18 @@ h5 {
   @apply font-semibold text-body2;
 }
 
+h6 {
+  @apply font-semibold text-body3;
+}
+
 label {
   @apply font-semibold text-body1;
+}
+
+p {
+  @apply text-xs;
+}
+
+hr {
+  @apply divide-y-2;
 }
