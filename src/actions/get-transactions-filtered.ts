@@ -29,7 +29,7 @@ const getTransactionsFiltered = async ({ toDate, fromDate, transactionType, tag 
                 ...(transactionType && transactionType.length > 0 && { type: transactionType }),
                 ...(tag && tag.length > 0 && {
                     tags: {
-                        every: {
+                        some: {
                             id: tag
                         }
                     }
