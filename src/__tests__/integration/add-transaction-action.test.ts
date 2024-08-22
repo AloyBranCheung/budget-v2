@@ -35,6 +35,7 @@ describe("test add transaction server action", async () => {
         validFormData.append('category', needsCategory.id)
         validFormData.append('tags', tags[0].id)
         validFormData.append('tags', tags[1].id)
+        validFormData.append('timezone', 'America/Toronto')
     })
 
     afterEach(() => {
