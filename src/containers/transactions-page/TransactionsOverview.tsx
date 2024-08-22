@@ -20,12 +20,14 @@ interface TransactionsOverviewProps {
   tags: Tag[];
   categories: Category[];
   editIcon: string;
+  trashIcon: string;
 }
 
 export default function TransactionsOverview({
   tags,
   categories,
   editIcon,
+  trashIcon,
 }: TransactionsOverviewProps) {
   const [isOn, setIsOn] = useState(false);
 
@@ -214,12 +216,21 @@ export default function TransactionsOverview({
                               x: 10,
                             }}
                             transition={{ delay: i * 0.1 }} // Stagger by 0.1 seconds
+                            className="flex items-center gap-2"
                           >
                             <Image
                               src={editIcon}
                               height={15}
                               width={15}
                               alt="edit-icon"
+                              className="cursor-pointer"
+                              onClick={() => alert(JSON.stringify(transaction))}
+                            />
+                            <Image
+                              src={trashIcon}
+                              height={15}
+                              width={15}
+                              alt="trash-icon"
                               className="cursor-pointer"
                               onClick={() => alert(JSON.stringify(transaction))}
                             />

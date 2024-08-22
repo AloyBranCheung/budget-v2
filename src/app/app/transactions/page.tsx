@@ -41,14 +41,24 @@ export default async function TransactionsPage() {
   });
 
   const editIcon = await new IconHelper("edit-icon.png").getIcon64();
+  const trashIcon = await new IconHelper("trash-icon.png").getIcon64();
 
-  if (!tags || !categories || !editIcon || !(editIcon.length > 0)) <Page500 />;
+  if (
+    !tags ||
+    !categories ||
+    !editIcon ||
+    !(editIcon.length > 0) ||
+    !trashIcon ||
+    !(trashIcon.length > 0)
+  )
+    <Page500 />;
 
   return (
     <TransactionsOverview
       tags={tags}
       categories={categories}
       editIcon={editIcon as string}
+      trashIcon={trashIcon as string}
     />
   );
 }

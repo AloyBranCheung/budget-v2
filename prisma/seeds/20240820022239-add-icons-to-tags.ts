@@ -11,7 +11,8 @@ const main = async () => {
         addIconToDb('budget-icon.png', { connectToTag: true, tagName: 'Personal Spendings' }),
         addIconToDb('entertainment-icon.png', { connectToTag: true, tagName: 'Recreation & Entertainment' }),
         addIconToDb('categorize-icon.png', { connectToTag: true, tagName: 'Miscellaneous' }),
-        addIconToDb('edit-icon.png')
+        addIconToDb('edit-icon.png'),
+        addIconToDb('trash-icon.png')
     ])
 }
 
