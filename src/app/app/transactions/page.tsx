@@ -2,6 +2,8 @@ import React from "react";
 import prisma from "@/libs/prisma";
 // auth
 import getUser from "@/auth/get-user";
+// utils
+import IconHelper from "@/utils/IconHelper";
 // components
 import TransactionsOverview from "@/containers/transactions-page/TransactionsOverview";
 import Page403 from "@/app/Page403";
@@ -38,7 +40,15 @@ export default async function TransactionsPage() {
     },
   });
 
-  if (!tags || !categories) <Page500 />;
+  const editIcon = await new IconHelper("edit-icon.png").getIcon64();
 
-  return <TransactionsOverview tags={tags} categories={categories} />;
+  if (!tags || !categories || !editIcon || !(editIcon.length > 0)) <Page500 />;
+
+  return (
+    <TransactionsOverview
+      tags={tags}
+      categories={categories}
+      editIcon={editIcon as string}
+    />
+  );
 }
