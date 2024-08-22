@@ -4,6 +4,7 @@ import prisma from "@/libs/prisma"
 import { Category, Tag, TransactionType } from "@prisma/client"
 import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc'
+import getUser from "@/auth/get-user"
 
 dayjs.extend(utc)
 
@@ -16,6 +17,12 @@ interface GetTransactionsFilteredParams {
 }
 
 const getTransactionsFiltered = async ({ toDate, fromDate, transactionType, tag, categoryId }: GetTransactionsFilteredParams) => {
+    const user = await getUser();
+    if (!user) {
+        throw new Error("User not found.")
+    }
+
+
     try {
         const transactions = await prisma.transaction.findMany({
             include: {

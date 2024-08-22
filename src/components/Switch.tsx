@@ -25,7 +25,7 @@ export default function Switch({
   return (
     <div
       className={twMerge(
-        `${!isOn ? "bg-secondary" : "bg-green-200"} w-16 h-7 rounded-2xl flex ${
+        `${!isOn ? "bg-secondary" : "bg-green-200"} w-14 h-7 rounded-2xl flex ${
           isOn ? "justify-end" : "justify-start"
         } p-2 cursor-pointer items-center shadows-inner shadow-md`,
         switchClassName

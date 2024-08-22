@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
@@ -33,7 +34,7 @@ export default function ExpenseFormat({
           }
         </div>
         <div className="flex flex-col">
-          <h5>{transaction.name}</h5>
+          <h5 className="break-all">{transaction.name}</h5>
           <h6>{dayjs(transaction.date).format(dayjsDateFormat ?? "HH:mm")}</h6>
         </div>
       </div>
