@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useState } from "react";
 import dayjs from "dayjs";
-import { Prisma, Tag, TransactionType } from "@prisma/client";
+import { Category, Prisma, Tag, TransactionType } from "@prisma/client";
 // action
 import getTransactionsFiltered from "@/actions/get-transactions-filtered";
 // hooks
@@ -15,10 +15,12 @@ import Card from "@/components/Card";
 
 interface TransactionsOverviewProps {
   tags: Tag[];
+  categories: Category[];
 }
 
 export default function TransactionsOverview({
   tags,
+  categories,
 }: TransactionsOverviewProps) {
   const last30Days = dayjs().startOf("day").subtract(30, "days").toISOString();
   const today = dayjs().startOf("day").toISOString();
@@ -29,6 +31,7 @@ export default function TransactionsOverview({
   const [toDate, setToDate] = useState<string>(today);
   const [transactionType, setTransactionType] = useState<string>("");
   const [tag, setTag] = useState<string>("");
+  const [categoryId, setCategoryId] = useState("");
 
   const fetchData = useCallback(
     () =>
@@ -37,8 +40,9 @@ export default function TransactionsOverview({
         toDate,
         transactionType: transactionType as TransactionType,
         tag,
+        categoryId,
       }),
-    [fromDate, toDate, transactionType, tag]
+    [fromDate, toDate, transactionType, tag, categoryId]
   );
   const { data: transactionsArr, isLoading } = useServerAction(fetchData) as {
     data:
@@ -111,10 +115,25 @@ export default function TransactionsOverview({
         />
       </div>
       <SingleSelect
+        label="Category"
+        name="category"
+        menuOptions={[
+          { id: "", label: "No filter", value: "" },
+          ...categories.map(({ id, name }) => ({
+            id,
+            label: name,
+            value: id,
+          })),
+        ]}
+        onChange={(e) => setCategoryId(e.target.value)}
+        value={categoryId}
+        selectClassName="p-2"
+      />
+      <SingleSelect
         label="Transaction Type"
         name="transaction-type"
         menuOptions={[
-          { id: "", label: "None", value: "" },
+          { id: "", label: "No filter", value: "" },
           {
             id: TransactionType.Expense,
             label: TransactionType.Expense,
@@ -134,7 +153,7 @@ export default function TransactionsOverview({
         label="Tags"
         name="Tags"
         menuOptions={[
-          { id: "", label: "None", value: "" },
+          { id: "", label: "No filter", value: "" },
           ...tags.map(({ id, name }) => ({
             id,
             label: name,
@@ -159,8 +178,8 @@ export default function TransactionsOverview({
                   key={transaction.id}
                   className={`border-l-8 ${
                     transaction.type === TransactionType.Expense
-                      ? "border-tertiary"
-                      : "border-quaternary"
+                      ? "border-expense"
+                      : "border-income"
                   }`}
                 >
                   <ExpenseFormat

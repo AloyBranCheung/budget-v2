@@ -26,7 +26,19 @@ export default async function TransactionsPage() {
       name: "asc",
     },
   });
-  if (!tags) <Page500 />;
 
-  return <TransactionsOverview tags={tags} />;
+  const categories = await prisma.category.findMany({
+    where: {
+      OR: [
+        { userId: null },
+        {
+          userId: user?.dbUser.id,
+        },
+      ],
+    },
+  });
+
+  if (!tags || !categories) <Page500 />;
+
+  return <TransactionsOverview tags={tags} categories={categories} />;
 }
