@@ -3,6 +3,9 @@
 import prisma from "@/libs/prisma"
 import { Tag, TransactionType } from "@prisma/client"
 import dayjs from "dayjs"
+import utc from 'dayjs/plugin/utc'
+
+dayjs.extend(utc)
 
 interface GetTransactionsFilteredParams {
     toDate: string
@@ -23,8 +26,8 @@ const getTransactionsFiltered = async ({ toDate, fromDate, transactionType, tag 
             },
             where: {
                 date: {
-                    gte: dayjs(fromDate).startOf('day').toISOString(),
-                    lt: dayjs(toDate).startOf('day').add(1, 'day').toISOString(),
+                    gte: fromDate, // frontend already sent date that is the start of the day in utc format 
+                    lt: dayjs.utc(toDate).add(1, 'day').toISOString(), // frontend already sent date that is the start of the day in utc format 
                 },
                 ...(transactionType && transactionType.length > 0 && { type: transactionType }),
                 ...(tag && tag.length > 0 && {

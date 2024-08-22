@@ -1,12 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 // util
 import BinaryUtil from "@/utils/BinaryUtil";
 import { Prisma } from "@prisma/client";
-
-dayjs.extend(utc);
 
 interface ExpenseFormatProps {
   transaction: Prisma.TransactionGetPayload<{
@@ -36,9 +33,7 @@ export default function ExpenseFormat({
         </div>
         <div className="flex flex-col">
           <h5>{transaction.name}</h5>
-          <h6>
-            {dayjs.utc(transaction.date).format(dayjsDateFormat ?? "HH:mm")}
-          </h6>
+          <h6>{dayjs(transaction.date).format(dayjsDateFormat ?? "HH:mm")}</h6>
         </div>
       </div>
       <h5>

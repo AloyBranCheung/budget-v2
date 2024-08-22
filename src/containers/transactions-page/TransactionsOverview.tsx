@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback, useState } from "react";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import { Prisma, Tag, TransactionType } from "@prisma/client";
 // action
 import getTransactionsFiltered from "@/actions/get-transactions-filtered";
@@ -14,8 +13,6 @@ import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ExpenseFormat from "@/components/ExpenseFormat";
 import Card from "@/components/Card";
 
-dayjs.extend(utc);
-
 interface TransactionsOverviewProps {
   tags: Tag[];
 }
@@ -23,17 +20,9 @@ interface TransactionsOverviewProps {
 export default function TransactionsOverview({
   tags,
 }: TransactionsOverviewProps) {
-  const last30Days = dayjs
-    .utc()
-    .startOf("day")
-    .subtract(30, "days")
-    .toISOString();
-  const today = dayjs.utc().startOf("day").toISOString();
-  const last7Days = dayjs
-    .utc()
-    .startOf("day")
-    .subtract(7, "days")
-    .toISOString();
+  const last30Days = dayjs().startOf("day").subtract(30, "days").toISOString();
+  const today = dayjs().startOf("day").toISOString();
+  const last7Days = dayjs().startOf("day").subtract(7, "days").toISOString();
 
   const [selectOption, setSelectOption] = useState<string>(last30Days);
   const [fromDate, setFromDate] = useState<string>(last30Days);
@@ -107,16 +96,16 @@ export default function TransactionsOverview({
         <DatePicker
           label="From"
           name="from"
-          onChange={(e) => setFromDate(dayjs.utc(e.target.value).toISOString())}
-          value={dayjs.utc(fromDate).format("YYYY-MM-DD")}
+          onChange={(e) => setFromDate(dayjs(e.target.value).toISOString())}
+          value={dayjs(fromDate).format("YYYY-MM-DD")}
           className="w-full"
           inputClassName="p-2"
         />
         <DatePicker
           label="To"
           name="to"
-          onChange={(e) => setToDate(dayjs.utc(e.target.value).toISOString())}
-          value={dayjs.utc(toDate).format("YYYY-MM-DD")}
+          onChange={(e) => setToDate(dayjs(e.target.value).toISOString())}
+          value={dayjs(toDate).format("YYYY-MM-DD")}
           className="w-full"
           inputClassName="p-2"
         />

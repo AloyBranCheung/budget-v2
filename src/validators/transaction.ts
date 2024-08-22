@@ -11,6 +11,7 @@ export const CreateTransactionSchema = z.object({
     amount: z.coerce.number().min(0.01, "At least $0.01."),
     category: z.string().uuid(),
     tags: z.array(z.string().uuid()),
-    date: z.coerce.date(),
+    date: z.string().datetime(),
     notes: z.string().nullable().optional(),
+    timezone: z.string(),
 })
