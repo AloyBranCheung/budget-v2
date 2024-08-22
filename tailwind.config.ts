@@ -1,5 +1,8 @@
 import type { Config } from "tailwindcss";
 
+const tertiary = '#F3D0D7'
+const quaternary = '#FFEFEF'
+
 const config: Config = {
   // https://stackoverflow.com/questions/70639657/tailwind-css-not-working-properly-in-nextjs
   content: [
@@ -13,9 +16,9 @@ const config: Config = {
       backgroundColor: {
         'primary': '#F6F5F2',
         'secondary': '#F0EBE3',
-        'tertiary': '#F3D0D7',
+        'tertiary': tertiary,
         'tertiary:hover': '#7c7c7c',
-        'quaternary': '#FFEFEF',
+        'quaternary': quaternary,
         'loading': '#e6e6e6'
       },
       fontSize: {
@@ -28,6 +31,12 @@ const config: Config = {
       textColor: {
         'placeholder': '#a1a8b2',
         'error': 'red',
+      },
+      borderColor: {
+        tertiary,
+        quaternary
+
+
       }
     },
   },

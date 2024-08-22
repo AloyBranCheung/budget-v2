@@ -155,7 +155,14 @@ export default function TransactionsOverview({
             {transactionsArr &&
               transactionsArr.length > 0 &&
               transactionsArr.map((transaction) => (
-                <Card key={transaction.id}>
+                <Card
+                  key={transaction.id}
+                  className={`border-l-8 ${
+                    transaction.type === TransactionType.Expense
+                      ? "border-tertiary"
+                      : "border-quaternary"
+                  }`}
+                >
                   <ExpenseFormat
                     transaction={transaction}
                     dayjsDateFormat="YYYY-MM-DD HH:mm"
