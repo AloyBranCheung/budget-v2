@@ -188,8 +188,8 @@ export default function TransactionsOverview({
                 transactionsArr.map((transaction, i) => (
                   <motion.div
                     key={transaction.id}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }} // Stagger by 0.1 seconds
                   >
                     <Card
@@ -206,9 +206,14 @@ export default function TransactionsOverview({
                         />
                         {isOn && (
                           <motion.div
+                            key={`${transaction.id}-${Math.random()}`}
                             initial={{ opacity: 0, x: 10 }}
                             animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 10 }}
+                            exit={{
+                              opacity: 0,
+                              x: 10,
+                            }}
+                            transition={{ delay: i * 0.1 }} // Stagger by 0.1 seconds
                           >
                             <Image
                               src={editIcon}
