@@ -2,6 +2,9 @@
 import prisma from '@/libs/prisma'
 import { TransactionType } from '@prisma/client';
 import { redirect } from 'next/navigation';
+import dayjs from 'dayjs';
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
 // auth 
 import getUser from "@/auth/get-user";
 // utils
@@ -11,6 +14,9 @@ import joinZodErrmsg from "@/utils/join-zod-err-msg";
 import { CreateTransactionSchema } from "@/validators/transaction";
 // types
 import { GenericFormState } from "@/types/formstate";
+
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 const addTransaction = async (_currState: GenericFormState | undefined, formData: FormData): Promise<GenericFormState | undefined> => {
     const data = formDataToObj(formData);
@@ -22,6 +28,11 @@ const addTransaction = async (_currState: GenericFormState | undefined, formData
         }
     } else {
         return { status: 'error', message: null, error: "Tags must be in data." }
+    }
+
+    // turn string (which is a date string) into iso format 
+    if ('date' in data && 'timezone' in data) {
+        data.date = dayjs.tz(data.date, data.timezone).toISOString()
     }
 
     const validatedData = CreateTransactionSchema.safeParse(data)
@@ -51,7 +62,7 @@ const addTransaction = async (_currState: GenericFormState | undefined, formData
         await prisma.transaction.create({
             data: {
                 amount: validatedData.data.amount,
-                date: new Date(validatedData.data.date).toISOString(), // this puts the date as is (no UTC conversion)
+                date: validatedData.data.date,
                 name: validatedData.data.name,
                 type: validatedData.data.type as TransactionType,
                 notes: validatedData.data.notes,

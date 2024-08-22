@@ -49,9 +49,7 @@ export default function OverviewCard({
               </div>
               <p className="text-xs">
                 {paycheckDate &&
-                  `Since ${dayjs
-                    .utc(paycheckDate)
-                    .format("dddd, MMMM D, YYYY")}`}
+                  `Since ${dayjs(paycheckDate).format("dddd, MMMM D, YYYY")}`}
               </p>
             </>
           ) : (

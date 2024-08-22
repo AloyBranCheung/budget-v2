@@ -2,7 +2,6 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { config as authOptions } from '@/auth/auth-helper'
 import prisma from '@/libs/prisma'
-import dayjs from 'dayjs'
 
 // params
 // todaysDate: string/Date
@@ -16,7 +15,7 @@ export async function GET(req: NextRequest) {
     }
 
     const url = new URL(req.url);
-    const todaysDate = url.searchParams.get('todaysDate')
+    const todaysDate = url.searchParams.get('todaysDate') // comes in as utc 
     const isIncludeIcon = url.searchParams.get('includeIcon')
 
     if (!todaysDate) {
@@ -26,7 +25,7 @@ export async function GET(req: NextRequest) {
     const todaysTransactions = await prisma.transaction.findMany({
         where: {
             date: {
-                gte: dayjs(todaysDate).startOf('day').toDate()
+                gte: todaysDate // utc date search db (db uses utc dates)
             }
         },
         ...(isIncludeIcon && { include: { tags: { include: { image: true } } } }),
