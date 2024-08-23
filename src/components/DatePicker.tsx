@@ -58,6 +58,11 @@ export default function DatePicker({
           inputClassName
         )}
       />
+      <input
+        type="hidden"
+        name="_clientTimezone"
+        value={Intl.DateTimeFormat().resolvedOptions().timeZone}
+      />
     </div>
   );
 }

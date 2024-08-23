@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFormState } from "react-dom";
 import { Prisma, Tag, TransactionType } from "@prisma/client";
 import Image from "next/image";
+// actions
+import updateTransaction from "@/actions/update-transaction";
+import { defaultGenericFormState, GenericFormState } from "@/types/formstate";
 // components
 import Modal from "@/components/Modal";
 import Input from "@/components/Input";
@@ -10,6 +14,7 @@ import BaseIconButton from "@/components/BaseIconButton";
 import AddTagModal from "../add-expense-page/AddTagModal";
 import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
+import Button from "@/components/Button";
 
 interface EditTransactionModalProps {
   isOpen: boolean;
@@ -26,6 +31,7 @@ interface EditTransactionModalProps {
   }>[];
   tags: Tag[];
   addIcon: string;
+  onSuccess: (state: GenericFormState) => void;
 }
 
 export default function EditTransactionModal({
@@ -36,8 +42,19 @@ export default function EditTransactionModal({
   categories,
   tags,
   addIcon,
+  onSuccess,
 }: EditTransactionModalProps) {
+  const [state, formAction] = useFormState<
+    GenericFormState | undefined,
+    FormData
+  >(updateTransaction, defaultGenericFormState);
   const [isAddingTag, setIsAddingTag] = useState(false);
+
+  useEffect(() => {
+    if (state?.status === "success") {
+      onSuccess(state);
+    }
+  }, [onSuccess, state, state?.status]);
 
   return (
     <Modal
@@ -46,7 +63,13 @@ export default function EditTransactionModal({
       onClose={onClose}
       closeIcon={closeIcon}
     >
-      <form className="flex flex-col gap-2">
+      <form className="flex flex-col gap-2" action={formAction}>
+        <input type="hidden" name="transactionId" value={transaction.id} />
+        <input
+          type="hidden"
+          name="oldTagIdsArr"
+          value={JSON.stringify(transaction.tags.map(({ id }) => id))}
+        />
         <SingleSelect
           defaultValue={transaction.type}
           label="Transaction Type"
@@ -109,6 +132,12 @@ export default function EditTransactionModal({
           required={false}
           defaultValue={transaction.notes}
         />
+        {state && state.status === "error" && (
+          <p className="text-red-500">{state.error}</p>
+        )}
+        <Button type="submit" className="bg-tertiary mt-4">
+          Save
+        </Button>
       </form>
       <AddTagModal
         onSuccess={() => setIsAddingTag(false)}

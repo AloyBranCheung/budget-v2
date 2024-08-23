@@ -69,7 +69,8 @@ export default function TransactionsOverview({
         tag,
         categoryId,
       }),
-    [fromDate, toDate, transactionType, tag, categoryId]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fromDate, toDate, transactionType, tag, categoryId, currEditTransactionId]
   );
   const { data: transactionsArr, isLoading } = useServerAction(fetchData) as {
     data: TransactionWithTags | null;
@@ -216,6 +217,9 @@ export default function TransactionsOverview({
                       categories={categories}
                       tags={tags}
                       addIcon={addIcon}
+                      onSuccess={() => {
+                        setCurrEditTransactionId("");
+                      }}
                     />
                     <Card
                       className={`flex space-between items-center border-l-8 gap-4 ${

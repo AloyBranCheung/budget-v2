@@ -21,15 +21,6 @@ dayjs.extend(tz);
 const addTransaction = async (_currState: GenericFormState | undefined, formData: FormData): Promise<GenericFormState | undefined> => {
     const data = formDataToObj(formData);
 
-    // create array from formdata if it is just one key/value pair 
-    if ('tags' in data) {
-        if (!Array.isArray(data.tags)) {
-            data.tags = [data.tags]
-        }
-    } else {
-        return { status: 'error', message: null, error: "Tags must be in data." }
-    }
-
     // turn string (which is a date string) into iso format 
     if ('date' in data && 'timezone' in data) {
         data.date = dayjs.tz(data.date, data.timezone).toISOString()
