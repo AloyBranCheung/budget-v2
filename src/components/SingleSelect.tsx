@@ -10,6 +10,7 @@ interface SingleSelectProps {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   value?: string | number;
   selectClassName?: ClassNameValue;
+  defaultValue?: React.HTMLAttributes<HTMLSelectElement>["defaultValue"];
 }
 
 export default function SingleSelect({
@@ -20,6 +21,7 @@ export default function SingleSelect({
   onChange,
   value,
   selectClassName,
+  defaultValue,
 }: SingleSelectProps) {
   return (
     <div className="flex flex-col gap-2">
@@ -37,6 +39,7 @@ export default function SingleSelect({
         onChange={onChange}
         value={value}
         data-testid={label ?? name}
+        defaultValue={defaultValue}
       >
         {menuOptions.map((option) => (
           <option

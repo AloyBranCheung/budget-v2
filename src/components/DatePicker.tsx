@@ -12,6 +12,7 @@ interface DatePickerProps {
   className?: ClassNameValue;
   inputClassName?: ClassNameValue;
   isDateTime?: boolean;
+  defaultValue?: Date | string;
 }
 
 export default function DatePicker({
@@ -23,12 +24,19 @@ export default function DatePicker({
   className,
   inputClassName,
   isDateTime,
+  defaultValue,
 }: DatePickerProps) {
-  const [date, setDate] = useState<string>(
-    isDateTime
-      ? dayjs().format("YYYY-MM-DDTHH:mm")
-      : dayjs(new Date()).format("YYYY-MM-DD")
-  );
+  const stateDefault = (() => {
+    if (isDateTime) {
+      if (defaultValue) return dayjs(defaultValue).format("YYYY-MM-DDTHH:mm");
+      return dayjs().format("YYYY-MM-DDTHH:mm");
+    } else {
+      if (defaultValue) return dayjs(defaultValue).format("YYYY-MM-DD");
+      return dayjs(new Date()).format("YYYY-MM-DD");
+    }
+  })();
+
+  const [date, setDate] = useState<string>(stateDefault);
 
   return (
     <div className={twMerge("flex flex-col gap-2", className)}>

@@ -6,6 +6,7 @@ interface TextAreaProps {
   name?: string;
   placeholder?: string;
   required?: boolean;
+  defaultValue?: string | null;
 }
 
 export default function TextArea({
@@ -13,8 +14,9 @@ export default function TextArea({
   name,
   placeholder,
   required,
+  defaultValue,
 }: TextAreaProps) {
-  const [textValue, setTextValue] = useState("");
+  const [textValue, setTextValue] = useState(defaultValue ?? "");
 
   return (
     <div className="flex flex-col gap-2 rounded-2xl relative">
