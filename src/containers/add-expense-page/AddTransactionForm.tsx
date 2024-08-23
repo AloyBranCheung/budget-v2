@@ -15,7 +15,6 @@ import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
 import SingleSelect from "@/components/SingleSelect";
-import Modal from "@/components/Modal";
 import BaseIconButton from "@/components/BaseIconButton";
 import AddTagModal from "./AddTagModal";
 
@@ -107,14 +106,12 @@ export default function AddTransactionForm({
           Save
         </Button>
       </form>
-      <Modal
+      <AddTagModal
         closeIcon={closeIcon}
-        modalTitle="Add Tag"
         onClose={() => setIsOpen(false)}
         isOpen={isOpen}
-      >
-        <AddTagModal onSuccess={() => setIsOpen(false)} />
-      </Modal>
+        onSuccess={() => setIsOpen(false)}
+      />
     </>
   );
 }

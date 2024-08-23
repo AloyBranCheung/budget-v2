@@ -47,7 +47,7 @@ export default function OverviewCard({
                 />
                 <h4 className="leading-10">Remaining</h4>
               </div>
-              <p className="text-xs">
+              <p className="text-xs" suppressHydrationWarning>
                 {paycheckDate &&
                   `Since ${dayjs(paycheckDate).format("dddd, MMMM D, YYYY")}`}
               </p>
