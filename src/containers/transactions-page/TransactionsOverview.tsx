@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useState } from "react";
 import dayjs from "dayjs";
-import { Category, Prisma, Tag, TransactionType } from "@prisma/client";
+import { Prisma, Tag, TransactionType } from "@prisma/client";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 // action
@@ -15,12 +15,25 @@ import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ExpenseFormat from "@/components/ExpenseFormat";
 import Card from "@/components/Card";
 import Switch from "@/components/Switch";
+import EditTransactionModal from "./EditTransactionModal";
+
+type TransactionWithTags = Prisma.TransactionGetPayload<{
+  include: { tags: { include: { image: true } } };
+}>[];
+type CategorySelectedField = Prisma.CategoryGetPayload<{
+  select: {
+    id: true;
+    name: true;
+  };
+}>;
 
 interface TransactionsOverviewProps {
   tags: Tag[];
-  categories: Category[];
+  categories: CategorySelectedField[];
   editIcon: string;
   trashIcon: string;
+  closeIcon: string;
+  addIcon: string;
 }
 
 export default function TransactionsOverview({
@@ -28,7 +41,12 @@ export default function TransactionsOverview({
   categories,
   editIcon,
   trashIcon,
+  closeIcon,
+  addIcon,
 }: TransactionsOverviewProps) {
+  const [currEditTransactionId, setCurrEditTransactionId] =
+    useState<string>("");
+
   const [isOn, setIsOn] = useState(false);
 
   const last30Days = dayjs().startOf("day").subtract(30, "days").toISOString();
@@ -54,11 +72,7 @@ export default function TransactionsOverview({
     [fromDate, toDate, transactionType, tag, categoryId]
   );
   const { data: transactionsArr, isLoading } = useServerAction(fetchData) as {
-    data:
-      | Prisma.TransactionGetPayload<{
-          include: { tags: { include: { image: true } } };
-        }>[]
-      | null;
+    data: TransactionWithTags | null;
     isLoading: boolean;
     isError: boolean;
   };
@@ -194,6 +208,15 @@ export default function TransactionsOverview({
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }} // Stagger by 0.1 seconds
                   >
+                    <EditTransactionModal
+                      isOpen={transaction.id == currEditTransactionId}
+                      onClose={() => setCurrEditTransactionId("")}
+                      closeIcon={closeIcon}
+                      transaction={transaction}
+                      categories={categories}
+                      tags={tags}
+                      addIcon={addIcon}
+                    />
                     <Card
                       className={`flex space-between items-center border-l-8 gap-4 ${
                         transaction.type === TransactionType.Expense
@@ -224,7 +247,9 @@ export default function TransactionsOverview({
                               width={15}
                               alt="edit-icon"
                               className="cursor-pointer"
-                              onClick={() => alert(JSON.stringify(transaction))}
+                              onClick={() =>
+                                setCurrEditTransactionId(transaction.id)
+                              }
                             />
                             <Image
                               src={trashIcon}

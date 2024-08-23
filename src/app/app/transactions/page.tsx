@@ -38,19 +38,18 @@ export default async function TransactionsPage() {
         },
       ],
     },
+    select: {
+      id: true,
+      name: true,
+    },
   });
 
   const editIcon = await new IconHelper("edit-icon.png").getIcon64();
   const trashIcon = await new IconHelper("trash-icon.png").getIcon64();
+  const closeIcon = await new IconHelper("close-icon.png").getIcon64();
+  const addIcon = await new IconHelper("add-icon.png").getIcon64();
 
-  if (
-    !tags ||
-    !categories ||
-    !editIcon ||
-    !(editIcon.length > 0) ||
-    !trashIcon ||
-    !(trashIcon.length > 0)
-  )
+  if (!tags || !categories || !editIcon || !trashIcon || !closeIcon || !addIcon)
     <Page500 />;
 
   return (
@@ -59,6 +58,8 @@ export default async function TransactionsPage() {
       categories={categories}
       editIcon={editIcon as string}
       trashIcon={trashIcon as string}
+      closeIcon={closeIcon as string}
+      addIcon={addIcon as string}
     />
   );
 }
