@@ -6,6 +6,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 // action
 import getTransactionsFiltered from "@/actions/get-transactions-filtered";
+import deleteTransaction from "@/actions/delete-transaction";
 // hooks
 import useServerAction from "@/hooks/useServerAction";
 // components
@@ -44,6 +45,7 @@ export default function TransactionsOverview({
   closeIcon,
   addIcon,
 }: TransactionsOverviewProps) {
+  const [shouldRefresh, setShouldRefresh] = useState(false);
   const [currEditTransactionId, setCurrEditTransactionId] =
     useState<string>("");
 
@@ -70,7 +72,15 @@ export default function TransactionsOverview({
         categoryId,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [fromDate, toDate, transactionType, tag, categoryId, currEditTransactionId]
+    [
+      fromDate,
+      toDate,
+      transactionType,
+      tag,
+      categoryId,
+      currEditTransactionId,
+      shouldRefresh,
+    ]
   );
   const { data: transactionsArr, isLoading } = useServerAction(fetchData) as {
     data: TransactionWithTags | null;
@@ -261,7 +271,15 @@ export default function TransactionsOverview({
                               width={15}
                               alt="trash-icon"
                               className="cursor-pointer"
-                              onClick={() => alert(JSON.stringify(transaction))}
+                              onClick={async () => {
+                                const response = await deleteTransaction(
+                                  transaction.id
+                                );
+                                if (response.status === "success") {
+                                  setShouldRefresh(!shouldRefresh);
+                                  return;
+                                }
+                              }}
                             />
                           </motion.div>
                         )}
