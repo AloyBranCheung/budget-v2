@@ -17,9 +17,12 @@ test.describe("test user auth flow to adding paycheck to adding transaction to l
         const inputField = await page.getByPlaceholder('$')
         await inputField.click()
         await inputField.fill('1000')
+        const dateInputField = await page.getByLabel('Date')
+        await dateInputField.fill('2024-08-01')
         await page.getByRole('button', { name: 'Submit' }).click()
 
         await expect(page.getByText('$ 1,000.00')).toBeVisible()
+        await expect(page.getByText("Since Thursday, August 1, 2024")).toBeVisible()
 
         await page.getByRole('img', { name: 'add-icon' }).click()
 
