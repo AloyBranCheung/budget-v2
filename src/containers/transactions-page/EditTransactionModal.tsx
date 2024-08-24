@@ -53,6 +53,7 @@ export default function EditTransactionModal({
   useEffect(() => {
     if (state?.status === "success") {
       onSuccess(state);
+      state.status = defaultGenericFormState.status
     }
   }, [onSuccess, state, state?.status]);
 
