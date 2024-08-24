@@ -62,6 +62,7 @@ export default function DatePicker({
         type="hidden"
         name="_clientTimezone"
         value={Intl.DateTimeFormat().resolvedOptions().timeZone}
+        data-testid='_hiddenClientTimezone'
       />
     </div>
   );

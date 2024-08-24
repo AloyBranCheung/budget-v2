@@ -1,5 +1,5 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { defaultGenericFormState, GenericFormState } from "@/types/formstate";
+import { defaultGenericFormState } from "@/types/formstate";
 import { render, screen } from "@testing-library/react";
 // mocks
 import mockIcon from "../mocks/mock-icon";
@@ -49,6 +49,13 @@ describe("test EditTransactionModal", () => {
     );
 
     expect((screen.getByLabelText('Date') as HTMLInputElement).value).toBe('2024-09-01T01:00')
-    screen.debug();
+    expect((screen.getByTestId('_hiddenClientTimezone'))).toBeDefined()
+    expect((screen.getByRole('option', { name: 'test-tag' }) as HTMLOptionElement).value).toBe('4')
+    expect((screen.getByRole('option', { name: 'test-tag' }) as HTMLOptionElement).selected).toBeTruthy()
+    expect((screen.getByRole('option', { name: '1' }) as HTMLOptionElement).value).toBe('1')
+    expect((screen.getByLabelText('Amount ($)') as HTMLInputElement).value).toBe('123')
+    expect((screen.getByLabelText('Name') as HTMLInputElement).value).toBe('transaction test name')
+    expect((screen.getByRole('option', { name: 'Expense' }) as HTMLOptionElement).value).toBe('Expense')
+    expect((screen.getByRole('option', { name: 'Expense' }) as HTMLOptionElement).selected).toBeTruthy()
   });
 });
