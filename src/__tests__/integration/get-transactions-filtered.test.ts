@@ -44,7 +44,8 @@ describe('test get-transactions-filtered server action/api thing', async () => {
         const paycheck = await prisma.paycheck.create({
             data: {
                 amount: 1000,
-                userId: user.id
+                userId: user.id,
+                date
             }
         })
 

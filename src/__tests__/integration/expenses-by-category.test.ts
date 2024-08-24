@@ -45,7 +45,8 @@ describe("test expenses by category util fn", () => {
         const mostRecentPaycheck = await prisma.paycheck.create({
             data: {
                 amount: randomAmount,
-                userId: user.id
+                userId: user.id,
+                date: new Date().toISOString()
             }
         })
 
