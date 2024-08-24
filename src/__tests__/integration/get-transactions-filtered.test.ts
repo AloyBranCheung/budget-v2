@@ -2,8 +2,12 @@ import { describe, it, beforeEach, vi, afterEach, expect } from 'vitest';
 import prisma from '@/libs/prisma';
 import { Transaction, TransactionType } from '@prisma/client';
 import dayjs from 'dayjs';
+// mocks
+import mockGetUser from '@/auth/__mocks__/get-user';
 // test this
 import getTransactionsFiltered from "@/actions/get-transactions-filtered";
+
+vi.mock('@/auth/get-user')
 
 describe('test get-transactions-filtered server action/api thing', async () => {
     const date = new Date('2024-08-01')
@@ -28,6 +32,10 @@ describe('test get-transactions-filtered server action/api thing', async () => {
     if (!user) throw new Error("Test user not found.")
     if (!tag) throw new Error("Test tag not found.")
     if (!category) throw new Error("Test category not found.")
+
+    beforeEach(() => {
+        mockGetUser.mockResolvedValue(mockGetUser)
+    })
 
     beforeEach(async () => {
         vi.useFakeTimers();
@@ -100,6 +108,7 @@ describe('test get-transactions-filtered server action/api thing', async () => {
             fromDate: dayjs().subtract(30, 'day').toISOString(),
             transactionType: '' as TransactionType,
             tag: '',
+            categoryId: category.id
         })
         const filteredTransactions = JSON.parse(jsonFilteredTransactions)
         expect(filteredTransactions.length).toBe(2)
@@ -113,6 +122,8 @@ describe('test get-transactions-filtered server action/api thing', async () => {
             fromDate: dayjs().subtract(90, 'day').toISOString(),
             transactionType: TransactionType.Expense,
             tag: '',
+            categoryId: category.id
+
         })
         const filteredTransactions = JSON.parse(jsonFilteredTransactions)
 
@@ -126,6 +137,7 @@ describe('test get-transactions-filtered server action/api thing', async () => {
             fromDate: new Date('2024-06-01').toISOString(),
             transactionType: TransactionType.Expense,
             tag: '',
+            categoryId: category.id
         })
         const filteredTransactions = JSON.parse(jsonFilteredTransactions)
 
