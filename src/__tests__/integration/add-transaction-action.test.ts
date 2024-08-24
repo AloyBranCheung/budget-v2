@@ -46,7 +46,7 @@ describe("test add transaction server action", async () => {
         const mockErrFormData = new FormData();
         const result = await addTransaction(defaultGenericFormState, mockErrFormData)
 
-        expect(result).toEqual({ status: 'error', message: null, error: 'Tags must be in data.' })
+        expect(result).toEqual({ status: 'error', message: null, error: "type: Required, name: Required, amount: Expected number, received nan, category: Required, tags: Required, date: Required" })
     });
 
     it('should return user not found error', async () => {

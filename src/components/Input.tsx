@@ -1,4 +1,4 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import { ClassNameValue, twMerge } from "tailwind-merge";
 
 interface InputProps {
@@ -10,6 +10,7 @@ interface InputProps {
   inputClassName?: ClassNameValue;
   required?: boolean;
   maxLength?: number;
+  defaultValue?: HTMLAttributes<HTMLInputElement>["defaultValue"];
 }
 
 export default function Input({
@@ -21,6 +22,7 @@ export default function Input({
   step,
   required,
   maxLength,
+  defaultValue,
 }: InputProps) {
   return (
     <div className="flex flex-col gap-2 relative">
@@ -36,7 +38,8 @@ export default function Input({
         )}
         name={name ?? label}
         step={step}
-        maxLength={30 ?? maxLength}
+        maxLength={maxLength ?? 30}
+        defaultValue={defaultValue}
       />
     </div>
   );

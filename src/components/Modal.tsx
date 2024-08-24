@@ -28,7 +28,7 @@ export default function Modal({
           exit={{ opacity: 0, y: document.body.clientHeight }}
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         >
-          <div className="bg-primary p-4 w-full h-full flex flex-col gap-2 shadow-md">
+          <div className="bg-primary p-4 w-full h-full flex flex-col gap-2 shadow-md overflow-y-scroll pb-40">
             <BaseIconButton className="self-end" onClick={onClose}>
               <Image src={closeIcon} width={20} height={20} alt="close-icon" />
             </BaseIconButton>

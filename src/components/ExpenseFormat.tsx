@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 // util
 import BinaryUtil from "@/utils/BinaryUtil";
 import { Prisma } from "@prisma/client";
@@ -17,7 +19,7 @@ export default function ExpenseFormat({
   dayjsDateFormat,
 }: ExpenseFormatProps) {
   return (
-    <div className="flex items-center justify-between">
+    <motion.div layout className="flex items-center justify-between w-full">
       <div className="flex items-center gap-8">
         <div>
           {
@@ -32,7 +34,7 @@ export default function ExpenseFormat({
           }
         </div>
         <div className="flex flex-col">
-          <h5>{transaction.name}</h5>
+          <h5 className="break-all">{transaction.name}</h5>
           <h6>{dayjs(transaction.date).format(dayjsDateFormat ?? "HH:mm")}</h6>
         </div>
       </div>
@@ -41,6 +43,6 @@ export default function ExpenseFormat({
           transaction.type === "Expense" ? "-" : "+"
         }$${transaction.amount.toFixed(2)}`}
       </h5>
-    </div>
+    </motion.div>
   );
 }

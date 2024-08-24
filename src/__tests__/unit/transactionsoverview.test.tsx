@@ -1,14 +1,26 @@
 import { beforeEach, afterEach, describe, it, vi, expect } from "vitest";
 import { screen, render, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+// mocks
+import mockIcon from "../mocks/mock-icon";
+import mockGetUser from "@/auth/__mocks__/get-user";
+import mockUser from "../mocks/mock-user";
+import mockUseAxios from "@/hooks/__mocks__/useAxios";
+
 // test this
 import TransactionsOverview from "@/containers/transactions-page/TransactionsOverview";
 import { Tag } from "@prisma/client";
 
+vi.mock("@/auth/get-user");
+vi.mock('@/hooks/useAxios')
+
 describe("test TransactionsOverview component", () => {
   beforeEach(() => {
+    mockGetUser.mockReturnValue(mockUser);
     // shouldAdvanceTimeOption - https://github.com/testing-library/react-testing-library/issues/1198
     vi.useFakeTimers({ shouldAdvanceTime: true });
+
+    mockUseAxios.mockReturnValue({ data: [], isLoading: false })
   });
 
   afterEach(() => {
@@ -23,6 +35,10 @@ describe("test TransactionsOverview component", () => {
 
     render(
       <TransactionsOverview
+        categories={[
+          { id: "1", name: "category1" },
+          { id: "2", name: "category2" },
+        ]}
         tags={
           [
             { id: "1", name: "test123" },
@@ -30,6 +46,10 @@ describe("test TransactionsOverview component", () => {
             { id: "3", name: "test345" },
           ] as Tag[]
         }
+        editIcon={mockIcon}
+        trashIcon={mockIcon}
+        closeIcon={mockIcon}
+        addIcon={mockIcon}
       />
     );
 
@@ -54,6 +74,10 @@ describe("test TransactionsOverview component", () => {
 
     render(
       <TransactionsOverview
+        categories={[
+          { id: "1", name: "category1" },
+          { id: "2", name: "category2" },
+        ]}
         tags={
           [
             { id: "1", name: "test123" },
@@ -61,6 +85,10 @@ describe("test TransactionsOverview component", () => {
             { id: "3", name: "test345" },
           ] as Tag[]
         }
+        editIcon={mockIcon}
+        trashIcon={mockIcon}
+        closeIcon={mockIcon}
+        addIcon={mockIcon}
       />
     );
 

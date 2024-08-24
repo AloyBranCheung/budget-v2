@@ -1,38 +1,22 @@
-import { type NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { config as authOptions } from '@/auth/auth-helper'
-import prisma from '@/libs/prisma'
-
-// params
-// todaysDate: string/Date
-// includeIcon: boolean
+import { NextRequest, NextResponse } from "next/server";
+import getUser from "@/auth/get-user";
+// util
+import getTransactionsFiltered from "@/actions/get-transactions-filtered";
+import { TransactionType } from "@prisma/client";
 
 export async function GET(req: NextRequest) {
-    const session = await getServerSession(authOptions)
+    const user = getUser();
+    if (!user) return new NextResponse("Unauthorized", { status: 401 });
 
-    if (!session) {
-        return new NextResponse('Unauthorized', { status: 403 })
-    }
-
+    // get params
     const url = new URL(req.url);
-    const todaysDate = url.searchParams.get('todaysDate') // comes in as utc 
-    const isIncludeIcon = url.searchParams.get('includeIcon')
+    const toDate = url.searchParams.get('toDate') || '' // comes in as utc 
+    const fromDate = url.searchParams.get('fromDate') || ''
+    const transactionType = url.searchParams.get('transactionType') || ''
+    const tag = url.searchParams.get('tag') || ''
+    const categoryId = url.searchParams.get('categoryId') || ''
 
-    if (!todaysDate) {
-        return new NextResponse('Error: No date given', { status: 500 })
-    }
+    const data = await getTransactionsFiltered({ toDate, fromDate, transactionType: transactionType as TransactionType, tag, categoryId })
 
-    const todaysTransactions = await prisma.transaction.findMany({
-        where: {
-            date: {
-                gte: todaysDate // utc date search db (db uses utc dates)
-            }
-        },
-        ...(isIncludeIcon && { include: { tags: { include: { image: true } } } }),
-        orderBy: {
-            date: 'desc'
-        }
-    })
-
-    return NextResponse.json(todaysTransactions)
+    return new NextResponse(data, { status: 200 })
 }

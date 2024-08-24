@@ -9,6 +9,7 @@ interface MultiselectProps {
   menuOptions: MenuOptions[];
   required?: boolean;
   icon?: React.ReactNode;
+  defaultValue?: string[];
 }
 
 export default function Multiselect({
@@ -17,8 +18,11 @@ export default function Multiselect({
   menuOptions,
   required,
   icon,
+  defaultValue,
 }: MultiselectProps) {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(
+    defaultValue ?? []
+  );
 
   return (
     <div className="flex flex-col gap-2">
