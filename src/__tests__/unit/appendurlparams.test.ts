@@ -15,7 +15,7 @@ describe('test append uri component to base url', () => {
             boolean: true,
         }
         const result = appendUrlParams({ baseUrl, params })
-        expect(result).toBe('/api/test?jsonData="%7B%22dict%22:%7B%22test%22:%22this%22%7D,%22array%22:%5B1,2,3%5D,%22string%22:%22test%22,%22number%22:123,%22boolean%22:true%7D"')
+        expect(result).toBe('/api/test?jsonData=%7B%22dict%22%3A%7B%22test%22%3A%22this%22%7D%2C%22array%22%3A%5B1%2C2%2C3%5D%2C%22string%22%3A%22test%22%2C%22number%22%3A123%2C%22boolean%22%3Atrue%7D')
 
         const decodedParams = decodedUrlParams(result);
         expect(decodedParams).toEqual(params)

@@ -11,6 +11,8 @@ import deleteTransaction from "@/actions/delete-transaction";
 import fetchFilteredTransactions from "@/data-fetching/fetch-transactions-filtered";
 // hooks
 import useAxios from "@/hooks/useAxios";
+// utils
+import { decodedUrlParams } from "@/utils/append-url-params";
 // components
 import SingleSelect from "@/components/SingleSelect";
 import DatePicker from "@/components/DatePicker";
@@ -49,9 +51,8 @@ export default function TransactionsOverview({
   addIcon,
 }: TransactionsOverviewProps) {
   const searchParams = useSearchParams();
-  const jsonData = searchParams.get('jsonData')
-  console.log(typeof jsonData)
-
+  const params = searchParams.get('jsonData') && JSON.parse(decodeURIComponent(searchParams.get('jsonData') || '')
+  )
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [currEditTransactionId, setCurrEditTransactionId] =
     useState<string>("");
@@ -62,8 +63,8 @@ export default function TransactionsOverview({
   const today = dayjs().startOf("day").toISOString();
   const last7Days = dayjs().startOf("day").subtract(7, "days").toISOString();
 
-  const [selectOption, setSelectOption] = useState<string>(last30Days);
-  const [fromDate, setFromDate] = useState<string>(last30Days);
+  const [selectOption, setSelectOption] = useState<string>(params?.isToday ? today : last30Days);
+  const [fromDate, setFromDate] = useState<string>(params?.fromDate ?? last30Days);
   const [toDate, setToDate] = useState<string>(today);
   const [transactionType, setTransactionType] = useState<string>("");
   const [tag, setTag] = useState<string>("");

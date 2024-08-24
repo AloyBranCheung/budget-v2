@@ -58,7 +58,7 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
                 include: { tags: { include: { image: true } } };
               }>[]
             ).map((transaction, i) => (
-              <CardClickWrapper key={transaction.id} isOn={(data as Transaction[]).length > 0} onClick={() => router.push(appendUrlParams({ baseUrl: '/app/transactions', params: { fromDate: transaction.date } }))}>
+              <CardClickWrapper key={transaction.id} isOn={(data as Transaction[]).length > 0} onClick={() => router.push(appendUrlParams({ baseUrl: '/app/transactions', params: { fromDate: transaction.date, isToday: true } }))}>
                 <ExpenseFormat transaction={transaction} />
                 {i !== (data as Transaction[]).length - 1 && (
                   <hr className="h-[2px] my-4 bg-tertiary border-0" />
