@@ -24,6 +24,7 @@ export default function Switch({
 }: SwitchProps) {
   return (
     <div
+      data-testid="switch-ui"
       className={twMerge(
         `${!isOn ? "bg-secondary" : "bg-green-200"} w-14 h-7 rounded-2xl flex ${
           isOn ? "justify-end" : "justify-start"
@@ -33,6 +34,7 @@ export default function Switch({
       onClick={onChange}
     >
       <motion.div
+        data-testid="switch-head"
         className={twMerge(
           "w-5 h-5 bg-white rounded-full shadow-md",
           handleClassName
