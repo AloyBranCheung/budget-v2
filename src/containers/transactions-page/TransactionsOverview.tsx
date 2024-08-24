@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { Prisma, Tag, TransactionType } from "@prisma/client";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { useParams } from "next/navigation";
 // action
 import deleteTransaction from "@/actions/delete-transaction";
 // data-fetching
@@ -47,6 +48,8 @@ export default function TransactionsOverview({
   closeIcon,
   addIcon,
 }: TransactionsOverviewProps) {
+  const params = useParams()
+  console.log({ params })
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [currEditTransactionId, setCurrEditTransactionId] =
     useState<string>("");
