@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Prisma, Tag, TransactionType } from "@prisma/client";
 import Image from "next/image";
@@ -113,6 +113,16 @@ export default function TransactionsOverview({
     }
   };
 
+  useEffect(() => {
+    const dayjsToDate = dayjs(toDate)
+    const dayjsFromDate = dayjs(fromDate)
+    const diff = dayjsToDate.diff(dayjsFromDate, 'day')
+    // not last 30 days
+    if (diff !== 30 && diff !== 7 && diff !== 0) {
+      setSelectOption('custom')
+    }
+  }, [fromDate, toDate])
+
   return (
     <div className="flex flex-col gap-2 w-full">
       <SingleSelect
@@ -130,6 +140,12 @@ export default function TransactionsOverview({
             label: "Last 7 days",
             value: last7Days,
           },
+          {
+            id: 4,
+            label: "Custom",
+            value: "custom",
+            hidden: true,
+          }
         ]}
         onChange={handleChangeSelect}
         value={selectOption}

@@ -46,6 +46,7 @@ export default function SingleSelect({
             key={option.value}
             value={option.value}
             data-testid={option.label}
+            hidden={option?.hidden}
           >
             {option.label}
           </option>
