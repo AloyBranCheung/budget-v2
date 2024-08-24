@@ -1,9 +1,9 @@
-name: Playwright Tests
+name: Playwright Tests (E2E)
 on:
   pull_request:
     branches: [main, master]
 jobs:
-  teste2e:
+  Test:
     services:
       postgres:
         image: postgres
