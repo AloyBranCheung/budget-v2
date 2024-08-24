@@ -1,0 +1,20 @@
+name: Build Test & Unit
+on:
+  pull_request:
+    branches: [main, master]
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    env:
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build + Generate API Client
+        run: yarn build
+      - name: Unit Test
+        run: yarn vitest --run
