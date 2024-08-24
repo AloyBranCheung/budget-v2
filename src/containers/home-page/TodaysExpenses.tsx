@@ -51,33 +51,31 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
           Error fetching data, please try again later.
         </p>
       ) : (
-        <CardClickWrapper onClick={() => router.push(appendUrlParams({ baseUrl: '/app/transactions', params: { test: 'this' } }))}>
-          <Card className="p-4">
-            {(data as Transaction[]).length > 0 ? (
-              (
-                data as Prisma.TransactionGetPayload<{
-                  include: { tags: { include: { image: true } } };
-                }>[]
-              ).map((transaction, i) => (
-                <div key={transaction.id}>
-                  <ExpenseFormat transaction={transaction} />
-                  {i !== (data as Transaction[]).length - 1 && (
-                    <hr className="h-[2px] my-4 bg-tertiary border-0" />
-                  )}
-                </div>
-              ))
-            ) : (
-              <div className="w-full flex items-center justify-center">
-                <Button
-                  onClick={() => router.push("/app/add")}
-                  className="bg-tertiary py-2"
-                >
-                  <p>Add an Expense</p>
-                </Button>
-              </div>
-            )}
-          </Card>
-        </CardClickWrapper>
+        <Card className="p-4">
+          {(data as Transaction[]).length > 0 ? (
+            (
+              data as Prisma.TransactionGetPayload<{
+                include: { tags: { include: { image: true } } };
+              }>[]
+            ).map((transaction, i) => (
+              <CardClickWrapper key={transaction.id} isOn={(data as Transaction[]).length > 0} onClick={() => router.push(appendUrlParams({ baseUrl: '/app/transactions', params: { fromDate: transaction.date } }))}>
+                <ExpenseFormat transaction={transaction} />
+                {i !== (data as Transaction[]).length - 1 && (
+                  <hr className="h-[2px] my-4 bg-tertiary border-0" />
+                )}
+              </CardClickWrapper>
+            ))
+          ) : (
+            <div className="w-full flex items-center justify-center">
+              <Button
+                onClick={() => router.push("/app/add")}
+                className="bg-tertiary py-2"
+              >
+                <p>Add an Expense</p>
+              </Button>
+            </div>
+          )}
+        </Card>
       )}
     </div>
   );
