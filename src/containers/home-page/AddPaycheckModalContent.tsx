@@ -7,6 +7,7 @@ import addPaycheck from "@/actions/add-paycheck";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { defaultGenericFormState, GenericFormState } from "@/types/formstate";
+import DatePicker from "@/components/DatePicker";
 
 interface AddPaycheckModalContentProps {
   onSuccess: () => void;
@@ -36,6 +37,7 @@ export default function AddPaycheckModalContent({
         inputClassName="text-right"
         step={0.01}
       />
+      <DatePicker name="date" label="Date" />
       {state && state.status === "error" && (
         <p className="text-red-500">{state.error}</p>
       )}

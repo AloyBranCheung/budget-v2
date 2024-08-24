@@ -77,7 +77,8 @@ describe("test add transaction server action", async () => {
         await prisma.paycheck.create({
             data: {
                 amount: 1000,
-                userId: user.id
+                userId: user.id,
+                date: new Date().toISOString()
             }
         })
 

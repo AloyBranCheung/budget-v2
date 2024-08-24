@@ -13,6 +13,7 @@ import { revalidatePath } from "next/cache"
 const addPaycheck = async (currState: GenericFormState | undefined, formData: FormData): Promise<GenericFormState | undefined> => {
     const data = formDataToObj(formData)
 
+
     const validatedData = CreatePaycheckSchema.safeParse(data)
 
     if (!validatedData.success) {
@@ -26,11 +27,13 @@ const addPaycheck = async (currState: GenericFormState | undefined, formData: Fo
         await prisma.paycheck.create({
             data: {
                 amount: validatedData.data.amount,
-                userId: user.dbUser.id
+                userId: user.dbUser.id,
+                date: validatedData.data.date
             }
         })
 
     } catch (error) {
+        console.error(error)
         return { status: "error", message: null, error: "error adding paycheck" }
 
     }

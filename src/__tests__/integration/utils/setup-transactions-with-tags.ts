@@ -30,7 +30,8 @@ const setupTransactionsWithTags = async () => {
     const paycheck = await prisma.paycheck.create({
         data: {
             amount: 1000,
-            userId: user.id
+            userId: user.id,
+            date
         },
     })
 

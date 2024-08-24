@@ -46,13 +46,13 @@ export default async function Home() {
       <OverviewCard
         totalRemaining={totalRemaining}
         closeIconB64={closeIconB64}
-        paycheckDate={mostRecentPaycheck?.createdAt}
+        paycheckDate={mostRecentPaycheck?.date}
       />
       {mostRecentPaycheck && (
         <CategoryExpense
           pieChartData={pieChartData}
           upRightArrowIconB64={upRightArrowIconB64}
-          paycheckDate={mostRecentPaycheck?.createdAt}
+          paycheckDate={mostRecentPaycheck?.date}
         />
       )}
       {mostRecentPaycheck && <TodaysExpenses icons={{ borderAllIconB64 }} />}

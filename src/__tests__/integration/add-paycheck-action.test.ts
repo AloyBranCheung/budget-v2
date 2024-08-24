@@ -14,6 +14,7 @@ describe("test add-paycheck server action", () => {
     beforeEach(() => {
         validFormData = new FormData()
         validFormData.append('amount', '123')
+        validFormData.append('date', new Date().toISOString())
     })
 
     afterEach(() => {
@@ -28,7 +29,7 @@ describe("test add-paycheck server action", () => {
         expect(result).toEqual({
             status: 'error',
             message: 'Invalid data',
-            error: 'amount: Expected number, received nan'
+            error: 'amount: Expected number, received nan, date: Required'
         })
     });
 
