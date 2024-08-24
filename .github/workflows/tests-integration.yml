@@ -40,8 +40,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Install jq
         uses: dcarbone/install-jq-action@v2.1.0
-      - name: Build + Generate API Client
-        run: yarn build
+      - name: Generate API Client
+        run: yarn prisma generate
       - name: Setup DB Schemas
         run: yarn prisma migrate deploy
       - name: Seed DB
