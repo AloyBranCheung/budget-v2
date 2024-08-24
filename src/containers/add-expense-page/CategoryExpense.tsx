@@ -1,25 +1,40 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { motion } from "framer-motion";
+// utils
+import appendUrlParams from "@/utils/append-url-params";
 // types
 import { ExpensesByCategory } from "@/types/piechart-data";
 // components
 import Card from "@/components/Card";
-import BaseIconButton from "@/components/BaseIconButton";
 
 const COLORS = ["#F3D0D7", "#FFEFEF"];
 
 interface CategoryExpenseProps {
   pieChartData: ExpensesByCategory[] | null;
   upRightArrowIconB64: string;
+  paycheckDate: Date | undefined
 }
 
 export default function CategoryExpense({
   pieChartData,
   upRightArrowIconB64,
+  paycheckDate
 }: CategoryExpenseProps) {
+  const router = useRouter();
+
+  const handleClickCard = (categoryId: string) => {
+    router.push(appendUrlParams({
+      baseUrl: "/app/transactions", params: {
+        fromDate: paycheckDate,
+        categoryId
+      }
+    }))
+  }
+
   return (
     <div>
       <h4>Expenses by Category</h4>
@@ -38,11 +53,12 @@ export default function CategoryExpense({
               }
               return 0;
             })
-            .map(({ chartData, label, spent, startingTotal }, i) => (
+            .map(({ chartData, label, spent, startingTotal, categoryId }, i) => (
               <motion.div
                 key={`${Math.random()}-${i}`}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => handleClickCard(categoryId)}
               >
                 <Card className="w-40 h-40 flex flex-col gap-2 cursor-pointer">
                   <div className="w-full h-40 flex">
@@ -66,17 +82,14 @@ export default function CategoryExpense({
                         </Pie>
                       </PieChart>
                     </ResponsiveContainer>
-                    <BaseIconButton
-                      className="w-7 h-7"
-                      onClick={() => console.log("icon clicked")}
-                    >
+                    <div>
                       <Image
                         src={upRightArrowIconB64}
                         alt="icon-arrow"
-                        width={30}
-                        height={30}
+                        width={15}
+                        height={15}
                       />
-                    </BaseIconButton>
+                    </div>
                   </div>
                   <h5>{label}</h5>
                   <p className="text-xs">

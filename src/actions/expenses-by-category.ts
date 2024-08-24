@@ -92,7 +92,7 @@ const expensesByCategory = async () => {
             value: transactionTotalRemaining
         })
         // if transaction total < 0 then it is amount saved, if it is > 0 then it is amount spent (expenditure)
-        pieChartData.push({ chartData, label: categoryWithTransactions.name, spent: transactionsTotal, startingTotal: categoryStartingTotal })
+        pieChartData.push({ chartData, label: categoryWithTransactions.name, spent: transactionsTotal, startingTotal: categoryStartingTotal, categoryId: categoryWithTransactions.id })
     }
 
     return pieChartData

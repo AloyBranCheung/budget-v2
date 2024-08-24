@@ -11,8 +11,6 @@ import deleteTransaction from "@/actions/delete-transaction";
 import fetchFilteredTransactions from "@/data-fetching/fetch-transactions-filtered";
 // hooks
 import useAxios from "@/hooks/useAxios";
-// utils
-import { decodedUrlParams } from "@/utils/append-url-params";
 // components
 import SingleSelect from "@/components/SingleSelect";
 import DatePicker from "@/components/DatePicker";
@@ -53,6 +51,7 @@ export default function TransactionsOverview({
   const searchParams = useSearchParams();
   const params = searchParams.get('jsonData') && JSON.parse(decodeURIComponent(searchParams.get('jsonData') || '')
   )
+
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [currEditTransactionId, setCurrEditTransactionId] =
     useState<string>("");
@@ -68,7 +67,7 @@ export default function TransactionsOverview({
   const [toDate, setToDate] = useState<string>(today);
   const [transactionType, setTransactionType] = useState<string>("");
   const [tag, setTag] = useState<string>("");
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState(params?.categoryId ?? '');
 
   const fetchData = useCallback(
     () =>
