@@ -231,6 +231,7 @@ export default function TransactionsOverview({
                       addIcon={addIcon}
                       onSuccess={() => {
                         setCurrEditTransactionId("");
+                        setIsOn(false);
                       }}
                     />
                     <Card
