@@ -1,9 +1,10 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Prisma, Tag, TransactionType } from "@prisma/client";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 // action
 import deleteTransaction from "@/actions/delete-transaction";
 // data-fetching
@@ -47,6 +48,10 @@ export default function TransactionsOverview({
   closeIcon,
   addIcon,
 }: TransactionsOverviewProps) {
+  const searchParams = useSearchParams();
+  const params = searchParams.get('jsonData') && JSON.parse(decodeURIComponent(searchParams.get('jsonData') || '')
+  )
+
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [currEditTransactionId, setCurrEditTransactionId] =
     useState<string>("");
@@ -57,12 +62,12 @@ export default function TransactionsOverview({
   const today = dayjs().startOf("day").toISOString();
   const last7Days = dayjs().startOf("day").subtract(7, "days").toISOString();
 
-  const [selectOption, setSelectOption] = useState<string>(last30Days);
-  const [fromDate, setFromDate] = useState<string>(last30Days);
+  const [selectOption, setSelectOption] = useState<string>(params?.isToday ? today : last30Days);
+  const [fromDate, setFromDate] = useState<string>(params?.fromDate ?? last30Days);
   const [toDate, setToDate] = useState<string>(today);
   const [transactionType, setTransactionType] = useState<string>("");
   const [tag, setTag] = useState<string>("");
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState(params?.categoryId ?? '');
 
   const fetchData = useCallback(
     () =>
@@ -108,6 +113,16 @@ export default function TransactionsOverview({
     }
   };
 
+  useEffect(() => {
+    const dayjsToDate = dayjs(toDate)
+    const dayjsFromDate = dayjs(fromDate)
+    const diff = dayjsToDate.diff(dayjsFromDate, 'day')
+    // not last 30 days
+    if (diff !== 30 && diff !== 7 && diff !== 0) {
+      setSelectOption('custom')
+    }
+  }, [fromDate, toDate])
+
   return (
     <div className="flex flex-col gap-2 w-full">
       <SingleSelect
@@ -125,6 +140,12 @@ export default function TransactionsOverview({
             label: "Last 7 days",
             value: last7Days,
           },
+          {
+            id: 4,
+            label: "Custom",
+            value: "custom",
+            hidden: true,
+          }
         ]}
         onChange={handleChangeSelect}
         value={selectOption}
@@ -231,6 +252,7 @@ export default function TransactionsOverview({
                       addIcon={addIcon}
                       onSuccess={() => {
                         setCurrEditTransactionId("");
+                        setIsOn(false);
                       }}
                     />
                     <Card

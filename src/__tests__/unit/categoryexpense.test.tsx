@@ -7,6 +7,10 @@ import mockIcon from "../mocks/mock-icon";
 import CategoryExpense from "@/containers/add-expense-page/CategoryExpense";
 import { afterEach } from "node:test";
 
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn()
+}))
+
 const expectTextPresent = (text: string) => {
   expect(screen.getByText(text)).not.toBeNull();
 };
@@ -37,8 +41,7 @@ describe("test CategoryExpense component", () => {
     render(
       <CategoryExpense
         pieChartData={mockPiechartData}
-        upRightArrowIconB64={mockIcon}
-      />
+        upRightArrowIconB64={mockIcon} paycheckDate={new Date()} />
     );
 
     expectTextPresent("$400.00 / $400.00");
@@ -53,7 +56,7 @@ describe("test CategoryExpense component", () => {
     mockData[0].spent = -100;
 
     render(
-      <CategoryExpense upRightArrowIconB64={mockIcon} pieChartData={mockData} />
+      <CategoryExpense upRightArrowIconB64={mockIcon} pieChartData={mockData} paycheckDate={new Date()} />
     );
 
     expectTextPresent("$1100.00 / $1000.00");

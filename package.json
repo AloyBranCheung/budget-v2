@@ -15,9 +15,9 @@
     "build": "yarn prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "test:unit": "vitest",
-    "test:int": "bash ./scripts/test_integration.sh",
-    "test:e2e": "bash ./scripts/test_e2e.sh",
+    "test:unit": "dotenv -e .env.test -- vitest",
+    "test:int": "dotenv -e .env.test -- bash ./scripts/test_integration.sh",
+    "test:e2e": "dotenv -e .env.test -- bash ./scripts/test_e2e.sh",
     "test:debug": "dotenv -e .env.test -- npx playwright test --project=chromium --debug"
   },
   "dependencies": {

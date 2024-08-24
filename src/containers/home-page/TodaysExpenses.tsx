@@ -3,6 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+// animations
+import CardClickWrapper from "@/animations/CardClickWrapper";
 // types
 import { Transaction, Prisma } from "@prisma/client";
 // hooks
@@ -15,6 +17,7 @@ import ExpenseFormat from "@/components/ExpenseFormat";
 import Button from "@/components/Button";
 // util
 import LoadingSkeleton from "@/components/LoadingSkeleton";
+import appendUrlParams from "@/utils/append-url-params";
 
 interface TodaysExpensesProps {
   icons: { borderAllIconB64: string };
@@ -55,12 +58,12 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
                 include: { tags: { include: { image: true } } };
               }>[]
             ).map((transaction, i) => (
-              <div key={transaction.id}>
+              <CardClickWrapper key={transaction.id} isOn={(data as Transaction[]).length > 0} onClick={() => router.push(appendUrlParams({ baseUrl: '/app/transactions', params: { fromDate: transaction.date, isToday: true } }))}>
                 <ExpenseFormat transaction={transaction} />
                 {i !== (data as Transaction[]).length - 1 && (
                   <hr className="h-[2px] my-4 bg-tertiary border-0" />
                 )}
-              </div>
+              </CardClickWrapper>
             ))
           ) : (
             <div className="w-full flex items-center justify-center">

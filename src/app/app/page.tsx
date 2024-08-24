@@ -52,6 +52,7 @@ export default async function Home() {
         <CategoryExpense
           pieChartData={pieChartData}
           upRightArrowIconB64={upRightArrowIconB64}
+          paycheckDate={mostRecentPaycheck?.createdAt}
         />
       )}
       {mostRecentPaycheck && <TodaysExpenses icons={{ borderAllIconB64 }} />}
