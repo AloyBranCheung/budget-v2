@@ -5,17 +5,22 @@ import userEvent from "@testing-library/user-event";
 import mockIcon from "../mocks/mock-icon";
 import mockGetUser from "@/auth/__mocks__/get-user";
 import mockUser from "../mocks/mock-user";
+import mockUseAxios from "@/hooks/__mocks__/useAxios";
+
 // test this
 import TransactionsOverview from "@/containers/transactions-page/TransactionsOverview";
 import { Tag } from "@prisma/client";
 
 vi.mock("@/auth/get-user");
+vi.mock('@/hooks/useAxios')
 
 describe("test TransactionsOverview component", () => {
   beforeEach(() => {
     mockGetUser.mockReturnValue(mockUser);
     // shouldAdvanceTimeOption - https://github.com/testing-library/react-testing-library/issues/1198
     vi.useFakeTimers({ shouldAdvanceTime: true });
+
+    mockUseAxios.mockReturnValue({ data: [], isLoading: false })
   });
 
   afterEach(() => {
