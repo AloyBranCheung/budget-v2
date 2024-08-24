@@ -8,7 +8,7 @@ import getUser from "@/auth/get-user"
 
 dayjs.extend(utc)
 
-interface GetTransactionsFilteredParams {
+export interface GetTransactionsFilteredParams {
     toDate: string
     fromDate: string
     transactionType: TransactionType

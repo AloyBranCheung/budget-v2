@@ -5,10 +5,11 @@ import { Prisma, Tag, TransactionType } from "@prisma/client";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 // action
-import getTransactionsFiltered from "@/actions/get-transactions-filtered";
 import deleteTransaction from "@/actions/delete-transaction";
+// data-fetching
+import fetchFilteredTransactions from "@/data-fetching/fetch-transactions-filtered";
 // hooks
-import useServerAction from "@/hooks/useServerAction";
+import useAxios from "@/hooks/useAxios";
 // components
 import SingleSelect from "@/components/SingleSelect";
 import DatePicker from "@/components/DatePicker";
@@ -18,9 +19,10 @@ import Card from "@/components/Card";
 import Switch from "@/components/Switch";
 import EditTransactionModal from "./EditTransactionModal";
 
-type TransactionWithTags = Prisma.TransactionGetPayload<{
+export type TransactionWithTags = Prisma.TransactionGetPayload<{
   include: { tags: { include: { image: true } } };
-}>[];
+}>;
+
 type CategorySelectedField = Prisma.CategoryGetPayload<{
   select: {
     id: true;
@@ -64,7 +66,7 @@ export default function TransactionsOverview({
 
   const fetchData = useCallback(
     () =>
-      getTransactionsFiltered({
+      fetchFilteredTransactions({
         fromDate,
         toDate,
         transactionType: transactionType as TransactionType,
@@ -82,11 +84,11 @@ export default function TransactionsOverview({
       shouldRefresh,
     ]
   );
-  const { data: transactionsArr, isLoading } = useServerAction(fetchData) as {
-    data: TransactionWithTags | null;
-    isLoading: boolean;
-    isError: boolean;
-  };
+  const { data: transactionsArr, isLoading } = useAxios(fetchData) as {
+    data: TransactionWithTags[];
+    isLoading: boolean
+  }
+
 
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -232,11 +234,10 @@ export default function TransactionsOverview({
                       }}
                     />
                     <Card
-                      className={`flex space-between items-center border-l-8 gap-4 ${
-                        transaction.type === TransactionType.Expense
-                          ? "border-expense"
-                          : "border-income"
-                      }`}
+                      className={`flex space-between items-center border-l-8 gap-4 ${transaction.type === TransactionType.Expense
+                        ? "border-expense"
+                        : "border-income"
+                        }`}
                     >
                       <AnimatePresence>
                         <ExpenseFormat
