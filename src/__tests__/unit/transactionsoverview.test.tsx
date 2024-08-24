@@ -1,6 +1,7 @@
 import { beforeEach, afterEach, describe, it, vi, expect } from "vitest";
 import { screen, render, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 // mocks
 import mockIcon from "../mocks/mock-icon";
 import mockGetUser from "@/auth/__mocks__/get-user";
@@ -13,6 +14,11 @@ import { Tag } from "@prisma/client";
 
 vi.mock("@/auth/get-user");
 vi.mock('@/hooks/useAxios')
+vi.mock("next/navigation", () => ({
+  // useSearchParams: vi.fn(() => ({ get: vi.fn().mockReturnValue(JSON.stringify({ fromDate: new Date(2023, 1, 1), isToday: true })) })),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
+  useRouter: vi.fn(),
+}))
 
 describe("test TransactionsOverview component", () => {
   beforeEach(() => {
@@ -106,5 +112,39 @@ describe("test TransactionsOverview component", () => {
       (screen.getByTestId("Last 7 days") as HTMLOptionElement).selected
     ).toBeTruthy();
     expect(screen.getByDisplayValue("2024-08-25")).toBeDefined();
+    expect(screen.queryByDisplayValue('Custom')).toBeNull();
+  });
+
+
+  it("should show 'Custom' in date range selector if fromDate and toDate do not fall in the date range selector values", async () => {
+    const mockUseSearchParams = vi.mocked(useSearchParams);
+    const urlSearchParams = new URLSearchParams();
+    urlSearchParams.set('jsonData', JSON.stringify({ fromDate: new Date(2023, 1, 1), isToday: true }));
+    mockUseSearchParams.mockReturnValueOnce(urlSearchParams as ReadonlyURLSearchParams)
+
+    const date = new Date(2024, 8, 1); // september first
+    vi.setSystemTime(date);
+
+    render(
+      <TransactionsOverview
+        categories={[
+          { id: "1", name: "category1" },
+          { id: "2", name: "category2" },
+        ]}
+        tags={
+          [
+            { id: "1", name: "test123" },
+            { id: "2", name: "test234" },
+            { id: "3", name: "test345" },
+          ] as Tag[]
+        }
+        editIcon={mockIcon}
+        trashIcon={mockIcon}
+        closeIcon={mockIcon}
+        addIcon={mockIcon}
+      />
+    );
+
+    expect(screen.queryByDisplayValue('Custom')).not.toBeNull()
   });
 });
