@@ -71,6 +71,7 @@ export default async function Home() {
             pieChartData={expensesByTagsArr}
             upRightArrowIconB64={upRightArrowIconB64}
             paycheckDate={mostRecentPaycheck.date}
+            icons={{ borderAllIconB64 }}
           />
         </>
       )}
