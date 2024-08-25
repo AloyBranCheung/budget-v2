@@ -10,6 +10,10 @@ interface IncomeVsExpensesProps {
     data: ChartData[]
 }
 
+const formatLabel = (value: number) => {
+    return `$${value.toFixed(2)}`
+}
+
 export default function IncomeVsExpenses({ data }: IncomeVsExpensesProps) {
     return (
         <div className='flex flex-col gap-2'>
@@ -21,11 +25,11 @@ export default function IncomeVsExpenses({ data }: IncomeVsExpensesProps) {
                         <Tooltip />
                         <Legend />
                         <Bar dataKey="income" stackId="a" fill="#A2D9A8" radius={[16, 16, 0, 0]}>
-                            <LabelList dataKey="income" position="top" />
+                            <LabelList dataKey="income" position="top" formatter={formatLabel} />
                         </Bar>
                         <ReferenceLine y={0} stroke="#000" />
                         <Bar dataKey="expense" stackId="a" fill="#F3D0D7" radius={[16, 16, 0, 0]}>
-                            <LabelList dataKey="expense" position="top" />
+                            <LabelList dataKey="expense" position="top" formatter={formatLabel} />
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>
