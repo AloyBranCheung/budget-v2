@@ -17,7 +17,8 @@
     "test:unit": "dotenv -e .env.test -- vitest",
     "test:int": "dotenv -e .env.test -- bash ./scripts/test_integration.sh",
     "test:e2e": "dotenv -e .env.test -- bash ./scripts/test_e2e.sh",
-    "test:debug": "dotenv -e .env.test -- npx playwright test --project=chromium --debug"
+    "test:debug": "dotenv -e .env.test -- npx playwright test --project=chromium --debug",
+    "test:all": "yarn test:unit --run && yarn test:int && yarn test:e2e"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
