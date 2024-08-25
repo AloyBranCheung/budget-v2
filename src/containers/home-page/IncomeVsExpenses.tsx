@@ -16,6 +16,8 @@ import {
 import { capitalize } from "lodash";
 // type
 import { ChartData } from "@/actions/get-incomevexpenses";
+// utils
+import nFormatter from "@/utils/format-number";
 // components
 import H4WithH6Icon from "@/components/H4WithH6Icon";
 
@@ -25,7 +27,8 @@ interface IncomeVsExpensesProps {
 }
 
 const formatLabel = (value: number) => {
-  return `$${value.toFixed(2)}`;
+  // need to Math.abs value as nFormatter does not work with negative numbers
+  return `$${value >= 0 ? "" : "-"}${nFormatter(Math.abs(value), 1)}`;
 };
 
 export default function IncomeVsExpenses({
@@ -39,13 +42,20 @@ export default function IncomeVsExpenses({
       <H4WithH6Icon
         icon={borderAllIconB64}
         iconAltText="all-transactions-icon.png"
-        h4Text="Transactions Per Month"
+        h4Text="Monthly Expense"
         h6Text="All Transactions"
         onClick={() => router.push("/app/transactions")}
       />
       <Card className="h-96 w-full overflow-x-auto">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart stackOffset="sign" height={384} data={data} barSize={15}>
+        <ResponsiveContainer width={600} height="100%">
+          <BarChart
+            stackOffset="sign"
+            width={600}
+            height={384}
+            data={data}
+            barSize={15}
+            margin={{ top: 16, bottom: 16 }}
+          >
             <YAxis hide padding={{ bottom: 25 }} />
             <XAxis dataKey="name" strokeWidth={2} />
             <Legend formatter={(value) => <p>{capitalize(value)}</p>} />
