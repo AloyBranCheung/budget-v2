@@ -18,15 +18,16 @@ export default function IncomeVsExpenses({ data }: IncomeVsExpensesProps) {
     return (
         <div className='flex flex-col gap-2'>
             <h4>Expenses Per Month</h4>
-            <Card className='h-80 w-full overflow-x-auto'>
+            <Card className='h-96 w-full overflow-x-auto'>
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart stackOffset='sign' height={320} data={data} margin={{ top: 50 }}>
+                    <BarChart stackOffset='sign' height={384} data={data}>
+                        <YAxis hide padding={{ bottom: 25 }} />
                         <XAxis dataKey='name' />
                         <Legend />
                         <Bar dataKey="income" stackId="a" fill="#A2D9A8" radius={[16, 16, 0, 0]}>
                             <LabelList dataKey="income" position="top" formatter={formatLabel} />
                         </Bar>
-                        <ReferenceLine y={0} stroke="#000" />
+                        <ReferenceLine y={0} />
                         <Bar dataKey="expense" stackId="a" fill="#F3D0D7" radius={[16, 16, 0, 0]}>
                             <LabelList dataKey="expense" position="top" formatter={formatLabel} />
                         </Bar>

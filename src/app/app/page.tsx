@@ -44,10 +44,6 @@ export default async function Home() {
 
   const incomeVExpensesData = await getIncomeVExpense();
 
-  if (!mostRecentPaycheck || !totalRemaining || !pieChartData || !incomeVExpensesData) {
-    return <Page500 />
-  }
-
   return (
     <div className="flex flex-col gap-4">
       <WelcomeText profileIconB64={profileIconB64} name={user.dbUser.name} />
