@@ -16,6 +16,7 @@ import WelcomeText from "@/containers/home-page/WelcomeText";
 import CategoryExpense from "@/containers/add-expense-page/CategoryExpense";
 import TodaysExpenses from "@/containers/home-page/TodaysExpenses";
 import IncomeVsExpenses from "@/containers/home-page/IncomeVsExpenses";
+import ExpensesPerTag from "@/containers/home-page/ExpensesPerTag";
 
 export default async function Home() {
   const user = await getUser();
@@ -60,7 +61,11 @@ export default async function Home() {
             paycheckDate={mostRecentPaycheck?.date}
           />
           <TodaysExpenses icons={{ borderAllIconB64 }} />
-          <IncomeVsExpenses data={incomeVExpensesData} />
+          <IncomeVsExpenses
+            data={incomeVExpensesData}
+            icons={{ borderAllIconB64 }}
+          />
+          <ExpensesPerTag upRightArrowIconB64={upRightArrowIconB64} />
         </>
       )}
     </div>
