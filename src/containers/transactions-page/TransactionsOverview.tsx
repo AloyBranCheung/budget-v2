@@ -71,7 +71,7 @@ export default function TransactionsOverview({
   );
   const [toDate, setToDate] = useState<string>(today);
   const [transactionType, setTransactionType] = useState<string>("");
-  const [tag, setTag] = useState<string>("");
+  const [tag, setTag] = useState<string>(params?.tagId ?? "");
   const [categoryId, setCategoryId] = useState(params?.categoryId ?? "");
 
   const fetchData = useCallback(

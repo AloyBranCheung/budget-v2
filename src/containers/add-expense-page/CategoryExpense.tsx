@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 // utils
 import appendUrlParams from "@/utils/append-url-params";
+import TransactionParams from "@/utils/TransactionParams";
 // types
 import { ExpensesByCategory } from "@/types/piechart-data";
 // components
@@ -27,10 +28,10 @@ export default function CategoryExpense({
     router.push(
       appendUrlParams({
         baseUrl: "/app/transactions",
-        params: {
+        params: new TransactionParams({
           fromDate: paycheckDate,
           categoryId,
-        },
+        }).getAll(),
       }),
     );
   };

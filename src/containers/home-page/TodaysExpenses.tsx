@@ -18,6 +18,7 @@ import H4WithH6Icon from "@/components/H4WithH6Icon";
 // util
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import appendUrlParams from "@/utils/append-url-params";
+import TransactionParams from "@/utils/TransactionParams";
 
 interface TodaysExpensesProps {
   icons: { borderAllIconB64: string };
@@ -57,7 +58,10 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
                   router.push(
                     appendUrlParams({
                       baseUrl: "/app/transactions",
-                      params: { fromDate: transaction.date, isToday: true },
+                      params: new TransactionParams({
+                        fromDate: transaction.date,
+                        isToday: true,
+                      }).getAll(),
                     }),
                   )
                 }

@@ -60,7 +60,7 @@ export default async function Home() {
           <CategoryExpense
             pieChartData={pieChartData}
             upRightArrowIconB64={upRightArrowIconB64}
-            paycheckDate={mostRecentPaycheck?.date}
+            paycheckDate={mostRecentPaycheck.date}
           />
           <TodaysExpenses icons={{ borderAllIconB64 }} />
           <IncomeVsExpenses
@@ -70,6 +70,7 @@ export default async function Home() {
           <ExpensesPerTag
             pieChartData={expensesByTagsArr}
             upRightArrowIconB64={upRightArrowIconB64}
+            paycheckDate={mostRecentPaycheck.date}
           />
         </>
       )}

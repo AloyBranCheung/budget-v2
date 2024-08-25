@@ -27,7 +27,7 @@ describe("test get expenses by tags for pie chart data", async () => {
     // even though 2 expenses are added in the setup, one of them doesn't have a
     // tag relation so it is not part of any expenses by tag (intended, even
     // though that means the data is bad)
-    const { amountSpent, label, chartData } = expensesByTags[0];
+    const { tagId, amountSpent, label, chartData } = expensesByTags[0];
     expect(amountSpent).toBe(100.69);
     expect(label).toBe("Housing");
     expect(chartData.length).toBe(2);
@@ -35,5 +35,6 @@ describe("test get expenses by tags for pie chart data", async () => {
     expect(chartData[0].value).toBe(100.69);
     expect(chartData[1].name).toBe("Total");
     expect(chartData[1].value).toBe(100.69);
+    expect(tagId.length > 0).toBeTruthy();
   });
 });

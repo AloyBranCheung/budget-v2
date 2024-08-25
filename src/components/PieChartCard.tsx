@@ -26,7 +26,7 @@ export default function PieChartCard({
   onClickContainer,
 }: PieChartCard) {
   return (
-    <CardClickWrapper isOn={false} onClick={onClickContainer}>
+    <CardClickWrapper onClick={onClickContainer}>
       <Card className="w-40 h-40 flex flex-col gap-2">
         <div className="w-full h-16 flex">
           <ResponsivePieChart

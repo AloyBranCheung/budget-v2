@@ -8,6 +8,7 @@ export interface GetExpensesByTagsRes {
   chartData: PieChartData;
   label: string;
   amountSpent: number;
+  tagId: string;
 }
 
 const getExpensesByTags = async (): Promise<GetExpensesByTagsRes[]> => {
@@ -16,6 +17,7 @@ const getExpensesByTags = async (): Promise<GetExpensesByTagsRes[]> => {
     throw new Error("User not found");
   }
 
+  // most recent paycheck
   const paycheck = await prisma.paycheck.findFirst({
     where: {
       userId: user.dbUser.id,
@@ -53,33 +55,35 @@ const getExpensesByTags = async (): Promise<GetExpensesByTagsRes[]> => {
     },
   });
 
-  const tagsHash: { [tagName: string]: number } = {};
+  const tagsHash: { [tagId: string]: { amount: number; id: string } } = {};
   let totalSpent = 0;
   for (const tag of tags) {
-    if (!(tag.name in tagsHash)) {
-      tagsHash[tag.name] = 0;
+    if (!(tag.id in tagsHash)) {
+      tagsHash[tag.name] = { amount: 0, id: tag.id };
     }
   }
+
   for (const expense of expenses) {
     for (const tag of expense.tags) {
       if (tag.name in tagsHash) {
-        tagsHash[tag.name] += expense.amount;
+        tagsHash[tag.name].amount += expense.amount;
         totalSpent += expense.amount;
       }
     }
   }
 
   const expensesByTagsChartData = Object.entries(tagsHash).map(
-    ([name, amount]) => ({
+    ([name, data]) => ({
       chartData: [
         {
           name,
-          value: amount,
+          value: data.amount,
         },
         { name: "Total", value: totalSpent },
       ],
       label: name,
-      amountSpent: amount,
+      amountSpent: data.amount,
+      tagId: data.id,
     }),
   );
 
