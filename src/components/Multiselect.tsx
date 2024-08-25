@@ -21,7 +21,7 @@ export default function Multiselect({
   defaultValue,
 }: MultiselectProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
-    defaultValue ?? []
+    defaultValue ?? [],
   );
 
   return (

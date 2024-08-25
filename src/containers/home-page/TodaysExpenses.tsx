@@ -29,7 +29,13 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <H4WithH6Icon icon={icons.borderAllIconB64} iconAltText='all-transactions-icon.png' h4Text={"Today's Expenses"} h6Text='All Transactions' onClick={() => router.push("/app/transactions")} />
+      <H4WithH6Icon
+        icon={icons.borderAllIconB64}
+        iconAltText="all-transactions-icon.png"
+        h4Text={"Today's Expenses"}
+        h6Text="All Transactions"
+        onClick={() => router.push("/app/transactions")}
+      />
       {isLoading ? (
         <LoadingSkeleton />
       ) : isError ? (
@@ -44,7 +50,18 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
                 include: { tags: { include: { image: true } } };
               }>[]
             ).map((transaction, i) => (
-              <CardClickWrapper key={transaction.id} isOn={(data as Transaction[]).length > 0} onClick={() => router.push(appendUrlParams({ baseUrl: '/app/transactions', params: { fromDate: transaction.date, isToday: true } }))}>
+              <CardClickWrapper
+                key={transaction.id}
+                isOn={(data as Transaction[]).length > 0}
+                onClick={() =>
+                  router.push(
+                    appendUrlParams({
+                      baseUrl: "/app/transactions",
+                      params: { fromDate: transaction.date, isToday: true },
+                    }),
+                  )
+                }
+              >
                 <ExpenseFormat transaction={transaction} />
                 {i !== (data as Transaction[]).length - 1 && (
                   <hr className="h-[2px] my-4 bg-tertiary border-0" />

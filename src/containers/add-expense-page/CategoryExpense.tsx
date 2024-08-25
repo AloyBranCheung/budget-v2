@@ -30,7 +30,7 @@ export default function CategoryExpense({
           fromDate: paycheckDate,
           categoryId,
         },
-      })
+      }),
     );
   };
 
@@ -72,7 +72,7 @@ export default function CategoryExpense({
                     </span>
                   </p>
                 </PieChartCard>
-              )
+              ),
             )}
       </div>
     </div>

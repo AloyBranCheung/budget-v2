@@ -55,14 +55,14 @@ export default function DatePicker({
         name={name}
         className={twMerge(
           "p-4 w-full bg-secondary rounded-2xl shadow-md outline-none border-none cursor-pointer",
-          inputClassName
+          inputClassName,
         )}
       />
       <input
         type="hidden"
         name="_clientTimezone"
         value={Intl.DateTimeFormat().resolvedOptions().timeZone}
-        data-testid='_hiddenClientTimezone'
+        data-testid="_hiddenClientTimezone"
       />
     </div>
   );

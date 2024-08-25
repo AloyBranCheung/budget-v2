@@ -20,7 +20,7 @@ export default function SegmentedButton({
   defaultValue,
 }: SegmentedButtonProps) {
   const [activeItem, setActiveItem] = useState(
-    defaultValue ?? menuItems[0].value
+    defaultValue ?? menuItems[0].value,
   );
 
   useEffect(() => {

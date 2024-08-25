@@ -25,7 +25,7 @@ export default function ExpenseFormat({
           {
             <Image
               src={new BinaryUtil(
-                transaction.tags[0].image!.bytes
+                transaction.tags[0].image!.bytes,
               ).pngBinaryToBase64()}
               alt="tag image"
               width={25}
@@ -39,8 +39,9 @@ export default function ExpenseFormat({
         </div>
       </div>
       <h5>
-        {`${transaction.type === "Expense" ? "-" : "+"
-          }$${transaction.amount.toFixed(2)}`}
+        {`${
+          transaction.type === "Expense" ? "-" : "+"
+        }$${transaction.amount.toFixed(2)}`}
       </h5>
     </motion.div>
   );

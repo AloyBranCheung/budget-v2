@@ -75,7 +75,7 @@ export default function AddTransactionForm({
               id: category.id,
               label: category.name,
               value: category.id,
-            })
+            }),
           )}
         />
         <Multiselect

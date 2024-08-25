@@ -34,7 +34,7 @@ export default function SingleSelect({
         name={name ?? label}
         className={twMerge(
           "p-4 rounded-2xl bg-secondary shadow-md outline-none border-none cursor-pointer",
-          selectClassName
+          selectClassName,
         )}
         onChange={onChange}
         value={value}

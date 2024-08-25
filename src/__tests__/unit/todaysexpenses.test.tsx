@@ -99,7 +99,7 @@ describe("test TodaysExpenses component", () => {
     render(<TodaysExpenses icons={{ borderAllIconB64: mockIcon }} />);
 
     expect(
-      screen.getByText("Error fetching data, please try again later.")
+      screen.getByText("Error fetching data, please try again later."),
     ).toBeDefined();
   });
 });

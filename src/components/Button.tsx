@@ -30,7 +30,7 @@ export default function Button({
       type={type}
       className={twMerge(
         "bg-secondary p-4 rounded-2xl text-center text-body1 shadow-md font-semibold",
-        className
+        className,
       )}
     >
       {isLoading ? "Loading..." : children}

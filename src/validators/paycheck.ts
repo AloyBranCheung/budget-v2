@@ -1,7 +1,6 @@
-import { z } from 'zod'
-
+import { z } from "zod";
 
 export const CreatePaycheckSchema = z.object({
-    amount: z.coerce.number().positive(),
-    date: z.string().datetime()
-})
+  amount: z.coerce.number().positive(),
+  date: z.string().datetime(),
+});

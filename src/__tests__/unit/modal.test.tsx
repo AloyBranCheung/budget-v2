@@ -25,7 +25,7 @@ describe("test Modal component", () => {
         closeIcon={mockIcon}
       >
         <div>helloworld</div>
-      </Modal>
+      </Modal>,
     );
 
     expect(screen.queryByText("helloworld")).not.toBeNull();
@@ -41,7 +41,7 @@ describe("test Modal component", () => {
         closeIcon={mockIcon}
       >
         <div>helloworld</div>
-      </Modal>
+      </Modal>,
     );
 
     expect(screen.queryByText("helloworld")).toBeNull();

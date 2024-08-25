@@ -25,7 +25,7 @@ export default async function Home() {
   const closeIconB64 = await new IconHelper("close-icon.png").getIcon64();
   const profileIconB64 = await new IconHelper("profile-icon.png").getIcon64();
   const upRightArrowIconB64 = await new IconHelper(
-    "up-right-arrow-icon.png"
+    "up-right-arrow-icon.png",
   ).getIcon64();
   const borderAllIconB64 = await new IconHelper("border-all.png").getIcon64();
 
@@ -37,9 +37,8 @@ export default async function Home() {
   )
     return <Page500 />;
 
-  const { mostRecentPaycheck, totalRemaining } = await getMostRecentPaycheck(
-    user
-  );
+  const { mostRecentPaycheck, totalRemaining } =
+    await getMostRecentPaycheck(user);
 
   const pieChartData = await expensesByCategory();
 
