@@ -1,10 +1,10 @@
 import { beforeEach, vi } from "vitest";
-import { mockReset } from 'vitest-mock-extended'
+import { mockReset } from "vitest-mock-extended";
 
 beforeEach(() => {
-    mockReset(mockGetUser)
-})
+  mockReset(mockGetUser);
+});
 
-const mockGetUser = vi.fn()
+const mockGetUser = vi.fn();
 
-export default mockGetUser
+export default mockGetUser;

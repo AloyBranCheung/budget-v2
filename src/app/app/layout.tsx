@@ -12,7 +12,5 @@ export default async function AppLayout({ children }: AppLayoutProps) {
   const session = await getServerSession();
   if (!session) return <Page403 />;
 
-  return (
-      <div className="h-full w-full">{children}</div>
-  );
+  return <div className="h-full w-full">{children}</div>;
 }

@@ -34,7 +34,7 @@ export default function Input({
         placeholder={placeholder ?? label}
         className={twMerge(
           "outline-none border-none p-4 rounded-2xl bg-secondary shadow-md",
-          inputClassName
+          inputClassName,
         )}
         name={name ?? label}
         step={step}

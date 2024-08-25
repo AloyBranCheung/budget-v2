@@ -49,8 +49,9 @@ export default function TransactionsOverview({
   addIcon,
 }: TransactionsOverviewProps) {
   const searchParams = useSearchParams();
-  const params = searchParams.get('jsonData') && JSON.parse(decodeURIComponent(searchParams.get('jsonData') || '')
-  )
+  const params =
+    searchParams.get("jsonData") &&
+    JSON.parse(decodeURIComponent(searchParams.get("jsonData") || ""));
 
   const [shouldRefresh, setShouldRefresh] = useState(false);
   const [currEditTransactionId, setCurrEditTransactionId] =
@@ -62,12 +63,16 @@ export default function TransactionsOverview({
   const today = dayjs().startOf("day").toISOString();
   const last7Days = dayjs().startOf("day").subtract(7, "days").toISOString();
 
-  const [selectOption, setSelectOption] = useState<string>(params?.isToday ? today : last30Days);
-  const [fromDate, setFromDate] = useState<string>(params?.fromDate ?? last30Days);
+  const [selectOption, setSelectOption] = useState<string>(
+    params?.isToday ? today : last30Days,
+  );
+  const [fromDate, setFromDate] = useState<string>(
+    params?.fromDate ?? last30Days,
+  );
   const [toDate, setToDate] = useState<string>(today);
   const [transactionType, setTransactionType] = useState<string>("");
-  const [tag, setTag] = useState<string>("");
-  const [categoryId, setCategoryId] = useState(params?.categoryId ?? '');
+  const [tag, setTag] = useState<string>(params?.tagId ?? "");
+  const [categoryId, setCategoryId] = useState(params?.categoryId ?? "");
 
   const fetchData = useCallback(
     () =>
@@ -87,13 +92,12 @@ export default function TransactionsOverview({
       categoryId,
       currEditTransactionId,
       shouldRefresh,
-    ]
+    ],
   );
   const { data: transactionsArr, isLoading } = useAxios(fetchData) as {
     data: TransactionWithTags[];
-    isLoading: boolean
-  }
-
+    isLoading: boolean;
+  };
 
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -114,14 +118,14 @@ export default function TransactionsOverview({
   };
 
   useEffect(() => {
-    const dayjsToDate = dayjs(toDate)
-    const dayjsFromDate = dayjs(fromDate)
-    const diff = dayjsToDate.diff(dayjsFromDate, 'day')
+    const dayjsToDate = dayjs(toDate);
+    const dayjsFromDate = dayjs(fromDate);
+    const diff = dayjsToDate.diff(dayjsFromDate, "day");
     // not last 30 days
     if (diff !== 30 && diff !== 7 && diff !== 0) {
-      setSelectOption('custom')
+      setSelectOption("custom");
     }
-  }, [fromDate, toDate])
+  }, [fromDate, toDate]);
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -145,7 +149,7 @@ export default function TransactionsOverview({
             label: "Custom",
             value: "custom",
             hidden: true,
-          }
+          },
         ]}
         onChange={handleChangeSelect}
         value={selectOption}
@@ -256,10 +260,11 @@ export default function TransactionsOverview({
                       }}
                     />
                     <Card
-                      className={`flex space-between items-center border-l-8 gap-4 ${transaction.type === TransactionType.Expense
-                        ? "border-expense"
-                        : "border-income"
-                        }`}
+                      className={`flex space-between items-center border-l-8 gap-4 ${
+                        transaction.type === TransactionType.Expense
+                          ? "border-expense"
+                          : "border-income"
+                      }`}
                     >
                       <AnimatePresence>
                         <ExpenseFormat
@@ -296,7 +301,7 @@ export default function TransactionsOverview({
                               className="cursor-pointer"
                               onClick={async () => {
                                 const response = await deleteTransaction(
-                                  transaction.id
+                                  transaction.id,
                                 );
                                 if (response.status === "success") {
                                   setShouldRefresh(!shouldRefresh);

@@ -29,7 +29,7 @@ export default function Switch({
         `${!isOn ? "bg-secondary" : "bg-green-200"} w-14 h-7 rounded-2xl flex ${
           isOn ? "justify-end" : "justify-start"
         } p-2 cursor-pointer items-center shadows-inner shadow-md`,
-        switchClassName
+        switchClassName,
       )}
       onClick={onChange}
     >
@@ -37,7 +37,7 @@ export default function Switch({
         data-testid="switch-head"
         className={twMerge(
           "w-5 h-5 bg-white rounded-full shadow-md",
-          handleClassName
+          handleClassName,
         )}
         layout
         transition={spring}

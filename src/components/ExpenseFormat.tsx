@@ -25,7 +25,7 @@ export default function ExpenseFormat({
           {
             <Image
               src={new BinaryUtil(
-                transaction.tags[0].image!.bytes
+                transaction.tags[0].image!.bytes,
               ).pngBinaryToBase64()}
               alt="tag image"
               width={25}
@@ -34,7 +34,7 @@ export default function ExpenseFormat({
           }
         </div>
         <div className="flex flex-col">
-          <h5 className="break-all">{transaction.name}</h5>
+          <h5 className="break-words">{transaction.name}</h5>
           <h6>{dayjs(transaction.date).format(dayjsDateFormat ?? "HH:mm")}</h6>
         </div>
       </div>

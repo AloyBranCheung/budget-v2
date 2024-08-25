@@ -28,8 +28,8 @@ export default function OverviewCard({
       <motion.div
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.97 }}
-        className="cursor-pointer"
         onClick={() => setIsOpen(true)}
+        className={`${paycheckDate ? "w-max" : "w-full"} cursor-pointer`}
       >
         <Card className={`${paycheckDate ? "w-max" : "w-full"}`}>
           {totalRemaining ? (
