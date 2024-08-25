@@ -2,12 +2,13 @@
 
 import Card from '@/components/Card';
 import React from 'react'
-import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import { ReferenceLine, Bar, BarChart, LabelList, Legend, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import { capitalize } from 'lodash'
 // type 
 import { ChartData } from '@/actions/get-incomevexpenses';
+// components
+import H4WithH6Icon from '@/components/H4WithH6Icon';
 
 interface IncomeVsExpensesProps {
     data: ChartData[]
@@ -23,21 +24,7 @@ export default function IncomeVsExpenses({ data, icons: { borderAllIconB64 } }: 
 
     return (
         <div className='flex flex-col gap-2'>
-            <div className='flex justify-between items-center'>
-                <h4>Transactions Per Month</h4>
-                <div
-                    className="cursor-pointer flex items-center gap-1"
-                    onClick={() => router.push("/app/transactions")}
-                >
-                    <h6>All Transactions</h6>
-                    <Image
-                        src={borderAllIconB64}
-                        alt="all-icon.png"
-                        width={20}
-                        height={20}
-                    />
-                </div>
-            </div>
+            <H4WithH6Icon icon={borderAllIconB64} iconAltText='all-transactions-icon.png' h4Text='Transactions Per Month' h6Text='All Transactions' onClick={() => router.push("/app/transactions")} />
             <Card className='h-96 w-full overflow-x-auto'>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart stackOffset='sign' height={384} data={data} barSize={15}>

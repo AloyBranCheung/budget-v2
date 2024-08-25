@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 // animations
 import CardClickWrapper from "@/animations/CardClickWrapper";
@@ -15,6 +14,7 @@ import fetchTodaysTransactions from "@/data-fetching/fetch-todays-transactions";
 import Card from "@/components/Card";
 import ExpenseFormat from "@/components/ExpenseFormat";
 import Button from "@/components/Button";
+import H4WithH6Icon from "@/components/H4WithH6Icon";
 // util
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import appendUrlParams from "@/utils/append-url-params";
@@ -29,21 +29,7 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center w-full justify-between">
-        <h4>Today&#39;s Expenses</h4>
-        <div
-          className="cursor-pointer flex items-center gap-1"
-          onClick={() => router.push("/app/transactions")}
-        >
-          <h6>All Transactions</h6>
-          <Image
-            src={icons.borderAllIconB64}
-            alt="all-icon.png"
-            width={20}
-            height={20}
-          />
-        </div>
-      </div>
+      <H4WithH6Icon icon={icons.borderAllIconB64} iconAltText='all-transactions-icon.png' h4Text={"Today's Expenses"} h6Text='All Transactions' onClick={() => router.push("/app/transactions")} />
       {isLoading ? (
         <LoadingSkeleton />
       ) : isError ? (
