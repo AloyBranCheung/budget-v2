@@ -34,14 +34,13 @@ export default function ExpenseFormat({
           }
         </div>
         <div className="flex flex-col">
-          <h5 className="break-all">{transaction.name}</h5>
+          <h5 className="break-words">{transaction.name}</h5>
           <h6>{dayjs(transaction.date).format(dayjsDateFormat ?? "HH:mm")}</h6>
         </div>
       </div>
       <h5>
-        {`${
-          transaction.type === "Expense" ? "-" : "+"
-        }$${transaction.amount.toFixed(2)}`}
+        {`${transaction.type === "Expense" ? "-" : "+"
+          }$${transaction.amount.toFixed(2)}`}
       </h5>
     </motion.div>
   );
