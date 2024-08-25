@@ -7,6 +7,7 @@ import getMostRecentPaycheck from "@/actions/most-recent-paycheck";
 import IconHelper from "@/utils/IconHelper";
 // actions
 import expensesByCategory from "@/actions/expenses-by-category";
+import getIncomeVExpense from "@/actions/get-incomevexpenses";
 // components
 import Page500 from "../error";
 import Page403 from "../Page403";
@@ -14,6 +15,7 @@ import OverviewCard from "@/containers/home-page/OverviewCard";
 import WelcomeText from "@/containers/home-page/WelcomeText";
 import CategoryExpense from "@/containers/add-expense-page/CategoryExpense";
 import TodaysExpenses from "@/containers/home-page/TodaysExpenses";
+import IncomeVsExpenses from "@/containers/home-page/IncomeVsExpenses";
 
 export default async function Home() {
   const user = await getUser();
@@ -40,6 +42,12 @@ export default async function Home() {
 
   const pieChartData = await expensesByCategory();
 
+  const incomeVExpensesData = await getIncomeVExpense();
+
+  if (!mostRecentPaycheck || !totalRemaining || !pieChartData || !incomeVExpensesData) {
+    return <Page500 />
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <WelcomeText profileIconB64={profileIconB64} name={user.dbUser.name} />
@@ -49,13 +57,16 @@ export default async function Home() {
         paycheckDate={mostRecentPaycheck?.date}
       />
       {mostRecentPaycheck && (
-        <CategoryExpense
-          pieChartData={pieChartData}
-          upRightArrowIconB64={upRightArrowIconB64}
-          paycheckDate={mostRecentPaycheck?.date}
-        />
+        <>
+          <CategoryExpense
+            pieChartData={pieChartData}
+            upRightArrowIconB64={upRightArrowIconB64}
+            paycheckDate={mostRecentPaycheck?.date}
+          />
+          <TodaysExpenses icons={{ borderAllIconB64 }} />
+          <IncomeVsExpenses data={incomeVExpensesData} />
+        </>
       )}
-      {mostRecentPaycheck && <TodaysExpenses icons={{ borderAllIconB64 }} />}
     </div>
   );
 }
