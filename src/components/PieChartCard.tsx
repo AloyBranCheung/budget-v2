@@ -2,12 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { truncate } from "lodash";
 // types
 import { PieChartData } from "@/types/piechart-data";
 // components
 import Card from "./Card";
 import ResponsivePieChart from "./ResponsivePieChart";
+import CardClickWrapper from "@/animations/CardClickWrapper";
 
 interface PieChartCard {
   chartData: PieChartData;
@@ -25,12 +26,7 @@ export default function PieChartCard({
   onClickContainer,
 }: PieChartCard) {
   return (
-    <motion.div
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={onClickContainer}
-      className="cursor-pointer"
-    >
+    <CardClickWrapper isOn={false} onClick={onClickContainer}>
       <Card className="w-40 h-40 flex flex-col gap-2">
         <div className="w-full h-16 flex">
           <ResponsivePieChart
@@ -47,9 +43,9 @@ export default function PieChartCard({
             />
           </div>
         </div>
-        <h5>{label}</h5>
+        <h5>{truncate(label, { length: 15 })}</h5>
         {children}
       </Card>
-    </motion.div>
+    </CardClickWrapper>
   );
 }

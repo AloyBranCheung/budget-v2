@@ -8,6 +8,7 @@ import IconHelper from "@/utils/IconHelper";
 // actions
 import expensesByCategory from "@/actions/expenses-by-category";
 import getIncomeVExpense from "@/actions/get-incomevexpenses";
+import getExpensesByTags from "@/actions/get-expenses-by-tag";
 // components
 import Page500 from "../error";
 import Page403 from "../Page403";
@@ -44,6 +45,8 @@ export default async function Home() {
 
   const incomeVExpensesData = await getIncomeVExpense();
 
+  const expensesByTagsArr = await getExpensesByTags();
+
   return (
     <div className="flex flex-col gap-4">
       <WelcomeText profileIconB64={profileIconB64} name={user.dbUser.name} />
@@ -64,7 +67,10 @@ export default async function Home() {
             data={incomeVExpensesData}
             icons={{ borderAllIconB64 }}
           />
-          <ExpensesPerTag upRightArrowIconB64={upRightArrowIconB64} />
+          <ExpensesPerTag
+            pieChartData={expensesByTagsArr}
+            upRightArrowIconB64={upRightArrowIconB64}
+          />
         </>
       )}
     </div>

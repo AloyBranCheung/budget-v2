@@ -8,6 +8,7 @@ import appendUrlParams from "@/utils/append-url-params";
 import { ExpensesByCategory } from "@/types/piechart-data";
 // components
 import PieChartCard from "@/components/PieChartCard";
+import PieChartCardsContainer from "@/components/PieChartCardsContainer";
 
 interface CategoryExpenseProps {
   pieChartData: ExpensesByCategory[] | null;
@@ -37,7 +38,7 @@ export default function CategoryExpense({
   return (
     <div>
       <h4>Expenses by Category</h4>
-      <div className="flex items-start space-between gap-4 p-2 py-6 flex-wrap">
+      <PieChartCardsContainer>
         {pieChartData &&
           pieChartData
             .sort((a) => {
@@ -74,7 +75,7 @@ export default function CategoryExpense({
                 </PieChartCard>
               ),
             )}
-      </div>
+      </PieChartCardsContainer>
     </div>
   );
 }
