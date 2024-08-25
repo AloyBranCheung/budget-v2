@@ -79,7 +79,7 @@ const getExpensesByTags = async (): Promise<GetExpensesByTagsRes[]> => {
           name,
           value: data.amount,
         },
-        { name: "Total", value: totalSpent },
+        { name: "Total", value: totalSpent === 0 ? 1 : totalSpent },
       ],
       label: name,
       amountSpent: data.amount,
