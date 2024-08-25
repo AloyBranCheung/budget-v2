@@ -54,7 +54,7 @@ export default function ExpensesPerTag({
   return (
     <div>
       <H4WithH6Icon
-        h4Text="Expense Per Tag This Paycheck"
+        h4Text="Paycheck Breakdown"
         h6Text="All Transactions"
         onClick={() => router.push("/app/transactions")}
         iconAltText="all-transactions-icon.png"
