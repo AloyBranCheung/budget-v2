@@ -2,7 +2,7 @@
 
 import Card from '@/components/Card';
 import React from 'react'
-import { ReferenceLine, Bar, BarChart, LabelList, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { ReferenceLine, Bar, BarChart, LabelList, Legend, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 // type 
 import { ChartData } from '@/actions/get-incomevexpenses';
 
