@@ -22,7 +22,6 @@ export default function IncomeVsExpenses({ data }: IncomeVsExpensesProps) {
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart stackOffset='sign' height={320} data={data} margin={{ top: 50 }}>
                         <XAxis dataKey='name' />
-                        <Tooltip />
                         <Legend />
                         <Bar dataKey="income" stackId="a" fill="#A2D9A8" radius={[16, 16, 0, 0]}>
                             <LabelList dataKey="income" position="top" formatter={formatLabel} />
