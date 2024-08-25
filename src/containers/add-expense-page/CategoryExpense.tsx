@@ -61,8 +61,8 @@ export default function CategoryExpense({
                 onClick={() => handleClickCard(categoryId)}
               >
                 <Card className="w-40 h-40 flex flex-col gap-2 cursor-pointer">
-                  <div className="w-full h-40 flex">
-                    <ResponsiveContainer width="100%" height="100%">
+                  <div className="w-full h-16 flex">
+                    <ResponsiveContainer width="100%" height={64}>
                       <PieChart>
                         <Pie
                           dataKey="value"
