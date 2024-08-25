@@ -13,7 +13,7 @@
     "psql:local": "psql -U local -h localhost -p 5432 local",
     "build": "yarn prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && yarn prettier . '!./databases' --write",
     "test:unit": "dotenv -e .env.test -- vitest",
     "test:int": "dotenv -e .env.test -- bash ./scripts/test_integration.sh",
     "test:e2e": "dotenv -e .env.test -- bash ./scripts/test_e2e.sh",
