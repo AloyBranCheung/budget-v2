@@ -1,7 +1,7 @@
 "use client";
 
 import Card from "@/components/Card";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   ReferenceLine,
@@ -31,11 +31,22 @@ const formatLabel = (value: number) => {
   return `$${value >= 0 ? "" : "-"}${nFormatter(Math.abs(value), 1)}`;
 };
 
+const chartWidth = 600;
+
 export default function IncomeVsExpenses({
   data,
   icons: { borderAllIconB64 },
 }: IncomeVsExpensesProps) {
   const router = useRouter();
+  const chartCardRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (chartCardRef.current) {
+      // scroll the chart to current month
+      chartCardRef.current.scrollLeft =
+        (chartWidth / 12) * new Date().getMonth();
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-2">
@@ -46,11 +57,11 @@ export default function IncomeVsExpenses({
         h6Text="All Transactions"
         onClick={() => router.push("/app/transactions")}
       />
-      <Card className="h-96 w-full overflow-x-auto">
-        <ResponsiveContainer width={600} height="100%">
+      <Card ref={chartCardRef} className="h-96 w-full overflow-x-auto">
+        <ResponsiveContainer width={chartWidth} height="100%">
           <BarChart
             stackOffset="sign"
-            width={600}
+            width={chartWidth}
             height={384}
             data={data}
             barSize={15}

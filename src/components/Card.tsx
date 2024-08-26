@@ -6,12 +6,18 @@ interface CardProps {
   children: React.ReactNode;
 }
 
-export default function Card({ children, className }: CardProps) {
-  return (
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ children, className }, ref) => (
     <div
+      ref={ref}
       className={twMerge("bg-secondary rounded-2xl p-4 shadow-md", className)}
     >
       {children}
     </div>
-  );
-}
+  ),
+);
+
+// https://stackoverflow.com/questions/67992894/component-definition-is-missing-display-name-for-forwardref
+Card.displayName = "Card";
+
+export default Card;
