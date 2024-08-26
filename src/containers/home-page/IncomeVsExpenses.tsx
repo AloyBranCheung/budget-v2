@@ -42,9 +42,13 @@ export default function IncomeVsExpenses({
 
   useEffect(() => {
     if (chartCardRef.current) {
+      const thisMonth = new Date().getMonth();
+      const scrollTo =
+        (chartWidth / 12) * thisMonth -
+        chartCardRef.current.getBoundingClientRect().width / 2;
+
       // scroll the chart to current month
-      chartCardRef.current.scrollLeft =
-        (chartWidth / 12) * new Date().getMonth();
+      chartCardRef.current.scrollLeft = scrollTo;
     }
   }, []);
 
