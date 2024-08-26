@@ -38,7 +38,7 @@ export default function CategoryExpense({
 
   return (
     <div>
-      <h4>Expenses by Category</h4>
+      <h4>Paycheck Budget</h4>
       <PieChartCardsContainer>
         {pieChartData &&
           pieChartData
