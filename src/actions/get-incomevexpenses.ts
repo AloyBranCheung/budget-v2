@@ -17,6 +17,19 @@ const getIncomeVExpense = async (): Promise<ChartData[]> => {
   }
 
   try {
+    const paychecksThisYear = await prisma.paycheck.findMany({
+      where: {
+        userId: user.dbUser.id,
+        date: {
+          gte: new Date(new Date().getFullYear(), 0, 1),
+          lt: new Date(new Date().getFullYear() + 1, 0, 1),
+        },
+      },
+      orderBy: {
+        date: "desc",
+      },
+    });
+
     const transactionsThisYear = await prisma.transaction.findMany({
       where: {
         userId: user.dbUser.id,
@@ -35,6 +48,13 @@ const getIncomeVExpense = async (): Promise<ChartData[]> => {
     for (let i = 0; i < 12; i++) {
       if (!(i in monthsHash)) {
         monthsHash[i] = { expense: 0, income: 0 };
+      }
+    }
+
+    for (const paycheck of paychecksThisYear) {
+      const paycheckMonth = paycheck.date.getMonth();
+      if (paycheckMonth in monthsHash) {
+        monthsHash[paycheckMonth].income += paycheck.amount;
       }
     }
 

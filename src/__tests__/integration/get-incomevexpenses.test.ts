@@ -15,10 +15,10 @@ describe("test get income vs expenses for chart", async () => {
   });
   beforeEach(async () => {
     await setupTransactionsWithTags();
+    mockGetUser.mockResolvedValue({ dbUser: user });
   });
 
   it("should return income vs expenses array for chat", async () => {
-    mockGetUser.mockResolvedValue({ dbUser: user });
     const response = await getIncomeVExpense();
 
     expect(response.length).toBe(12);
@@ -30,7 +30,8 @@ describe("test get income vs expenses for chart", async () => {
       { name: "May", income: null, expense: null },
       { name: "Jun", income: null, expense: -100.69 },
       { name: "Jul", income: 100.69, expense: null },
-      { name: "Aug", income: null, expense: -100.69 },
+      // includes paycheck as income
+      { name: "Aug", income: 1000, expense: -100.69 },
       { name: "Sep", income: null, expense: null },
       { name: "Oct", income: null, expense: null },
       { name: "Nov", income: null, expense: null },

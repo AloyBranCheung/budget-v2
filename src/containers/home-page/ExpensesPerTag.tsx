@@ -10,17 +10,20 @@ import { GetExpensesByTagsRes } from "@/actions/get-expenses-by-tag";
 // components
 import PieChartCard from "@/components/PieChartCard";
 import PieChartCardsContainer from "@/components/PieChartCardsContainer";
+import H4WithH6Icon from "@/components/H4WithH6Icon";
 
 interface ExpensesPerTagProps {
   upRightArrowIconB64: string;
   pieChartData: GetExpensesByTagsRes[];
   paycheckDate: Date;
+  icons: { borderAllIconB64: string };
 }
 
 export default function ExpensesPerTag({
   upRightArrowIconB64,
   pieChartData,
   paycheckDate,
+  icons: { borderAllIconB64 },
 }: ExpensesPerTagProps) {
   const router = useRouter();
 
@@ -50,7 +53,13 @@ export default function ExpensesPerTag({
 
   return (
     <div>
-      <h4>Expense Per Tag</h4>
+      <H4WithH6Icon
+        h4Text="Paycheck Breakdown"
+        h6Text="All Transactions"
+        onClick={() => router.push("/app/transactions")}
+        iconAltText="all-transactions-icon.png"
+        icon={borderAllIconB64}
+      />
       <PieChartCardsContainer>{pieCharts}</PieChartCardsContainer>
     </div>
   );

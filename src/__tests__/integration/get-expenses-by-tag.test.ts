@@ -15,13 +15,14 @@ describe("test get expenses by tags for pie chart data", async () => {
   });
   if (!user) throw new Error("User not found.");
 
-  beforeEach(async () => {
-    await setupTransactionsWithTags();
+  beforeEach(async (textCtx) => {
+    mockGetUser.mockReturnValue({ dbUser: user });
+    if (textCtx.task.name !== "should return empty array when no paycheck") {
+      await setupTransactionsWithTags();
+    }
   });
 
   it("should return correct data for pie chart", async () => {
-    mockGetUser.mockReturnValue({ dbUser: user });
-
     const expensesByTags = await getExpensesByTags();
 
     // even though 2 expenses are added in the setup, one of them doesn't have a
@@ -36,5 +37,27 @@ describe("test get expenses by tags for pie chart data", async () => {
     expect(chartData[1].name).toBe("Total");
     expect(chartData[1].value).toBe(100.69);
     expect(tagId.length > 0).toBeTruthy();
+  });
+
+  it("should return empty array when no paycheck", async () => {
+    const response = await getExpensesByTags();
+
+    expect(response.length).toBe(0);
+  });
+
+  it("should return total 1 when no transactions for new paycheck so that pie chart will show empty", async () => {
+    await prisma.paycheck.create({
+      data: {
+        userId: user.id,
+        amount: 100.69,
+        date: new Date(),
+      },
+    });
+
+    const response = await getExpensesByTags();
+
+    const totalObj = response[0].chartData[1];
+    expect(totalObj.name).toBe("Total");
+    expect(totalObj.value).toBe(1);
   });
 });

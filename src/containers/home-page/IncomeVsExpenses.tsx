@@ -1,7 +1,7 @@
 "use client";
 
 import Card from "@/components/Card";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   ReferenceLine,
@@ -16,6 +16,8 @@ import {
 import { capitalize } from "lodash";
 // type
 import { ChartData } from "@/actions/get-incomevexpenses";
+// utils
+import nFormatter from "@/utils/format-number";
 // components
 import H4WithH6Icon from "@/components/H4WithH6Icon";
 
@@ -25,27 +27,50 @@ interface IncomeVsExpensesProps {
 }
 
 const formatLabel = (value: number) => {
-  return `$${value.toFixed(2)}`;
+  // need to Math.abs value as nFormatter does not work with negative numbers
+  return `$${value >= 0 ? "" : "-"}${nFormatter(Math.abs(value), 1)}`;
 };
+
+const chartWidth = 600;
 
 export default function IncomeVsExpenses({
   data,
   icons: { borderAllIconB64 },
 }: IncomeVsExpensesProps) {
   const router = useRouter();
+  const chartCardRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (chartCardRef.current) {
+      const thisMonth = new Date().getMonth();
+      const scrollTo =
+        (chartWidth / 12) * thisMonth -
+        chartCardRef.current.getBoundingClientRect().width / 2;
+
+      // scroll the chart to current month
+      chartCardRef.current.scrollLeft = scrollTo;
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-2">
       <H4WithH6Icon
         icon={borderAllIconB64}
         iconAltText="all-transactions-icon.png"
-        h4Text="Transactions Per Month"
+        h4Text="Monthly Expense"
         h6Text="All Transactions"
         onClick={() => router.push("/app/transactions")}
       />
-      <Card className="h-96 w-full overflow-x-auto">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart stackOffset="sign" height={384} data={data} barSize={15}>
+      <Card ref={chartCardRef} className="h-96 w-full overflow-x-auto">
+        <ResponsiveContainer width={chartWidth} height="100%">
+          <BarChart
+            stackOffset="sign"
+            width={chartWidth}
+            height={384}
+            data={data}
+            barSize={15}
+            margin={{ top: 16, bottom: 16 }}
+          >
             <YAxis hide padding={{ bottom: 25 }} />
             <XAxis dataKey="name" strokeWidth={2} />
             <Legend formatter={(value) => <p>{capitalize(value)}</p>} />
