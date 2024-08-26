@@ -31,7 +31,7 @@ const formatLabel = (value: number) => {
   return `$${value >= 0 ? "" : "-"}${nFormatter(Math.abs(value), 1)}`;
 };
 
-const chartWidth = 600;
+const chartWidth = 1504 - 32;
 
 export default function IncomeVsExpenses({
   data,
@@ -42,6 +42,7 @@ export default function IncomeVsExpenses({
 
   useEffect(() => {
     if (chartCardRef.current) {
+      console.log(chartCardRef.current.getBoundingClientRect().width);
       const thisMonth = new Date().getMonth();
       const scrollTo =
         (chartWidth / 12) * thisMonth -
