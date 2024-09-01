@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { ClassNameValue, twMerge } from "tailwind-merge";
+// utils
+import getTimezone from "@/utils/get-user-timezone";
 
 interface DatePickerProps {
   label: string;
@@ -61,7 +63,7 @@ export default function DatePicker({
       <input
         type="hidden"
         name="_clientTimezone"
-        value={Intl.DateTimeFormat().resolvedOptions().timeZone}
+        value={getTimezone()}
         data-testid="_hiddenClientTimezone"
       />
     </div>

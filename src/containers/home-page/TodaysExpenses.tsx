@@ -19,6 +19,8 @@ import H4WithH6Icon from "@/components/H4WithH6Icon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import appendUrlParams from "@/utils/append-url-params";
 import TransactionParams from "@/utils/TransactionParams";
+import ErrorText from "@/components/ErrorText";
+import { ErrMsg } from "@/types/errmsg";
 
 interface TodaysExpensesProps {
   icons: { borderAllIconB64: string };
@@ -40,9 +42,7 @@ export default function TodaysExpenses({ icons }: TodaysExpensesProps) {
       {isLoading ? (
         <LoadingSkeleton />
       ) : isError ? (
-        <p className="text-error">
-          Error fetching data, please try again later.
-        </p>
+        <ErrorText>{ErrMsg.NO_DATA}</ErrorText>
       ) : (
         <Card className="p-4">
           {(data as Transaction[]).length > 0 ? (
