@@ -1,9 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { TransactionType } from "@prisma/client";
+// types
+import { defaultGenericFormState } from "@/types/formstate";
+// mocks
+import mockGetUser from "@/auth/__mocks__/get-user";
+// utils
+import prisma from "./utils/prisma";
 // test this
 import addTag from "@/actions/add-tag";
-import { defaultGenericFormState } from "@/types/formstate";
-import mockGetUser from "@/auth/__mocks__/get-user";
-import prisma from "./utils/prisma";
 
 vi.mock("@/auth/get-user");
 vi.mock("next/cache");
@@ -14,6 +18,7 @@ describe("test add tag server action", () => {
   beforeEach(() => {
     validFormData = new FormData();
     validFormData.append("name", "test name");
+    validFormData.append("type", TransactionType.Expense);
   });
 
   afterEach(() => {
@@ -28,7 +33,7 @@ describe("test add tag server action", () => {
     expect(result).toEqual({
       status: "error",
       message: "Error",
-      error: "name: Required",
+      error: "name: Required, type: Required",
     });
   });
 

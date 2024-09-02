@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 interface TextAreaProps {
   label: string;
@@ -19,7 +20,7 @@ export default function TextArea({
   const [textValue, setTextValue] = useState(defaultValue ?? "");
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl relative">
+    <motion.div layout className="flex flex-col gap-2 rounded-2xl relative">
       <label>{label}</label>
       <textarea
         required={required ?? true}
@@ -35,6 +36,6 @@ export default function TextArea({
       <div className="absolute bottom-4 right-4 text-placeholder">
         {textValue.length}/250
       </div>
-    </div>
+    </motion.div>
   );
 }

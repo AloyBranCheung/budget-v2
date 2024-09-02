@@ -58,7 +58,9 @@ describe("test expenses by category util fn", () => {
     });
     if (!needCategory)
       throw new Error("TestDB Setup Error: Needs Category not found");
-    const randomTag = await prisma.tag.findFirst();
+    const randomTag = await prisma.tag.findFirst({
+      where: { type: TransactionType.Expense },
+    });
     if (!randomTag) throw new Error("TestDB Setup Error: Tags not found");
     const randomSpent = Math.floor(randomAmount * 0.5 * 0.5);
     await prisma.transaction.create({

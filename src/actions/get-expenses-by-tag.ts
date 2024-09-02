@@ -3,6 +3,7 @@
 import getUser from "@/auth/get-user";
 import prisma from "@/libs/prisma";
 import { PieChartData } from "@/types/piechart-data";
+import { TransactionType } from "@prisma/client";
 
 export interface GetExpensesByTagsRes {
   chartData: PieChartData;
@@ -38,6 +39,9 @@ const getExpensesByTags = async (): Promise<GetExpensesByTagsRes[]> => {
           userId: null,
         },
       ],
+      AND: {
+        type: TransactionType.Expense,
+      },
     },
   });
 

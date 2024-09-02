@@ -7,7 +7,6 @@ import getMostRecentPaycheck from "@/actions/most-recent-paycheck";
 import IconHelper from "@/utils/IconHelper";
 // actions
 import expensesByCategory from "@/actions/expenses-by-category";
-import getIncomeVExpense from "@/actions/get-incomevexpenses";
 import getExpensesByTags from "@/actions/get-expenses-by-tag";
 // components
 import Page500 from "../error";
@@ -43,8 +42,6 @@ export default async function Home() {
 
   const pieChartData = await expensesByCategory();
 
-  const incomeVExpensesData = await getIncomeVExpense();
-
   const expensesByTagsArr = await getExpensesByTags();
 
   return (
@@ -63,10 +60,7 @@ export default async function Home() {
             paycheckDate={mostRecentPaycheck.date}
           />
           <TodaysExpenses icons={{ borderAllIconB64 }} />
-          <IncomeVsExpenses
-            data={incomeVExpensesData}
-            icons={{ borderAllIconB64 }}
-          />
+          <IncomeVsExpenses icons={{ borderAllIconB64 }} />
           <ExpensesPerTag
             pieChartData={expensesByTagsArr}
             upRightArrowIconB64={upRightArrowIconB64}
