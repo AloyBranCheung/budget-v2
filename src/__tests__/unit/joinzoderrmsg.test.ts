@@ -31,7 +31,7 @@ describe("test util fn join zod err msg", () => {
     const errors = zodFormErrorObj(testValidatedData);
 
     expect(errors.error).toBe(
-      "name: Must contain at least 1 character, description: Expected string, received boolean",
+      "name: Must contain at least 1 character, description: Expected string, received boolean, type: Required",
     );
     expect(errors.status).toBe("error");
     expect(errors.message).toBe("Invalid data");
@@ -44,7 +44,7 @@ describe("test util fn join zod err msg", () => {
     const errors = joinZodErrMsg(testValidatedData.error);
 
     expect(errors).toBe(
-      "name: Must contain at least 1 character, description: Expected string, received boolean",
+      "name: Must contain at least 1 character, description: Expected string, received boolean, type: Required",
     );
   });
 });
