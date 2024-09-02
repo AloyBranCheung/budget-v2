@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 // auth
 import { signIn, signOut } from "next-auth/react";
@@ -10,11 +10,19 @@ interface LoginButtonProps {
 }
 
 export default function LoginButton({ session }: LoginButtonProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   return session ? (
     <>
-      <button onClick={() => router.push("/app")}>Go to app</button>
+      <button
+        onClick={() => {
+          setIsLoading(true);
+          router.push("/app");
+        }}
+      >
+        {isLoading ? "Loading..." : "Go to App"}
+      </button>
       <button
         onClick={() =>
           signOut({ callbackUrl: process.env.NEXT_PUBLIC_BASE_URL })
@@ -25,13 +33,14 @@ export default function LoginButton({ session }: LoginButtonProps) {
     </>
   ) : (
     <button
-      onClick={() =>
+      onClick={() => {
+        setIsLoading(true);
         signIn("auth0", {
           callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/app`,
-        })
-      }
+        });
+      }}
     >
-      LoginButton
+      {isLoading ? "Loading..." : "LoginButton"}
     </button>
   );
 }
