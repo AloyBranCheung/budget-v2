@@ -23,6 +23,7 @@ export default function Button({
 
   return (
     <motion.button
+      layout
       onClick={onClick}
       disabled={isLoading}
       whileHover={{ backgroundColor: "#7c7c7c" }}

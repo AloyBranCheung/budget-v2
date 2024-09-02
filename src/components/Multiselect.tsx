@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 // types
 import { MenuOptions } from "@/types/menu";
 
@@ -25,7 +26,11 @@ export default function Multiselect({
   );
 
   return (
-    <div className="flex flex-col gap-2">
+    <motion.div
+      layout
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="flex flex-col gap-2"
+    >
       <div className="flex items-center justify-between">
         <label htmlFor={name ?? label}>{label}</label>
         {icon}
@@ -59,6 +64,6 @@ export default function Multiselect({
           </option>
         ))}
       </select>
-    </div>
+    </motion.div>
   );
 }

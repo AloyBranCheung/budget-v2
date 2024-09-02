@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { ClassNameValue, twMerge } from "tailwind-merge";
+import { motion } from "framer-motion";
 // utils
 import getTimezone from "@/utils/get-user-timezone";
 
@@ -41,7 +42,7 @@ export default function DatePicker({
   const [date, setDate] = useState<string>(stateDefault);
 
   return (
-    <div className={twMerge("flex flex-col gap-2", className)}>
+    <motion.div layout className={twMerge("flex flex-col gap-2", className)}>
       <label htmlFor={name}>{label}</label>
       <input
         required={required ?? true}
@@ -66,6 +67,6 @@ export default function DatePicker({
         value={getTimezone()}
         data-testid="_hiddenClientTimezone"
       />
-    </div>
+    </motion.div>
   );
 }

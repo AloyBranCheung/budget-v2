@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import { Prisma, TransactionType } from "@prisma/client";
 import Image from "next/image";
+import { AnimatePresence } from "framer-motion";
 // types
 import { GenericFormState, defaultGenericFormState } from "@/types/formstate";
 // action
@@ -37,11 +38,18 @@ export default function AddTransactionForm({
   >(addTransaction, defaultGenericFormState);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [currType, setCurrType] = useState<string | null>(null);
+
+  const handleTypeChange = (value: string | number) => {
+    setCurrType(value as string);
+  };
 
   return (
-    <>
-      <form className="flex flex-col gap-4" action={formAction}>
+    <AnimatePresence>
+      <form key="form" className="flex flex-col gap-4" action={formAction}>
         <SegmentedButton
+          key="type-seg-button"
+          onValueChange={handleTypeChange}
           name="type"
           layoutGroupId="incomeExpenses"
           defaultValue={TransactionType.Expense}
@@ -58,8 +66,14 @@ export default function AddTransactionForm({
             },
           ]}
         />
-        <Input name="name" label="Name" placeholder="Name of transaction" />
         <Input
+          key="name"
+          name="name"
+          label="Name"
+          placeholder="Name of transaction"
+        />
+        <Input
+          key="amount"
           name="amount"
           label="Amount"
           type="number"
@@ -68,6 +82,7 @@ export default function AddTransactionForm({
           step={0.01}
         />
         <SingleSelect
+          key="category"
           label="Category"
           name="category"
           menuOptions={JSON.parse(JSONcategories).map(
@@ -79,34 +94,46 @@ export default function AddTransactionForm({
           )}
         />
         <Multiselect
+          key="tags"
           label="Tags"
           name="tags"
-          menuOptions={userTags.map((tag) => ({
-            id: tag.id,
-            label: tag.name,
-            value: tag.id,
-          }))}
+          menuOptions={userTags
+            .filter((tag) => {
+              if (currType === TransactionType.Income) {
+                return tag.type === TransactionType.Income;
+              } else {
+                return tag.type === TransactionType.Expense;
+              }
+            })
+            .map((tag) => ({
+              id: tag.id,
+              label: tag.name,
+              value: tag.id,
+            }))}
           icon={
             <BaseIconButton onClick={() => setIsOpen(true)}>
               <Image src={addIcon} alt="add-tag-icon" width={20} height={20} />
             </BaseIconButton>
           }
         />
-        <DatePicker label="Date" name="date" isDateTime />
-        <TextArea label="Notes" name="notes" required={false} />
+        <DatePicker key="date" label="Date" name="date" isDateTime />
+        <TextArea key="notes" label="Notes" name="notes" required={false} />
         {state && state.status === "error" && (
-          <p className="text-red-500">{state.error}</p>
+          <p key="err-msg" className="text-red-500">
+            {state.error}
+          </p>
         )}
-        <Button type="submit" className="mt-4 bg-tertiary">
+        <Button key="submit-btn" type="submit" className="mt-4 bg-tertiary">
           Save
         </Button>
       </form>
       <AddTagModal
+        key="add-tag-modal"
         closeIcon={closeIcon}
         onClose={() => setIsOpen(false)}
         isOpen={isOpen}
         onSuccess={() => setIsOpen(false)}
       />
-    </>
+    </AnimatePresence>
   );
 }
