@@ -42,7 +42,6 @@ export default async function Home() {
 
   const pieChartData = await expensesByCategory();
 
-
   const expensesByTagsArr = await getExpensesByTags();
 
   return (
@@ -61,9 +60,7 @@ export default async function Home() {
             paycheckDate={mostRecentPaycheck.date}
           />
           <TodaysExpenses icons={{ borderAllIconB64 }} />
-          <IncomeVsExpenses
-            icons={{ borderAllIconB64 }}
-          />
+          <IncomeVsExpenses icons={{ borderAllIconB64 }} />
           <ExpensesPerTag
             pieChartData={expensesByTagsArr}
             upRightArrowIconB64={upRightArrowIconB64}

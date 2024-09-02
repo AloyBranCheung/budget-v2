@@ -1,3 +1,3 @@
-const getTimezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone
+const getTimezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-export default getTimezone
+export default getTimezone;

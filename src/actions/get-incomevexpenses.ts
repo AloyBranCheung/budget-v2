@@ -3,11 +3,11 @@
 import prisma from "@/libs/prisma";
 import getUser from "@/auth/get-user";
 import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc';
-import tz from 'dayjs/plugin/timezone'
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
 
-dayjs.extend(utc)
-dayjs.extend(tz)
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export interface ChartData {
   name: string;
@@ -15,7 +15,10 @@ export interface ChartData {
   income: number | null;
 }
 
-const getIncomeVExpense = async (date: string, timezone: string): Promise<ChartData[]> => {
+const getIncomeVExpense = async (
+  date: string,
+  timezone: string,
+): Promise<ChartData[]> => {
   const user = await getUser();
   if (!user) {
     throw new Error("User not found.");
@@ -23,9 +26,9 @@ const getIncomeVExpense = async (date: string, timezone: string): Promise<ChartD
 
   try {
     const thisYearFilter = {
-      gte: dayjs(date).startOf('year').toISOString(),
-      lt: dayjs(date).startOf('year').add(1, 'year').toISOString(),
-    }
+      gte: dayjs(date).startOf("year").toISOString(),
+      lt: dayjs(date).startOf("year").add(1, "year").toISOString(),
+    };
 
     const paychecksThisYear = await prisma.paycheck.findMany({
       where: {
@@ -56,14 +59,14 @@ const getIncomeVExpense = async (date: string, timezone: string): Promise<ChartD
     }
 
     for (const paycheck of paychecksThisYear) {
-      const paycheckMonth = dayjs.tz(paycheck.date, timezone).month()
+      const paycheckMonth = dayjs.tz(paycheck.date, timezone).month();
       if (paycheckMonth in monthsHash) {
         monthsHash[paycheckMonth].income += paycheck.amount;
       }
     }
 
     for (const transaction of transactionsThisYear) {
-      const transactionMonth = dayjs.tz(transaction.date, timezone).month()
+      const transactionMonth = dayjs.tz(transaction.date, timezone).month();
       if (transactionMonth in monthsHash) {
         if (transaction.type === "Expense") {
           monthsHash[transactionMonth].expense -= transaction.amount;
