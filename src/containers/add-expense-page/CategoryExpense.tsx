@@ -10,6 +10,7 @@ import { ExpensesByCategory } from "@/types/piechart-data";
 // components
 import PieChartCard from "@/components/PieChartCard";
 import PieChartCardsContainer from "@/components/PieChartCardsContainer";
+import SpentOrSaved from "@/components/SpentOrSaved";
 
 interface CategoryExpenseProps {
   pieChartData: ExpensesByCategory[] | null;
@@ -63,16 +64,7 @@ export default function CategoryExpense({
                   upRightArrowIconB64={upRightArrowIconB64}
                   onClickContainer={() => handleClickCard(categoryId)}
                 >
-                  <p className="text-xs">
-                    $
-                    {spent < 0
-                      ? (Math.abs(spent) + startingTotal).toFixed(2)
-                      : Math.abs(spent).toFixed(2)}{" "}
-                    / ${startingTotal.toFixed(2)}{" "}
-                    <span className="font-medium">
-                      {spent < 0 ? "saved" : "spent"}
-                    </span>
-                  </p>
+                  <SpentOrSaved startingTotal={startingTotal} spent={spent} />
                 </PieChartCard>
               ),
             )}
