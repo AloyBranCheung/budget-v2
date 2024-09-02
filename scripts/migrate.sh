@@ -42,3 +42,5 @@ npx tsx ./prisma/seeds/20240427203855-add-arrow-icon.ts
 npx tsx ./prisma/seeds/20240820003353-add-border-all-icon.ts
 
 npx tsx ./prisma/seeds/20240820022239-add-icons-to-tags.ts
+
+npx tsx ./prisma/seeds/20240902043422-add-income-tags.ts
