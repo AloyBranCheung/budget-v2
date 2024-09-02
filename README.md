@@ -42,3 +42,7 @@ for `deployed` environment e.g. `tst` will need to have an auth0 post user regis
 - test debugging
   - ` npx playwright test example.spec.ts:10 --project=chromium --debug`
   - [docs here](https://playwright.dev/docs/debug)
+
+## Updating Schema
+
+Run `yarn migrate:dev --name <insert name for file here>`
