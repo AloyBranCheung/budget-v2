@@ -52,9 +52,9 @@ export default function MainNavbar({
           label="add"
         />
         <NavbarIcon
-          targetPath="/app/statistics"
+          targetPath="/app/insights"
           b64Str={graphIconBase64}
-          label="Statistics"
+          label="Insights"
         />
         <NavbarIcon
           targetPath="/app/goals"
