@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "yarn dc:db && yarn next dev",
-    "dc:db": "docker compose up local-db test-db -d --build",
+    "dc:db": "docker compose up local-db -d --build",
     "dc:stop": "docker compose -f docker-compose.yml down",
     "migrate:data:create": "dotenv -e .env.local -- ./scripts/create_static_data_migration.sh",
     "migrate:data": "dotenv -e .env.local -- ./scripts/migrate.sh",
