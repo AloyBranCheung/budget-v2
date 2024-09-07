@@ -19,6 +19,8 @@ import ExpenseFormat from "@/components/ExpenseFormat";
 import Card from "@/components/Card";
 import Switch from "@/components/Switch";
 import EditTransactionModal from "./EditTransactionModal";
+import Input from "@/components/Input";
+import useDebounce from "@/hooks/useDebounce";
 
 export type TransactionWithTags = Prisma.TransactionGetPayload<{
   include: { tags: { include: { image: true } } };
@@ -73,6 +75,8 @@ export default function TransactionsOverview({
   const [transactionType, setTransactionType] = useState<string>("");
   const [tag, setTag] = useState<string>(params?.tagId ?? "");
   const [categoryId, setCategoryId] = useState(params?.categoryId ?? "");
+  const [searchDisplay, setSearchDisplay] = useState("");
+  const searchName = useDebounce(searchDisplay, 300);
 
   const fetchData = useCallback(
     () =>
@@ -82,6 +86,7 @@ export default function TransactionsOverview({
         transactionType: transactionType as TransactionType,
         tag,
         categoryId,
+        searchName,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
@@ -92,8 +97,10 @@ export default function TransactionsOverview({
       categoryId,
       currEditTransactionId,
       shouldRefresh,
+      searchName,
     ],
   );
+
   const { data: transactionsArr, isLoading } = useAxios(fetchData) as {
     data: TransactionWithTags[];
     isLoading: boolean;
@@ -115,6 +122,10 @@ export default function TransactionsOverview({
       setSelectOption(value);
       setFromDate(value);
     }
+  };
+
+  const handleChangeSearchName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchDisplay(e.target.value);
   };
 
   useEffect(() => {
@@ -223,6 +234,11 @@ export default function TransactionsOverview({
         value={tag}
         selectClassName="p-2"
       />
+      <Input
+        label="Name"
+        value={searchDisplay}
+        onChange={handleChangeSearchName}
+      />
       <hr className="my-4" />
       <div className="flex items-center space-between">
         <h4 className="w-full">Results</h4>
@@ -237,8 +253,7 @@ export default function TransactionsOverview({
         ) : (
           <div className="flex flex-col gap-2">
             <AnimatePresence>
-              {transactionsArr &&
-                transactionsArr.length > 0 &&
+              {transactionsArr && transactionsArr.length > 0 ? (
                 transactionsArr.map((transaction, i) => (
                   <motion.div
                     key={transaction.id}
@@ -314,7 +329,10 @@ export default function TransactionsOverview({
                       </AnimatePresence>
                     </Card>
                   </motion.div>
-                ))}
+                ))
+              ) : (
+                <p className="self-center mt-8">No results found.</p>
+              )}
             </AnimatePresence>
           </div>
         )}
