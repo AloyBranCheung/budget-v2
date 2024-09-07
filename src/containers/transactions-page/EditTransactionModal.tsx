@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { Prisma, Tag, TransactionType } from "@prisma/client";
-import Image from "next/image";
+// import Image from "next/image";
 // actions
 import updateTransaction from "@/actions/update-transaction";
 import { defaultGenericFormState, GenericFormState } from "@/types/formstate";
@@ -10,7 +10,7 @@ import Modal from "@/components/Modal";
 import Input from "@/components/Input";
 import SingleSelect from "@/components/SingleSelect";
 import Multiselect from "@/components/Multiselect";
-import BaseIconButton from "@/components/BaseIconButton";
+// import BaseIconButton from "@/components/BaseIconButton";
 import AddTagModal from "../add-expense-page/AddTagModal";
 import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
@@ -41,7 +41,7 @@ export default function EditTransactionModal({
   transaction,
   categories,
   tags,
-  addIcon,
+  // addIcon,
   onSuccess,
 }: EditTransactionModalProps) {
   const [state, formAction] = useFormState<
@@ -115,11 +115,11 @@ export default function EditTransactionModal({
             label: name,
             value: id,
           }))}
-          icon={
-            <BaseIconButton onClick={() => setIsAddingTag(true)}>
-              <Image src={addIcon} alt="add-tag-icon" width={20} height={20} />
-            </BaseIconButton>
-          }
+          // icon={
+          //   <BaseIconButton onClick={() => setIsAddingTag(true)}>
+          //     <Image src={addIcon} alt="add-tag-icon" width={20} height={20} />
+          //   </BaseIconButton>
+          // }
         />
         <DatePicker
           label="Date"

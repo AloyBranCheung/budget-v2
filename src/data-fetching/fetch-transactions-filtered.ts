@@ -7,9 +7,10 @@ const fetchFilteredTransactions = async ({
   transactionType,
   tag,
   categoryId,
+  searchName,
 }: GetTransactionsFilteredParams) => {
   const response = axios.get("/api/transactions", {
-    params: { toDate, fromDate, transactionType, tag, categoryId },
+    params: { toDate, fromDate, transactionType, tag, categoryId, searchName },
   });
   return response;
 };

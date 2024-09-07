@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
 import { Prisma, TransactionType } from "@prisma/client";
-import Image from "next/image";
+// import Image from "next/image";
 import { AnimatePresence } from "framer-motion";
 // types
 import { GenericFormState, defaultGenericFormState } from "@/types/formstate";
@@ -16,7 +16,7 @@ import DatePicker from "@/components/DatePicker";
 import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
 import SingleSelect from "@/components/SingleSelect";
-import BaseIconButton from "@/components/BaseIconButton";
+// import BaseIconButton from "@/components/BaseIconButton";
 import AddTagModal from "./AddTagModal";
 
 interface AddTransactionFormProps {
@@ -29,7 +29,7 @@ interface AddTransactionFormProps {
 export default function AddTransactionForm({
   JSONcategories,
   userTags,
-  addIcon,
+  // addIcon,
   closeIcon,
 }: AddTransactionFormProps) {
   const [state, formAction] = useFormState<
@@ -110,11 +110,11 @@ export default function AddTransactionForm({
               label: tag.name,
               value: tag.id,
             }))}
-          icon={
-            <BaseIconButton onClick={() => setIsOpen(true)}>
-              <Image src={addIcon} alt="add-tag-icon" width={20} height={20} />
-            </BaseIconButton>
-          }
+          // icon={
+          //   <BaseIconButton onClick={() => setIsOpen(true)}>
+          //     <Image src={addIcon} alt="add-tag-icon" width={20} height={20} />
+          //   </BaseIconButton>
+          // }
         />
         <DatePicker key="date" label="Date" name="date" isDateTime />
         <TextArea key="notes" label="Notes" name="notes" required={false} />

@@ -14,6 +14,7 @@ export interface GetTransactionsFilteredParams {
   transactionType: TransactionType;
   tag: Tag["id"];
   categoryId: Category["id"];
+  searchName: string;
 }
 
 const getTransactionsFiltered = async ({
@@ -22,6 +23,7 @@ const getTransactionsFiltered = async ({
   transactionType,
   tag,
   categoryId,
+  searchName,
 }: GetTransactionsFilteredParams) => {
   const user = await getUser();
   if (!user) {
@@ -55,6 +57,10 @@ const getTransactionsFiltered = async ({
         ...(categoryId &&
           categoryId.length > 0 && {
             categoryId,
+          }),
+        ...(searchName &&
+          searchName.length > 0 && {
+            name: { search: searchName.replace(" ", "&") }, // https://www.prisma.io/docs/orm/prisma-client/queries/full-text-search
           }),
       },
       orderBy: {

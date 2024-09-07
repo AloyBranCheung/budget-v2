@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
   const transactionType = url.searchParams.get("transactionType") || "";
   const tag = url.searchParams.get("tag") || "";
   const categoryId = url.searchParams.get("categoryId") || "";
+  const searchName = url.searchParams.get("searchName") || "";
 
   const data = await getTransactionsFiltered({
     toDate,
@@ -22,6 +23,7 @@ export async function GET(req: NextRequest) {
     transactionType: transactionType as TransactionType,
     tag,
     categoryId,
+    searchName,
   });
 
   return new NextResponse(data, { status: 200 });
