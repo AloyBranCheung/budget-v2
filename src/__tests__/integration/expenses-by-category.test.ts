@@ -1,5 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import prisma from "./utils/prisma";
+// util
+import setupTransactionsWithTags from "./utils/setup-transactions-with-tags";
 // mocks
 import mockGetUser from "@/auth/__mocks__/get-user";
 // test this
@@ -98,5 +100,49 @@ describe("test expenses by category util fn", () => {
     expect(chartData[1].name).toBe("Needs Total Remaining");
     expect(chartData[1].value).toBe(testStartingTotal - randomSpent);
     expect(result).toHaveLength(3);
+  });
+
+  it("should add 100 to want category when transaction income +100", async () => {
+    /* -------------------------------------------------------------------------- */
+    // setup
+    await setupTransactionsWithTags();
+    const user = await prisma.user.findFirst({
+      where: {
+        name: "test@test.com",
+      },
+    });
+    if (!user)
+      throw new Error("TestDB Setup Error: test@test.com user not found. ");
+    mockGetUser.mockResolvedValue({ dbUser: user });
+
+    let result = await expensesByCategory();
+    expect(result).not.toBeNull();
+    expect(result![1].startingTotal).toBe(300);
+
+    /* -------------------------------------------------------------------------- */
+    // add income transaction
+    const wantsCategory = await prisma.category.findFirst({
+      where: { name: "Wants" },
+    });
+    if (!wantsCategory) throw new Error("Test category not found");
+    const currPaycheck = await prisma.paycheck.findFirst();
+    if (!currPaycheck) throw new Error("Test paycheck not found.");
+
+    await prisma.transaction.create({
+      data: {
+        amount: 100,
+        date: new Date().toISOString(),
+        name: "test add",
+        type: "Income",
+        userId: user.id,
+        paycheckId: currPaycheck.id,
+        categoryId: wantsCategory.id,
+      },
+    });
+
+    result = await expensesByCategory();
+
+    expect(result).not.toBeNull();
+    expect(result![1].spent).toBe(-100); // negative because gained instead of spent
   });
 });
