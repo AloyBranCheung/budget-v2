@@ -40,16 +40,16 @@ export default function MainNavbar({
       <div className="bg-secondary py-3 px-6 rounded-2xl flex items-center justify-between shadow-md border-solid border-black border-2">
         <NavbarIcon targetPath="/app" b64Str={homeIconBase64} label="Home" />
         <NavbarIcon
-          targetPath="/app/planning"
+          targetPath="/app/overview"
           b64Str={strategyIconBase64}
-          label="Planning"
+          label="Overview"
         />
         <NavbarIcon
           targetPath="/app/add"
           b64Str={addIconBase64}
           width={40}
           height={40}
-          label="add"
+          label="Add"
         />
         <NavbarIcon
           targetPath="/app/insights"
