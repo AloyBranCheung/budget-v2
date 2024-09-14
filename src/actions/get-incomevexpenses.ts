@@ -32,8 +32,12 @@ const getIncomeVExpense = async (
 
     const paychecksThisYear = await prisma.paycheck.findMany({
       where: {
-        userId: user.dbUser.id,
-        date: thisYearFilter,
+        AND: [
+          { userId: user.dbUser.id },
+          {
+            date: thisYearFilter,
+          },
+        ],
       },
       orderBy: {
         date: "desc",
@@ -42,8 +46,12 @@ const getIncomeVExpense = async (
 
     const transactionsThisYear = await prisma.transaction.findMany({
       where: {
-        userId: user.dbUser.id,
-        date: thisYearFilter,
+        AND: [
+          { userId: user.dbUser.id },
+          {
+            date: thisYearFilter,
+          },
+        ],
       },
       orderBy: {
         date: "desc",

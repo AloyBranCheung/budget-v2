@@ -40,6 +40,7 @@ const getTransactionsFiltered = async ({
         },
       },
       where: {
+        userId: user.dbUser.id,
         date: {
           gte: fromDate, // frontend already sent date that is the start of the day in utc format
           lt: dayjs.utc(toDate).add(1, "day").toISOString(), // frontend already sent date that is the start of the day in utc format
