@@ -11,6 +11,9 @@ const getMostRecentPaycheck = async (user: GetUserType) => {
       createdAt: "desc",
     },
     take: 1,
+    where: {
+      userId: user.dbUser.id,
+    },
   });
   let transactions;
 

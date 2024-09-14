@@ -40,10 +40,6 @@ describe("test get-transactions-filtered server action/api thing", async () => {
   if (!tag) throw new Error("Test tag not found.");
   if (!category) throw new Error("Test category not found.");
 
-  beforeEach(() => {
-    mockGetUser.mockResolvedValue(mockGetUser);
-  });
-
   beforeEach(async () => {
     vi.useFakeTimers();
     vi.setSystemTime(date);
@@ -102,6 +98,8 @@ describe("test get-transactions-filtered server action/api thing", async () => {
       });
 
     await Promise.all([createBasicTransactions(), createTransactionWithTag()]);
+
+    mockGetUser.mockResolvedValue({ auth0User: {}, dbUser: user });
   });
 
   afterEach(async () => {
@@ -119,6 +117,7 @@ describe("test get-transactions-filtered server action/api thing", async () => {
       transactionType: "" as TransactionType,
       tag: "",
       categoryId: category.id,
+      searchName: "",
     });
     const filteredTransactions = JSON.parse(jsonFilteredTransactions);
     expect(filteredTransactions.length).toBe(2);
@@ -133,6 +132,7 @@ describe("test get-transactions-filtered server action/api thing", async () => {
       transactionType: TransactionType.Expense,
       tag: "",
       categoryId: category.id,
+      searchName: "",
     });
     const filteredTransactions = JSON.parse(jsonFilteredTransactions);
 
@@ -151,10 +151,60 @@ describe("test get-transactions-filtered server action/api thing", async () => {
       transactionType: TransactionType.Expense,
       tag: "",
       categoryId: category.id,
+      searchName: "",
     });
     const filteredTransactions = JSON.parse(jsonFilteredTransactions);
 
     expect(filteredTransactions.length).toBe(1);
     expect(filteredTransactions[0].tags[0].name).toBe("Housing");
+  });
+
+  it("should not have data cross contamination", async () => {
+    // with fake user
+    mockGetUser.mockResolvedValueOnce({
+      auth0User: {},
+      dbUser: { id: "asdfasdf" },
+    });
+    const jsonFilteredTransactions = await getTransactionsFiltered({
+      toDate: new Date().toISOString(),
+      fromDate: dayjs().subtract(30, "day").toISOString(),
+      transactionType: "" as TransactionType,
+      tag: "",
+      categoryId: category.id,
+      searchName: "",
+    });
+    expect(JSON.parse(jsonFilteredTransactions).length).toBe(0);
+
+    // with real user
+    mockGetUser.mockResolvedValueOnce({ auth0User: {}, dbUser: user });
+    const jsonFilteredTransactionsWithRealUser = await getTransactionsFiltered({
+      toDate: new Date().toISOString(),
+      fromDate: dayjs().subtract(30, "day").toISOString(),
+      transactionType: "" as TransactionType,
+      tag: "",
+      categoryId: category.id,
+      searchName: "",
+    });
+    expect(JSON.parse(jsonFilteredTransactionsWithRealUser).length).toBe(2);
+
+    // user not found
+    mockGetUser.mockResolvedValueOnce({ auth0User: {}, dbUser: null });
+    const jsonFilteredTransactionsWithNullUser = await getTransactionsFiltered({
+      toDate: new Date().toISOString(),
+      fromDate: dayjs().subtract(30, "day").toISOString(),
+      transactionType: "" as TransactionType,
+      tag: "",
+      categoryId: category.id,
+      searchName: "",
+    });
+    const parsedJsonFilteredTransactions = JSON.parse(
+      jsonFilteredTransactionsWithNullUser,
+    );
+    expect(parsedJsonFilteredTransactions.length).toBeUndefined(); // is an object when error message, otherwise is an array when request is status 200
+    expect(parsedJsonFilteredTransactions.message).toBe(
+      "Error fetching transactions.",
+    );
+    expect(parsedJsonFilteredTransactions.isError).toBe(true);
+    expect(parsedJsonFilteredTransactions.data).toBeNull();
   });
 });

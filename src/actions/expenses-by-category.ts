@@ -13,6 +13,9 @@ const expensesByCategory = async () => {
       createdAt: "desc",
     },
     take: 1,
+    where: {
+      userId: user.dbUser.id,
+    },
   });
   if (!mostRecentPaycheck) return null;
 
