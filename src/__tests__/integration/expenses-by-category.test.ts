@@ -145,4 +145,22 @@ describe("test expenses by category util fn", () => {
     expect(result).not.toBeNull();
     expect(result![1].spent).toBe(-100); // negative because gained instead of spent
   });
+
+  it("should not have data cross contamination", async () => {
+    await setupTransactionsWithTags();
+
+    // 'other' user
+    mockGetUser.mockResolvedValueOnce({ dbUser: { id: "fakeuuid" } });
+    const result = await expensesByCategory();
+    expect(result).toBeNull();
+
+    // test user with paycheck and transactions
+    const realUser = await prisma.user.findUnique({
+      where: { email: "test@test.com" },
+    });
+    if (!realUser) throw new Error("Test user not found");
+    mockGetUser.mockResolvedValueOnce({ dbUser: realUser });
+    const realUserResult = await expensesByCategory();
+    expect(realUserResult?.length).toBe(3);
+  });
 });

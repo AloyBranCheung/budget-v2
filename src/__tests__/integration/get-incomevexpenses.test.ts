@@ -125,4 +125,35 @@ describe("test get income vs expenses for chart", async () => {
       { name: "Dec", income: null, expense: null },
     ]);
   });
+
+  it("should not have data cross contamination", async () => {
+    // 'other' user
+    mockGetUser.mockResolvedValueOnce({ dbUser: { id: "fakeuuid" } });
+
+    const response = await getIncomeVExpense(
+      new Date().toISOString(),
+      "America/Toronto",
+    );
+
+    for (const month of response) {
+      expect(month.income).toBeNull();
+      expect(month.expense).toBeNull();
+    }
+
+    // real user
+    mockGetUser.mockResolvedValueOnce({ dbUser: user });
+    const realUserResponse = await getIncomeVExpense(
+      new Date().toISOString(),
+      "America/Toronto",
+    );
+    for (const month of realUserResponse) {
+      if (month.name === "May") {
+        expect(month.expense).toBe(-100.69);
+      }
+      if (month.name === "Jul") {
+        expect(month.income).toBe(1100.69);
+        expect(month.expense).toBe(-100.69);
+      }
+    }
+  });
 });

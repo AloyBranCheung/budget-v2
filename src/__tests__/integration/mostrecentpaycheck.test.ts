@@ -87,4 +87,31 @@ describe("test paycheck balance", () => {
     expect(mostRecentPaycheck).not.toBeNull();
     expect(mostRecentPaycheck!.amount).toBe(1000);
   });
+
+  it("should not show other user data", async () => {
+    const { totalRemaining, mostRecentPaycheck } = await getMostRecentPaycheck({
+      auth0User: {},
+      dbUser: user,
+    });
+
+    expect(totalRemaining).toBe(899.31);
+    expect(mostRecentPaycheck).not.toBeNull();
+    expect(mostRecentPaycheck!.amount).toBe(1000);
+
+    const testThis = await getMostRecentPaycheck({
+      auth0User: {},
+      dbUser: {
+        id: "fakeuuid",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        name: "fake",
+        email: "fake@fake.com",
+        auth0Id: "fake|123",
+        image: "fake-image-url",
+      },
+    });
+
+    expect(testThis.mostRecentPaycheck).toBeNull();
+    expect(testThis.totalRemaining).toBeNull();
+  });
 });
