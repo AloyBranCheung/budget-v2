@@ -1,4 +1,15 @@
 services:
+  client:
+    container_name: web-client
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env.local
+    volumes:
+      - ./:/app
+      - /app/node_modules
   local-db:
     container_name: local-db
     image: postgres

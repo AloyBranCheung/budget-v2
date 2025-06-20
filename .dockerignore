@@ -1,0 +1,8 @@
+node_modules
+.env*
+.github
+.next
+databases
+playwright-report
+scripts
+test-results
