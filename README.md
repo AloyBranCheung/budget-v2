@@ -46,3 +46,9 @@ for `deployed` environment e.g. `tst` will need to have an auth0 post user regis
 ## Updating Schema
 
 Run `yarn migrate:dev --name <insert name for file here>`
+
+## Restore from deployed database
+
+Using DBeaver, download the `public` schema tables.
+In the localdb delete the `public` table with `DROP SCHEMA public CASCADE;`.
+Then tools > restore backup > select the `.sql` file.
