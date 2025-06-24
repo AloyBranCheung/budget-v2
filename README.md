@@ -52,3 +52,10 @@ Run `yarn migrate:dev --name <insert name for file here>`
 Using DBeaver, download the `public` schema tables.
 In the localdb delete the `public` table with `DROP SCHEMA public CASCADE;`.
 Then tools > restore backup > select the `.sql` file.
+
+## Running production build
+
+- Create a `.env.production`
+- Run `yarn prod:up`
+- If first time, may need to restore the database
+  e.g. `docker exec -i prd-db psql -U prd -X prd < backup.sql`
