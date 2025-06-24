@@ -1,0 +1,23 @@
+services:
+  client:
+    container_name: web-client
+    build:
+      dockerfile: ./Dockerfile.prd
+      args:
+        NEXT_PUBLIC_BASE_URL: http://localhost:3000
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env.production
+  prd-db:
+    container_name: prd-db
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=prd
+      - POSTGRES_USER=prd
+      - POSTGRES_DB=prd
+      - PGPORT=5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./databases/prd-core-db:/var/lib/postgresql/data

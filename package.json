@@ -18,7 +18,9 @@
     "test:int": "dotenv -e .env.test -- bash ./scripts/test_integration.sh",
     "test:e2e": "dotenv -e .env.test -- bash ./scripts/test_e2e.sh",
     "test:debug": "dotenv -e .env.test -- npx playwright test --project=chromium --debug",
-    "test:all": "yarn test:unit --run && yarn test:int && yarn test:e2e"
+    "test:all": "yarn test:unit --run && yarn test:int && yarn test:e2e",
+    "prod:up": "docker compose -f docker-compose.prd.yml up -d --build",
+    "prod:down": "docker compose -f docker-compose.prd.yml down"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
