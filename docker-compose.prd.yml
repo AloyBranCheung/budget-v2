@@ -1,6 +1,7 @@
+name: budget-app
 services:
   client:
-    container_name: web-client
+    container_name: budget-web-client
     build:
       dockerfile: ./Dockerfile.prd
       args:
@@ -9,6 +10,8 @@ services:
       - "3000:3000"
     env_file:
       - ./.env.production
+    networks:
+        - budgetapp-net
   prd-db:
     container_name: prd-db
     image: postgres
@@ -21,3 +24,9 @@ services:
       - "5432:5432"
     volumes:
       - ./databases/prd-core-db:/var/lib/postgresql/data
+    networks:
+        - budgetapp-net
+networks:
+  budgetapp-net:
+    name: budgetapp-net
+    driver: bridge
