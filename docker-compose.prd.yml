@@ -1,13 +1,13 @@
 name: budget-app
 services:
-  client:
+  budget-web-client:
     container_name: budget-web-client
     build:
       dockerfile: ./Dockerfile.prd
       args:
         NEXT_PUBLIC_BASE_URL: http://localhost:3000
-    ports:
-      - "3000:3000"
+    expose:
+      - 3000
     env_file:
       - ./.env.production
     networks:
